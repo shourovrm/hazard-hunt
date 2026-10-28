@@ -20,6 +20,10 @@ static func create(question: Dictionary) -> QuestionView:
 			view = GateCheckView.new()
 		"permit_check":
 			view = PermitCheckView.new()
+		"evidence_board":
+			view = EvidenceBoardView.new()
+		"matching":
+			view = MatchingView.new()
 		_:
 			push_error(
 				(
