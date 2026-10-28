@@ -7,8 +7,10 @@ const CASE_PLAYER_SCENE := "res://game/case_player.tscn"
 const HOME_ICON_PATH := "res://assets/icons/home.svg"
 # Two rows of four cards fit a 720 px tall screen without scrolling; more cases scroll vertically.
 const CARD_COLUMNS := 4
-const CARD_SIZE := Vector2(272, 272)
-const THUMBNAIL_SIZE := Vector2(240, 88)
+const CARD_SIZE := Vector2(272, 256)
+const THUMBNAIL_SIZE := Vector2(240, 64)
+# Every title gets room for exactly two lines, so all cards stay the same height.
+const TITLE_HEIGHT := 58
 
 var _sector: Dictionary = {}
 var _case_entries: Array[Dictionary] = []
@@ -118,7 +120,7 @@ func _make_case_card(entry: Dictionary, case_ids: Array) -> PanelContainer:
 	column.add_child(title)
 
 	var stars := StarRating.new()
-	stars.star_size = 28.0
+	stars.star_size = 26.0
 	stars.filled_count = Progress.get_stars(case_id)
 	stars.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(stars)
@@ -126,7 +128,7 @@ func _make_case_card(entry: Dictionary, case_ids: Array) -> PanelContainer:
 	var play_button := Button.new()
 	play_button.theme_type_variation = "PrimaryButton"
 	play_button.text = Loc.ui("play") if is_unlocked else Loc.ui("locked")
-	play_button.custom_minimum_size = Vector2(0, 56)
+	play_button.custom_minimum_size = Vector2(0, 52)
 	play_button.disabled = not is_unlocked
 	play_button.size_flags_vertical = Control.SIZE_SHRINK_END
 	play_button.pressed.connect(_on_play_pressed.bind(entry["path"]))
@@ -155,11 +157,13 @@ func _make_coming_soon_card(title_text: Dictionary) -> PanelContainer:
 func _make_card_title(title_text: String) -> Label:
 	var title := Label.new()
 	title.theme_type_variation = "HeadingLabel"
-	title.add_theme_font_size_override("font_size", 21)
+	title.add_theme_font_size_override("font_size", 20)
 	title.text = title_text
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	title.custom_minimum_size = Vector2(0, TITLE_HEIGHT)
+	title.max_lines_visible = 2
+	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	return title
 
 
