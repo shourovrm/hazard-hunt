@@ -3,8 +3,9 @@ extends QuestionView
 ## PPE items are dragged onto the worker, or tapped, to equip them. Tapping an equipped item
 ## removes it. The answer is the array of equipped item ids.
 
-const WORKER_SIZE := Vector2(240, 300)
+const WORKER_SIZE := Vector2(240, 250)
 const ICON_MAX_WIDTH := 48
+const TRAY_SINGLE_COLUMN_LIMIT := 4
 
 var _equipped_item_ids: Array[String] = []
 
@@ -60,13 +61,10 @@ func _make_worker_column() -> VBoxContainer:
 	worker_stack.add_child(worker_image)
 	var drop_hint_label := _make_wrapping_label(Loc.ui("drop_gear_here"))
 	drop_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	drop_hint_label.visible = not _locked
 	worker_stack.add_child(drop_hint_label)
 	column.add_child(worker_target)
-
-	var equipped_row := HFlowContainer.new()
-	for item_id in _equipped_item_ids:
-		equipped_row.add_child(_make_equipped_button(_find_item(item_id)))
-	column.add_child(equipped_row)
+	# Equipped items are shown in the tray itself (green), so no separate icon row is needed.
 	return column
 
 
@@ -77,23 +75,18 @@ func _worker_image_path() -> String:
 	return question["target_image"]
 
 
-func _make_equipped_button(item: Dictionary) -> Button:
-	var button := Button.new()
-	button.icon = _load_texture(item["icon"])
-	button.expand_icon = true
-	button.tooltip_text = Loc.text(item["text"])
-	button.custom_minimum_size = Vector2(MINIMUM_TOUCH_HEIGHT, MINIMUM_TOUCH_HEIGHT)
-	button.disabled = _locked
-	button.pressed.connect(_unequip_item.bind(item["id"]))
-	return button
-
-
-func _make_tray_column() -> VBoxContainer:
-	var column := VBoxContainer.new()
+func _make_tray_column() -> GridContainer:
+	# Two columns once there are more than four items, so the whole question fits the panel
+	# and the worker picture never scrolls out of view.
+	var column := GridContainer.new()
+	column.columns = 2 if question["items"].size() > TRAY_SINGLE_COLUMN_LIMIT else 1
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	column.add_theme_constant_override("separation", 8)
+	column.add_theme_constant_override("h_separation", 8)
+	column.add_theme_constant_override("v_separation", 8)
 	for item: Dictionary in question["items"]:
-		column.add_child(_make_tray_button(item))
+		var button := _make_tray_button(item)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		column.add_child(button)
 	return column
 
 
