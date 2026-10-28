@@ -16,6 +16,8 @@ static func create(question: Dictionary) -> QuestionView:
 			view = DialogueView.new()
 		"drag_ppe":
 			view = DragPpeView.new()
+		"gate_check":
+			view = GateCheckView.new()
 		_:
 			push_error(
 				(
