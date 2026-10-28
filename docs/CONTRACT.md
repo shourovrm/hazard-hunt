@@ -328,3 +328,17 @@ The player inspects the scene, marks each permit condition OK or Not OK, then ap
 - Test hooks: `set_mark(check_id: String, status: String)`, `choose_decision(decision: String)`
   (sets the decision and submits, only if all rows are marked), plus the usual
   `get_answer()` / `set_answer(answer)` with the answer shape above.
+
+## Show answer (so nobody gets stuck)
+
+- Core: `CaseSession.correct_answer(question: Dictionary) -> Variant` (static). Returns the answer
+  in the shape `submit_answer` expects that is fully correct: `correct` (single, multi, drag_ppe),
+  `correct_order` (ordering), the id of the first `best` choice (dialogue), a worker id → `missing`
+  dictionary (gate_check), `{marks: {id: status}, decision: correct_decision}` (permit_check).
+- QuestionView: a `Loc.ui("show_answer")` button appears only after the view has received a
+  wrong result (or, for gate_check, after a wrong decision on the current worker), and only while
+  the view is not locked. Pressing it, or calling `show_solution()`, selects the correct answer in
+  the UI (for gate_check: marks the current worker's missing items only) and shows
+  `Loc.ui("solution_shown")`. The player still presses Submit / the decision / the dialogue choice
+  to continue. Scoring is unchanged: the earlier wrong try already counted; showing the answer
+  adds nothing.

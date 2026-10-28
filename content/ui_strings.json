@@ -178,5 +178,13 @@
   "refuse_permit": {
     "en": "Refuse permit",
     "bn": "পারমিট বাতিল"
+  },
+  "show_answer": {
+    "en": "Show answer",
+    "bn": "উত্তর দেখুন"
+  },
+  "solution_shown": {
+    "en": "The correct answer is now selected. Read it, then continue.",
+    "bn": "সঠিক উত্তর এখন বাছাই করা আছে। পড়ে নিন, তারপর এগিয়ে যান।"
   }
 }
