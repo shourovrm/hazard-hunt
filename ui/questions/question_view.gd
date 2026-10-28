@@ -128,6 +128,7 @@ func _build_skeleton() -> void:
 	scrolled_content.add_child(_result_area)
 
 	_submit_button = Button.new()
+	_submit_button.theme_type_variation = "PrimaryButton"
 	_submit_button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
 	_submit_button.pressed.connect(submit)
 	layout.add_child(_submit_button)

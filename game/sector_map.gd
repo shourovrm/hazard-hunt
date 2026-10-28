@@ -108,7 +108,7 @@ func _make_case_card(entry: Dictionary, case_ids: Array) -> PanelContainer:
 
 	var play_button := Button.new()
 	play_button.theme_type_variation = "PrimaryButton"
-	play_button.text = Loc.ui("play")
+	play_button.text = Loc.ui("play") if is_unlocked else Loc.ui("locked")
 	play_button.custom_minimum_size = Vector2(0, 72)
 	play_button.disabled = not is_unlocked
 	play_button.size_flags_vertical = Control.SIZE_SHRINK_END

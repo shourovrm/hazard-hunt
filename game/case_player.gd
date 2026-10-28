@@ -857,9 +857,8 @@ func _rebuild_result_card() -> void:
 	stars.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(stars)
 
-	# "×" (U+00D7) is in Noto Sans; the star and cross symbols are not reliably covered.
 	var mistakes := Label.new()
-	mistakes.text = "× %s" % Loc.number(result["mistakes"])
+	mistakes.text = Loc.ui("mistakes_count", {"count": result["mistakes"]})
 	mistakes.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(mistakes)
 

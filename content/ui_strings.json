@@ -122,5 +122,13 @@
   "tap_to_continue": {
     "en": "Tap to continue",
     "bn": "চালিয়ে যেতে ট্যাপ করুন"
+  },
+  "mistakes_count": {
+    "en": "Mistakes: {count}",
+    "bn": "ভুল: {count}টি"
+  },
+  "locked": {
+    "en": "Locked",
+    "bn": "তালাবদ্ধ"
   }
 }
