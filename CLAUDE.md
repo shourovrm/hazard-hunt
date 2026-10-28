@@ -1,4 +1,4 @@
-# OSH Safety Supervisor: project notes
+# Hazard Hunt: project notes
 
 - Godot 4.7.2, GDScript, Compatibility renderer, 1280×720 landscape. Interfaces: `docs/CONTRACT.md`.
 - Slice verify: `godot --headless --path . --import >/dev/null 2>&1; godot --headless --path . res://tests/test_runner.tscn -- --dir=<core|ui|game> 2>&1 | grep -E '^FAIL|tests,'`

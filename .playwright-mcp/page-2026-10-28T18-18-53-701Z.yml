@@ -1,0 +1,35 @@
+- generic [active] [ref=e1]:
+  - 'heading "Concept A: Orange hard hat with check" [level=1] [ref=e2]'
+  - heading "App icon" [level=2] [ref=e3]
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]: 96 px
+      - generic [ref=e9]: 64 px round mask
+      - generic [ref=e11]: 48 px
+    - generic [ref=e13]:
+      - generic [ref=e14]: App
+      - generic [ref=e16]: App
+      - generic [ref=e18]: App
+      - generic [ref=e20]: App
+      - generic [ref=e22]: App
+      - generic [ref=e24]: Safety Sup…
+      - generic [ref=e26]: App
+      - generic [ref=e28]: App
+  - heading "Logo on light and dark" [level=2] [ref=e30]
+  - generic [ref=e34]:
+    - generic [ref=e35]: নিরাপত্তা সুপারভাইজার
+    - generic [ref=e36]: SAFETY SUPERVISOR
+    - generic [ref=e37]: OSH training · SICIP
+  - generic [ref=e41]:
+    - generic [ref=e42]: নিরাপত্তা সুপারভাইজার
+    - generic [ref=e43]: SAFETY SUPERVISOR
+    - generic [ref=e44]: OSH training · SICIP
+  - heading "Title screen" [level=2] [ref=e45]
+  - generic [ref=e46]:
+    - generic [ref=e48]: English
+    - generic [ref=e49]:
+      - generic [ref=e52]:
+        - generic [ref=e53]: নিরাপত্তা সুপারভাইজার
+        - generic [ref=e54]: SAFETY SUPERVISOR
+        - generic [ref=e55]: OSH training · SICIP
+      - generic [ref=e56]: শুরু করুন

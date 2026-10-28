@@ -1,4 +1,4 @@
-# OSH Safety Supervisor
+# Hazard Hunt
 
 Android training game for occupational safety and health (OSH) in Bangladesh. The player is a site
 supervisor who finds hazards in an unsafe scene, answers questions, and then sees the same scene

@@ -1,33 +1,126 @@
 {
-  "app_title": { "en": "Safety Supervisor", "bn": "নিরাপত্তা সুপারভাইজার" },
-  "app_subtitle": { "en": "Occupational safety training", "bn": "পেশাগত নিরাপত্তা প্রশিক্ষণ" },
-  "start": { "en": "Start", "bn": "শুরু করুন" },
-  "continue": { "en": "Continue", "bn": "চালিয়ে যান" },
-  "back": { "en": "Back", "bn": "ফিরে যান" },
-  "language_switch": { "en": "বাংলা", "bn": "English" },
-  "coming_soon": { "en": "Coming soon", "bn": "শীঘ্রই আসছে" },
-  "play": { "en": "Play", "bn": "খেলুন" },
-  "play_again": { "en": "Play again", "bn": "আবার খেলুন" },
-  "back_to_map": { "en": "Back to site map", "bn": "সাইট ম্যাপে ফিরুন" },
-  "mentor_name": { "en": "Engineer Nasrin", "bn": "প্রকৌশলী নাসরিন" },
-  "find_hazards": { "en": "Find the hazards", "bn": "বিপদগুলো খুঁজুন" },
-  "hazards_found": { "en": "{found} of {total} hazards found", "bn": "{total}টির মধ্যে {found}টি বিপদ পাওয়া গেছে" },
-  "hazard_found": { "en": "Hazard found!", "bn": "বিপদ পাওয়া গেছে!" },
-  "already_found": { "en": "You already found this one.", "bn": "এটি আগেই পাওয়া গেছে।" },
-  "not_a_hazard": { "en": "That looks safe. Keep looking.", "bn": "এটি নিরাপদ মনে হচ্ছে। আরও খুঁজুন।" },
-  "all_hazards_found": { "en": "All hazards found. Now decide what to do.", "bn": "সব বিপদ পাওয়া গেছে। এখন কী করবেন ঠিক করুন।" },
-  "question_counter": { "en": "Question {number} of {total}", "bn": "প্রশ্ন {number} / {total}" },
-  "submit": { "en": "Submit", "bn": "জমা দিন" },
-  "next": { "en": "Next", "bn": "পরবর্তী" },
-  "correct": { "en": "Correct!", "bn": "সঠিক!" },
-  "try_again": { "en": "Not quite. Try again.", "bn": "পুরোপুরি ঠিক হয়নি। আবার চেষ্টা করুন।" },
-  "choose_all": { "en": "Choose all that apply", "bn": "সব সঠিক উত্তর বেছে নিন" },
-  "most_effective": { "en": "Most effective", "bn": "সবচেয়ে কার্যকর" },
-  "least_effective": { "en": "Least effective", "bn": "সবচেয়ে কম কার্যকর" },
-  "drop_gear_here": { "en": "Drop gear here", "bn": "সরঞ্জাম এখানে রাখুন" },
-  "safe_scene_title": { "en": "The site after your fixes", "bn": "আপনার সমাধানের পর সাইট" },
-  "case_complete": { "en": "Case complete", "bn": "কেস সম্পন্ন" },
-  "references": { "en": "References", "bn": "তথ্যসূত্র" },
-  "draft_notice": { "en": "Draft content, under expert review", "bn": "খসড়া বিষয়বস্তু, বিশেষজ্ঞ পর্যালোচনাধীন" },
-  "tap_to_continue": { "en": "Tap to continue", "bn": "চালিয়ে যেতে ট্যাপ করুন" }
+  "app_title": {
+    "en": "Hazard Hunt",
+    "bn": "Hazard Hunt"
+  },
+  "app_subtitle": {
+    "en": "",
+    "bn": ""
+  },
+  "start": {
+    "en": "Start",
+    "bn": "শুরু করুন"
+  },
+  "continue": {
+    "en": "Continue",
+    "bn": "চালিয়ে যান"
+  },
+  "back": {
+    "en": "Back",
+    "bn": "ফিরে যান"
+  },
+  "language_switch": {
+    "en": "বাংলা",
+    "bn": "English"
+  },
+  "coming_soon": {
+    "en": "Coming soon",
+    "bn": "শীঘ্রই আসছে"
+  },
+  "play": {
+    "en": "Play",
+    "bn": "খেলুন"
+  },
+  "play_again": {
+    "en": "Play again",
+    "bn": "আবার খেলুন"
+  },
+  "back_to_map": {
+    "en": "Back to site map",
+    "bn": "সাইট ম্যাপে ফিরুন"
+  },
+  "mentor_name": {
+    "en": "Engineer Nasrin",
+    "bn": "প্রকৌশলী নাসরিন"
+  },
+  "find_hazards": {
+    "en": "Find the hazards",
+    "bn": "বিপদগুলো খুঁজুন"
+  },
+  "hazards_found": {
+    "en": "{found} of {total} hazards found",
+    "bn": "{total}টির মধ্যে {found}টি বিপদ পাওয়া গেছে"
+  },
+  "hazard_found": {
+    "en": "Hazard found!",
+    "bn": "বিপদ পাওয়া গেছে!"
+  },
+  "already_found": {
+    "en": "You already found this one.",
+    "bn": "এটি আগেই পাওয়া গেছে।"
+  },
+  "not_a_hazard": {
+    "en": "That looks safe. Keep looking.",
+    "bn": "এটি নিরাপদ মনে হচ্ছে। আরও খুঁজুন।"
+  },
+  "all_hazards_found": {
+    "en": "All hazards found. Now decide what to do.",
+    "bn": "সব বিপদ পাওয়া গেছে। এখন কী করবেন ঠিক করুন।"
+  },
+  "question_counter": {
+    "en": "Question {number} of {total}",
+    "bn": "প্রশ্ন {number} / {total}"
+  },
+  "submit": {
+    "en": "Submit",
+    "bn": "জমা দিন"
+  },
+  "next": {
+    "en": "Next",
+    "bn": "পরবর্তী"
+  },
+  "correct": {
+    "en": "Correct!",
+    "bn": "সঠিক!"
+  },
+  "try_again": {
+    "en": "Not quite. Try again.",
+    "bn": "পুরোপুরি ঠিক হয়নি। আবার চেষ্টা করুন।"
+  },
+  "choose_all": {
+    "en": "Choose all that apply",
+    "bn": "সব সঠিক উত্তর বেছে নিন"
+  },
+  "most_effective": {
+    "en": "Most effective",
+    "bn": "সবচেয়ে কার্যকর"
+  },
+  "least_effective": {
+    "en": "Least effective",
+    "bn": "সবচেয়ে কম কার্যকর"
+  },
+  "drop_gear_here": {
+    "en": "Drop gear here",
+    "bn": "সরঞ্জাম এখানে রাখুন"
+  },
+  "safe_scene_title": {
+    "en": "The site after your fixes",
+    "bn": "আপনার সমাধানের পর সাইট"
+  },
+  "case_complete": {
+    "en": "Case complete",
+    "bn": "কেস সম্পন্ন"
+  },
+  "references": {
+    "en": "References",
+    "bn": "তথ্যসূত্র"
+  },
+  "draft_notice": {
+    "en": "Draft content, under expert review",
+    "bn": "খসড়া বিষয়বস্তু, বিশেষজ্ঞ পর্যালোচনাধীন"
+  },
+  "tap_to_continue": {
+    "en": "Tap to continue",
+    "bn": "চালিয়ে যেতে ট্যাপ করুন"
+  }
 }
