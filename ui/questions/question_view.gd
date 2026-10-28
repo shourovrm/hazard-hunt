@@ -99,9 +99,7 @@ func show_solution() -> void:
 		return
 	Sfx.play("select")
 	_solution_is_shown = true
-	# Looked up by name: a direct CaseSession.correct_answer() call is a parse error until that
-	# helper exists, and a parse error here would stop every question view from compiling.
-	set_answer(Callable(CaseSession, "correct_answer").call(question))
+	set_answer(CaseSession.correct_answer(question))
 	_rebuild()
 
 
