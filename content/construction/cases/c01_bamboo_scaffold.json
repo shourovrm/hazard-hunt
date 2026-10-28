@@ -30,7 +30,7 @@
         "unsafe": "res://assets/characters/labourer_unsafe.png",
         "safe": "res://assets/characters/labourer_safe.png",
         "position": [560, 668],
-        "safe_position": [850, 672],
+        "safe_position": [880, 672],
         "scale": 0.48,
         "idle": "breathe"
       }
@@ -38,8 +38,8 @@
     "ambient": ["dust"]
   },
   "intro": {
-    "en": "Good morning, Supervisor. Karim is laying bricks on the third-floor scaffold, and Rahim is carrying bricks below. I can see four hazards here. Tap each hazard you find.",
-    "bn": "শুভ সকাল, সুপারভাইজার। করিম তিনতলার বাঁশের মাচায় ইট গাঁথছেন, আর রহিম নিচে ইট বহন করছেন। এখানে আমি চারটি বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+    "en": "Good morning, Supervisor. Karim is laying bricks on the third-floor scaffold, and Rahim is moving bricks below. I can see four hazards here. Tap each hazard you find.",
+    "bn": "শুভ সকাল, সুপারভাইজার। করিম তিনতলার বাঁশের মাচায় ইট গাঁথছেন, আর রহিম নিচে ইট নিয়ে যাচ্ছেন। এখানে আমি চারটি বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
   },
   "hazard_hint": {
     "en": "Look at the people, the platform edge and the bamboo poles.",
@@ -84,14 +84,14 @@
     },
     {
       "id": "drop_zone",
-      "rect": [505, 485, 115, 190],
+      "rect": [474, 500, 172, 172],
       "label": {
         "en": "Walking under the work area without a helmet",
         "bn": "হেলমেট ছাড়া কাজের জায়গার নিচ দিয়ে হাঁটা"
       },
       "explain": {
-        "en": "The area below the scaffold is not fenced off. Rahim walks through it with no helmet and in sandals.",
-        "bn": "মাচার নিচের জায়গা ঘেরা নেই। রহিম হেলমেট ছাড়া, স্যান্ডেল পরে সেখান দিয়ে হাঁটছেন।"
+        "en": "The area below the scaffold is not fenced off. Rahim pushes a wheelbarrow through it with no helmet, no gloves and only sandals.",
+        "bn": "মাচার নিচের জায়গা ঘেরা নেই। রহিম হেলমেট ও গ্লাভস ছাড়া, শুধু স্যান্ডেল পরে সেখান দিয়ে ঠেলাগাড়ি ঠেলছেন।"
       }
     }
   ],
@@ -257,8 +257,8 @@
       ],
       "correct": ["helmet", "boots", "gloves"],
       "hint": {
-        "en": "Rahim carries bricks under the scaffold. Protect his head, feet and hands.",
-        "bn": "রহিম মাচার নিচে ইট বহন করেন। তাঁর মাথা, পা ও হাত সুরক্ষিত করুন।"
+        "en": "Rahim moves bricks under the scaffold. Protect his head, feet and hands.",
+        "bn": "রহিম মাচার নিচে ইট নিয়ে যান। তাঁর মাথা, পা ও হাত সুরক্ষিত করুন।"
       },
       "explanation": {
         "en": "A helmet protects against falling bricks, boots protect against dropped loads and nails, and gloves protect against rough bricks. Ear muffs and welding masks are for other jobs.",
