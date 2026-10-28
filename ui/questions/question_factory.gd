@@ -22,6 +22,10 @@ static func create(question: Dictionary) -> QuestionView:
 			view = PermitCheckView.new()
 		"cause_chain":
 			view = CauseChainView.new()
+		"evidence_board":
+			view = EvidenceBoardView.new()
+		"matching":
+			view = MatchingView.new()
 		_:
 			push_error(
 				(
