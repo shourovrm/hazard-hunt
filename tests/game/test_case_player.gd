@@ -98,3 +98,11 @@ func test_miss_tap_does_not_find_hazard() -> void:
 	player.skip_intro()
 	player.handle_scene_tap(Vector2(1270, 10))
 	t.assert_eq(player.get_session().found_hazard_ids().size(), 0)
+
+
+func test_wide_screen_backdrop_exists() -> void:
+	var player := _new_player()
+	var backdrop: Node = player.find_child("Backdrop", true, false)
+	t.assert_not_null(backdrop, "no Backdrop node")
+	if backdrop != null:
+		t.assert_not_null(backdrop.get("texture"), "Backdrop has no texture")

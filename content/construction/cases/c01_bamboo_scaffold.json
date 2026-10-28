@@ -244,6 +244,7 @@
       "id": "equip_rahim",
       "type": "drag_ppe",
       "target_image": "res://assets/characters/labourer_unsafe.png",
+      "target_image_safe": "res://assets/characters/labourer_safe.png",
       "prompt": {
         "en": "Drag the right safety gear onto Rahim before he goes back to work.",
         "bn": "রহিম কাজে ফেরার আগে সঠিক সুরক্ষা সরঞ্জাম টেনে তাঁর উপর রাখুন।"

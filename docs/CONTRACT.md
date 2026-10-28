@@ -157,8 +157,12 @@ Behaviour:
   up/down buttons (touch friendly), labelled top `most_effective`, bottom `least_effective`;
   shows each item's `tag` only after a correct result.
 - `drag_ppe`: shows `target_image` (worker) and the item icons. An item is dragged onto the
-  worker to equip it, or tapped to toggle (fallback for small screens). Equipped items show on
-  or next to the worker; tapping an equipped item removes it.
+  worker to equip it, or tapped to toggle (fallback for small screens). Tray buttons never move:
+  an equipped item stays in its tray slot, visibly marked as equipped, and tapping it again
+  removes it. After a correct result the worker image switches to `target_image_safe` when the
+  question has one.
+- After a correct result the Submit button is hidden, and after any result the scroll area
+  scrolls so the feedback text is visible.
 - `dialogue`: shows `npc_portrait`, `npc_name` and `npc_line` as a speech bubble, and each
   choice as a full-width button.
 - Touch targets at least 64 px high; text 24 px or larger; layout fits a 1280×720 panel area of
@@ -198,6 +202,10 @@ Behaviour:
     `func get_active_question_view() -> QuestionView`, `func advance() -> void` (same as the
     visible Continue/Next button of the current step), `func background_state() -> String`
     ("unsafe" or "safe"), `func is_result_visible() -> bool`.
+  - Wide screens: screens wider than 16:9 show a `Backdrop` node (TextureRect or Sprite2D named
+    "Backdrop") behind the scene: the current background, blurred (downscale to about 1/20 and
+    scale back up with bilinear filtering, done once per texture at load) and darkened, sized to
+    cover the whole viewport. It follows the unsafe/safe crossfade. No black bars remain.
 - `ui/mentor_panel.tscn` + `.gd`: portrait `assets/characters/mentor_portrait.png`, name
   `mentor_name`, `func say(localized: Dictionary) -> void`, text appears with a short
   type-on effect (skippable by tap).
