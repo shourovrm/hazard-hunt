@@ -3,6 +3,7 @@ extends RefCounted
 const CASE_PATH := "res://content/construction/cases/c01_bamboo_scaffold.json"
 const TEST_SAVE_PATH := "user://test_progress_game.json"
 const MainMenuScene := preload("res://game/main_menu.tscn")
+const CasePlayerScene := preload("res://game/case_player.tscn")
 
 var t
 
@@ -34,7 +35,7 @@ func _find_button_with_text(node: Node, text: String) -> Button:
 
 
 func _new_player() -> Node:
-	var player: Node = load("res://game/case_player.tscn").instantiate()
+	var player: Node = CasePlayerScene.instantiate()
 	player.animations_enabled = false
 	t.root.add_child(player)
 	player.start_case(CASE_PATH)
@@ -135,7 +136,7 @@ func test_hunt_hint_is_free_and_shows_clue() -> void:
 
 
 func test_case_without_hazards_goes_to_questions() -> void:
-	var player: Node = load("res://game/case_player.tscn").instantiate()
+	var player: Node = CasePlayerScene.instantiate()
 	player.animations_enabled = false
 	t.root.add_child(player)
 	player.start_case("res://content/construction/cases/c02_gate_check.json")
