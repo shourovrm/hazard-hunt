@@ -49,7 +49,8 @@ func test_correct_answer_helper_wins_every_question() -> void:
 		for hazard in session.case_data["hazards"]:
 			var rect: Array = hazard["rect"]
 			session.tap(Vector2(rect[0] + rect[2] / 2.0, rect[1] + rect[3] / 2.0))
-		session.finish_hazard_hunt()
+		if session.phase == CaseSession.Phase.HAZARD_HUNT:
+			session.finish_hazard_hunt()
 		var moved := true
 		while moved:
 			var result := session.submit_answer(CaseSession.correct_answer(session.current_question()))
