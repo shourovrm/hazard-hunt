@@ -5,14 +5,16 @@ const SECTOR_PATH := "res://content/construction/sector.json"
 const MAIN_MENU_SCENE := "res://game/main_menu.tscn"
 const CASE_PLAYER_SCENE := "res://game/case_player.tscn"
 const HOME_ICON_PATH := "res://assets/icons/home.svg"
-const CARD_SIZE := Vector2(272, 400)
-const THUMBNAIL_SIZE := Vector2(240, 135)
+# Two rows of four cards fit a 720 px tall screen without scrolling; more cases scroll vertically.
+const CARD_COLUMNS := 4
+const CARD_SIZE := Vector2(272, 272)
+const THUMBNAIL_SIZE := Vector2(240, 88)
 
 var _sector: Dictionary = {}
 var _case_entries: Array[Dictionary] = []
 var _title_label: Label
 var _home_button: NavigationButton
-var _card_row: HBoxContainer
+var _card_row: GridContainer
 
 
 func _ready() -> void:
@@ -39,10 +41,10 @@ func _build_layout() -> void:
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]:
-		margin.add_theme_constant_override("margin_" + side, 32)
+		margin.add_theme_constant_override("margin_" + side, 20)
 	add_child(margin)
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 24)
+	column.add_theme_constant_override("separation", 16)
 	margin.add_child(column)
 
 	var header := HBoxContainer.new()
@@ -57,11 +59,17 @@ func _build_layout() -> void:
 	_title_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	header.add_child(_title_label)
 
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	column.add_child(scroll)
 	var center := CenterContainer.new()
-	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	column.add_child(center)
-	_card_row = HBoxContainer.new()
-	_card_row.add_theme_constant_override("separation", 24)
+	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(center)
+	_card_row = GridContainer.new()
+	_card_row.columns = CARD_COLUMNS
+	_card_row.add_theme_constant_override("h_separation", 20)
+	_card_row.add_theme_constant_override("v_separation", 16)
 	center.add_child(_card_row)
 
 
@@ -101,7 +109,7 @@ func _make_case_card(entry: Dictionary, case_ids: Array) -> PanelContainer:
 	column.add_child(title)
 
 	var stars := StarRating.new()
-	stars.star_size = 44.0
+	stars.star_size = 28.0
 	stars.filled_count = Progress.get_stars(case_id)
 	stars.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(stars)
@@ -109,7 +117,7 @@ func _make_case_card(entry: Dictionary, case_ids: Array) -> PanelContainer:
 	var play_button := Button.new()
 	play_button.theme_type_variation = "PrimaryButton"
 	play_button.text = Loc.ui("play") if is_unlocked else Loc.ui("locked")
-	play_button.custom_minimum_size = Vector2(0, 72)
+	play_button.custom_minimum_size = Vector2(0, 56)
 	play_button.disabled = not is_unlocked
 	play_button.size_flags_vertical = Control.SIZE_SHRINK_END
 	play_button.pressed.connect(_on_play_pressed.bind(entry["path"]))
@@ -138,7 +146,7 @@ func _make_coming_soon_card(title_text: Dictionary) -> PanelContainer:
 func _make_card_title(title_text: String) -> Label:
 	var title := Label.new()
 	title.theme_type_variation = "HeadingLabel"
-	title.add_theme_font_size_override("font_size", 26)
+	title.add_theme_font_size_override("font_size", 21)
 	title.text = title_text
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
