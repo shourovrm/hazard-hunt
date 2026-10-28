@@ -24,10 +24,6 @@ const SPARKLE_DELAY_SECONDS := 0.7
 const FOUND_POP_SECONDS := 0.35
 const HINT_PULSE_SECONDS := 0.5
 const HINT_PULSE_COUNT := 4
-const BREATHE_SCALE_AMPLITUDE := 0.02
-const BREATHE_HALF_CYCLE_SECONDS := 1.6
-const WORK_BOB_RADIANS := 0.035
-const WORK_BOB_HALF_CYCLE_SECONDS := 0.55
 
 # Particles.
 const DUST_PARTICLE_COUNT := 20
@@ -170,6 +166,15 @@ func get_active_question_view() -> QuestionView:
 
 func background_state() -> String:
 	return "safe" if _background_is_safe else "unsafe"
+
+
+## "paper" for cut-out art (style D), "smooth" for everything else.
+func motion_style() -> String:
+	var style: String = _session.case_data["scene"].get("motion_style", "smooth")
+	if style != "paper" and style != "smooth":
+		push_error("CasePlayer: unknown motion_style '%s', using smooth" % style)
+		return "smooth"
+	return style
 
 
 func is_result_visible() -> bool:
@@ -438,8 +443,10 @@ func _make_actor(actor_data: Dictionary) -> Sprite2D:
 	safe_sprite.modulate.a = 0.0
 	sprite.add_child(safe_sprite)
 	_scene_content.add_child(sprite)
-	if animations_enabled:
-		_start_idle_animation(sprite, actor_data.get("idle", ""))
+	if motion_style() == "paper":
+		PaperMotion.attach_to(sprite, animations_enabled)
+	elif animations_enabled:
+		ActorIdle.start(sprite, actor_data.get("idle", ""))
 	return sprite
 
 
@@ -450,45 +457,6 @@ func _bottom_centre_offset(texture: Texture2D) -> Vector2:
 		return Vector2.ZERO
 	var texture_size := texture.get_size()
 	return Vector2(-texture_size.x / 2.0, -texture_size.y)
-
-
-func _start_idle_animation(sprite: Sprite2D, idle_name: String) -> void:
-	match idle_name:
-		"breathe":
-			var base_scale_y := sprite.scale.y
-			var tween := sprite.create_tween().set_loops()
-			(
-				tween
-				. tween_property(
-					sprite, "scale:y", base_scale_y * (1.0 + BREATHE_SCALE_AMPLITUDE), BREATHE_HALF_CYCLE_SECONDS
-				)
-				. set_trans(Tween.TRANS_SINE)
-				. set_ease(Tween.EASE_IN_OUT)
-			)
-			(
-				tween
-				. tween_property(sprite, "scale:y", base_scale_y, BREATHE_HALF_CYCLE_SECONDS)
-				. set_trans(Tween.TRANS_SINE)
-				. set_ease(Tween.EASE_IN_OUT)
-			)
-		"work":
-			var tween := sprite.create_tween().set_loops()
-			(
-				tween
-				. tween_property(sprite, "rotation", WORK_BOB_RADIANS, WORK_BOB_HALF_CYCLE_SECONDS)
-				. set_trans(Tween.TRANS_SINE)
-				. set_ease(Tween.EASE_IN_OUT)
-			)
-			(
-				tween
-				. tween_property(sprite, "rotation", -WORK_BOB_RADIANS, WORK_BOB_HALF_CYCLE_SECONDS)
-				. set_trans(Tween.TRANS_SINE)
-				. set_ease(Tween.EASE_IN_OUT)
-			)
-		"":
-			pass
-		_:
-			push_error("CasePlayer: unknown idle animation '%s' on actor '%s'" % [idle_name, sprite.name])
 
 
 func _make_dust() -> CPUParticles2D:
@@ -574,6 +542,9 @@ func _enter_intro() -> void:
 	_refresh_texts()
 	if animations_enabled:
 		_play_intro_pan()
+		if motion_style() == "paper":
+			var sheet_tween := _background_unsafe.create_tween().set_parallel(true)
+			PaperTransitions.slide_sheet_in(sheet_tween, _background_unsafe, SCENE_SIZE.x)
 	else:
 		_set_camera(_hunt_camera_position(), 1.0)
 
@@ -832,13 +803,20 @@ func _refresh_question_counter() -> void:
 
 
 func _play_reveal_animation() -> void:
+	var is_paper := motion_style() == "paper"
 	_reveal_tween = create_tween().set_parallel(true)
-	_reveal_tween.tween_property(_background_safe, "modulate:a", 1.0, REVEAL_FADE_SECONDS)
+	if is_paper:
+		PaperTransitions.slide_sheet_in(_reveal_tween, _background_safe, SCENE_SIZE.x)
+	else:
+		_reveal_tween.tween_property(_background_safe, "modulate:a", 1.0, REVEAL_FADE_SECONDS)
 	_reveal_tween.tween_property(_ring_layer, "modulate:a", 0.0, REVEAL_FADE_SECONDS * 0.5)
 	for actor in _actors:
 		var safe_sprite := actor.get_node("Safe") as Sprite2D
-		_reveal_tween.tween_property(actor, "self_modulate:a", 0.0, REVEAL_FADE_SECONDS)
-		_reveal_tween.tween_property(safe_sprite, "modulate:a", 1.0, REVEAL_FADE_SECONDS)
+		if is_paper:
+			PaperTransitions.add_card_flip(_reveal_tween, actor, safe_sprite)
+		else:
+			_reveal_tween.tween_property(actor, "self_modulate:a", 0.0, REVEAL_FADE_SECONDS)
+			_reveal_tween.tween_property(safe_sprite, "modulate:a", 1.0, REVEAL_FADE_SECONDS)
 		var move := _reveal_tween.tween_property(
 			actor, "position", actor.get_meta("safe_position"), REVEAL_MOVE_SECONDS
 		)
@@ -855,12 +833,14 @@ func _emit_sparkles() -> void:
 ## The end state of the reveal, also used to jump there when the player continues early.
 func _apply_safe_state() -> void:
 	_background_safe.modulate.a = 1.0
+	PaperTransitions.settle_sheet(_background_safe)
 	_background_unsafe.visible = false
 	_ring_layer.visible = false
 	for actor in _actors:
 		actor.self_modulate.a = 0.0
 		(actor.get_node("Safe") as Sprite2D).modulate.a = 1.0
 		actor.position = actor.get_meta("safe_position")
+		PaperTransitions.finish_card_flip(actor)
 
 
 func _finish_reveal_immediately() -> void:
