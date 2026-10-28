@@ -342,3 +342,24 @@ The player inspects the scene, marks each permit condition OK or Not OK, then ap
   `Loc.ui("solution_shown")`. The player still presses Submit / the decision / the dialogue choice
   to continue. Scoring is unchanged: the earlier wrong try already counted; showing the answer
   adds nothing.
+
+## Home and exit on every screen
+
+Icons: `res://assets/icons/home.svg` and `res://assets/icons/exit.svg` (white strokes; put them on
+a navy round or rounded-square button, at least 64×64 px, top-left corner, always on top).
+
+- Main menu: an Exit button (icon + `Loc.ui("exit_game")`). Pressing it, or the Android back
+  button, shows a confirm dialog (`quit_title`, buttons `stay` / `exit_game`); confirming calls
+  `get_tree().quit()`.
+- Sector map: a Home button (icon + `Loc.ui("home")`) top-left that returns to the main menu. The
+  Android back button does the same. (It may replace the existing Back button.)
+- Case player: a Home icon button named `HomeButton`, visible in every phase (intro, hunt,
+  questions, reveal, result), drawn above the scene and panels. Pressing it, the Android back
+  button, or calling `request_home()` shows a confirm dialog named `LeaveConfirm` with
+  `leave_case_title`, `leave_case_body` and buttons `stay` / `leave`. `cancel_leave()` hides it;
+  `confirm_leave()` stops ambience and changes scene to the main menu. On the RESULT screen the
+  progress is already saved, so Home goes straight to the main menu without the dialog.
+- Android back: handle `NOTIFICATION_WM_GO_BACK_REQUEST` in each screen
+  (`application/config/quit_on_go_back` is disabled in project.godot so the game decides).
+- Test hooks (case player): `request_home()`, `cancel_leave()`, `is_leave_confirm_visible() -> bool`.
+  Main menu: `request_quit()`, `is_quit_confirm_visible() -> bool`.

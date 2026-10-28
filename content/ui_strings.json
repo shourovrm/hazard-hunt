@@ -186,5 +186,33 @@
   "solution_shown": {
     "en": "The correct answer is now selected. Read it, then continue.",
     "bn": "সঠিক উত্তর এখন বাছাই করা আছে। পড়ে নিন, তারপর এগিয়ে যান।"
+  },
+  "home": {
+    "en": "Home",
+    "bn": "হোম"
+  },
+  "exit_game": {
+    "en": "Exit",
+    "bn": "বের হোন"
+  },
+  "leave_case_title": {
+    "en": "Leave this case?",
+    "bn": "এই কেস ছেড়ে যাবেন?"
+  },
+  "leave_case_body": {
+    "en": "Your progress in this case will be lost.",
+    "bn": "এই কেসে আপনার অগ্রগতি মুছে যাবে।"
+  },
+  "quit_title": {
+    "en": "Exit the game?",
+    "bn": "গেম থেকে বের হবেন?"
+  },
+  "stay": {
+    "en": "Stay",
+    "bn": "থাকুন"
+  },
+  "leave": {
+    "en": "Leave",
+    "bn": "ছেড়ে যান"
   }
 }
