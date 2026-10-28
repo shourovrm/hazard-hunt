@@ -20,6 +20,7 @@ var _prompt_label: Label
 var _body: VBoxContainer
 var _result_area: VBoxContainer
 var _submit_button: Button
+var _scroll: ScrollContainer
 
 
 func setup(new_question: Dictionary) -> void:
@@ -56,6 +57,7 @@ func show_result(result: Dictionary) -> void:
 	if result.get("correct", false):
 		_locked = true
 	_rebuild()
+	_scroll_to_bottom_after_layout()
 
 
 func is_locked() -> bool:
@@ -94,7 +96,7 @@ func _rebuild() -> void:
 	_build_body()
 	_clear_children(_result_area)
 	_build_result_area()
-	_submit_button.visible = _uses_submit_button()
+	_submit_button.visible = _uses_submit_button() and not _locked
 	_submit_button.text = Loc.ui("submit")
 	_submit_button.disabled = _locked or not _is_answer_valid()
 
@@ -108,15 +110,15 @@ func _build_skeleton() -> void:
 	layout.add_theme_constant_override("separation", 12)
 	add_child(layout)
 
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	layout.add_child(scroll)
+	_scroll = ScrollContainer.new()
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	layout.add_child(_scroll)
 
 	var scrolled_content := VBoxContainer.new()
 	scrolled_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scrolled_content.add_theme_constant_override("separation", 12)
-	scroll.add_child(scrolled_content)
+	_scroll.add_child(scrolled_content)
 
 	_prompt_label = _make_wrapping_label("")
 	scrolled_content.add_child(_prompt_label)
@@ -132,6 +134,15 @@ func _build_skeleton() -> void:
 	_submit_button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
 	_submit_button.pressed.connect(submit)
 	layout.add_child(_submit_button)
+
+
+## The feedback labels are added in this frame, and the scroll maximum only covers them after
+## the layout pass, so the bottom is read one frame later.
+func _scroll_to_bottom_after_layout() -> void:
+	await get_tree().process_frame
+	if not is_instance_valid(_scroll):
+		return
+	_scroll.scroll_vertical = int(_scroll.get_v_scroll_bar().max_value)
 
 
 func _build_result_area() -> void:
@@ -169,14 +180,20 @@ func _make_choice_button(button_text: String, is_selected: bool, selected_color:
 	button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if is_selected:
-		var selected_style := _make_selected_style(selected_color)
-		for style_name in ["normal", "hover", "pressed", "focus", "disabled"]:
-			button.add_theme_stylebox_override(style_name, selected_style)
-		for color_name in [
-			"font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"
-		]:
-			button.add_theme_color_override(color_name, Color.WHITE)
+		_apply_selected_look(button, selected_color)
 	return button
+
+
+## Fills `button` with `fill_color` in every state and sets white text, so the selected state
+## shows without relying on the theme's toggle look.
+func _apply_selected_look(button: Button, fill_color: Color) -> void:
+	var selected_style := _make_selected_style(fill_color)
+	for style_name in ["normal", "hover", "pressed", "focus", "disabled"]:
+		button.add_theme_stylebox_override(style_name, selected_style)
+	for color_name in [
+		"font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"
+	]:
+		button.add_theme_color_override(color_name, Color.WHITE)
 
 
 func _make_selected_style(fill_color: Color) -> StyleBoxFlat:
