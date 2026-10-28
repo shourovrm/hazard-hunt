@@ -123,8 +123,8 @@
       "id": "make_mason_safe",
       "type": "multi_select",
       "prompt": {
-        "en": "Which actions make Karim safe on the scaffold? Choose all that apply.",
-        "bn": "মাচায় করিমকে নিরাপদ রাখতে কোন কাজগুলো দরকার? সবগুলো সঠিক উত্তর বেছে নিন।"
+        "en": "Which actions make Karim safe on the scaffold?",
+        "bn": "মাচায় করিমকে নিরাপদ রাখতে কোন কাজগুলো দরকার?"
       },
       "options": [
         { "id": "harness", "text": { "en": "Full-body harness clipped to a strong anchor", "bn": "শক্ত নোঙরে আটকানো ফুল-বডি হারনেস" } },
@@ -193,8 +193,8 @@
         "bn": "করিম হারনেস পরতে চান না। আপনি কী বলবেন?"
       },
       "npc_line": {
-        "en": "Sir, the harness slows me down. I have worked on scaffolds for ten years and never fallen.",
-        "bn": "স্যার, হারনেস পরলে কাজ ধীর হয়ে যায়। দশ বছর ধরে মাচায় কাজ করছি, কোনোদিন পড়িনি।"
+        "en": "Sir, the harness slows me down. I have worked on scaffolds for five years and never fallen.",
+        "bn": "স্যার, হারনেস পরলে কাজ ধীর হয়ে যায়। পাঁচ বছর ধরে মাচায় কাজ করছি, কোনোদিন পড়িনি।"
       },
       "choices": [
         {
