@@ -1,0 +1,10 @@
+{
+  "id": "construction",
+  "title": { "en": "Construction Site", "bn": "নির্মাণ সাইট" },
+  "cases": ["res://content/construction/cases/c01_bamboo_scaffold.json"],
+  "coming_soon": [
+    { "en": "Trench digging", "bn": "পরিখা খনন" },
+    { "en": "Electrical cables on site", "bn": "সাইটে বৈদ্যুতিক তার" },
+    { "en": "Morning gate check", "bn": "সকালের গেট পরীক্ষা" }
+  ]
+}

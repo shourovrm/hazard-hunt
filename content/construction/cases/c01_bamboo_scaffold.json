@@ -1,0 +1,285 @@
+{
+  "id": "c01_bamboo_scaffold",
+  "sector": "construction",
+  "order": 1,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Bamboo Scaffold: Work at Height",
+    "bn": "বাঁশের মাচা: উঁচুতে কাজ"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "background": {
+      "unsafe": "res://assets/construction/c01/bg_unsafe.png",
+      "safe": "res://assets/construction/c01/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "mason",
+        "name": { "en": "Karim", "bn": "করিম" },
+        "unsafe": "res://assets/characters/mason_unsafe.png",
+        "safe": "res://assets/characters/mason_safe.png",
+        "position": [470, 240],
+        "safe_position": [470, 240],
+        "scale": 0.5,
+        "idle": "work"
+      },
+      {
+        "id": "labourer",
+        "name": { "en": "Rahim", "bn": "রহিম" },
+        "unsafe": "res://assets/characters/labourer_unsafe.png",
+        "safe": "res://assets/characters/labourer_safe.png",
+        "position": [560, 668],
+        "safe_position": [850, 672],
+        "scale": 0.48,
+        "idle": "breathe"
+      }
+    ],
+    "ambient": ["dust"]
+  },
+  "intro": {
+    "en": "Good morning, Supervisor. Karim is laying bricks on the third-floor scaffold, and Rahim is carrying bricks below. I can see four hazards here. Tap each hazard you find.",
+    "bn": "শুভ সকাল, সুপারভাইজার। করিম তিনতলার বাঁশের মাচায় ইট গাঁথছেন, আর রহিম নিচে ইট বহন করছেন। এখানে আমি চারটি বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+  },
+  "hazard_hint": {
+    "en": "Look at the people, the platform edge and the bamboo poles.",
+    "bn": "মানুষগুলো, মাচার কিনারা আর বাঁশের খুঁটিগুলো ভালো করে দেখুন।"
+  },
+  "hazards": [
+    {
+      "id": "no_harness",
+      "rect": [410, 118, 120, 125],
+      "label": {
+        "en": "Working at height without a harness or helmet",
+        "bn": "হারনেস ও হেলমেট ছাড়া উঁচুতে কাজ"
+      },
+      "explain": {
+        "en": "A fall from the third floor (about 9 m) can kill. Karim has no harness clipped to an anchor and no helmet.",
+        "bn": "তিনতলা (প্রায় ৯ মিটার) থেকে পড়লে মৃত্যু হতে পারে। করিমের কোনো নোঙরে আটকানো হারনেস নেই, হেলমেটও নেই।"
+      }
+    },
+    {
+      "id": "open_edge",
+      "rect": [545, 180, 120, 60],
+      "label": {
+        "en": "Open platform edge with bricks stacked on it",
+        "bn": "খোলা কিনারায় ইটের স্তূপ"
+      },
+      "explain": {
+        "en": "The platform has no guardrail or toe board, and bricks are piled at the edge. A brick falling 9 m can kill a person below.",
+        "bn": "মাচায় কোনো রেলিং বা টো-বোর্ড নেই, আর কিনারায় ইট জমা করা। ৯ মিটার উপর থেকে একটি ইট পড়লে নিচের মানুষের মৃত্যু হতে পারে।"
+      }
+    },
+    {
+      "id": "damaged_pole",
+      "rect": [645, 235, 45, 130],
+      "label": {
+        "en": "Cracked bamboo pole tied with worn rope",
+        "bn": "ফাটা বাঁশ, পুরনো দড়িতে বাঁধা"
+      },
+      "explain": {
+        "en": "A split pole or a loose lashing can make the whole scaffold collapse.",
+        "bn": "একটি ফাটা বাঁশ বা ঢিলা বাঁধনে পুরো মাচা ভেঙে পড়তে পারে।"
+      }
+    },
+    {
+      "id": "drop_zone",
+      "rect": [505, 485, 115, 190],
+      "label": {
+        "en": "Walking under the work area without a helmet",
+        "bn": "হেলমেট ছাড়া কাজের জায়গার নিচ দিয়ে হাঁটা"
+      },
+      "explain": {
+        "en": "The area below the scaffold is not fenced off. Rahim walks through it with no helmet and in sandals.",
+        "bn": "মাচার নিচের জায়গা ঘেরা নেই। রহিম হেলমেট ছাড়া, স্যান্ডেল পরে সেখান দিয়ে হাঁটছেন।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "main_risk",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What is the biggest danger on this scaffold?",
+        "bn": "এই মাচায় সবচেয়ে বড় বিপদ কোনটি?"
+      },
+      "options": [
+        { "id": "noise", "text": { "en": "Noise from the cement mixer", "bn": "সিমেন্ট মিক্সারের শব্দ" } },
+        { "id": "falls", "text": { "en": "Falling from height and falling objects", "bn": "উঁচু থেকে পড়ে যাওয়া ও উপর থেকে জিনিস পড়া" } },
+        { "id": "dust", "text": { "en": "Cement dust in the eyes", "bn": "চোখে সিমেন্টের ধুলা" } },
+        { "id": "heat", "text": { "en": "Working in the sun", "bn": "রোদে কাজ করা" } }
+      ],
+      "correct": "falls",
+      "hint": {
+        "en": "Think about what happens if something, or someone, drops from the third floor.",
+        "bn": "ভাবুন, তিনতলা থেকে কিছু, বা কেউ, পড়ে গেলে কী হবে।"
+      },
+      "explanation": {
+        "en": "Falls from height kill more construction workers in Bangladesh than any other hazard. Noise, dust and heat are hazards too, but a fall kills in one moment.",
+        "bn": "বাংলাদেশে নির্মাণ খাতে অন্য যেকোনো বিপদের চেয়ে উঁচু থেকে পড়ে বেশি শ্রমিকের মৃত্যু হয়। শব্দ, ধুলা ও গরমও বিপদ, কিন্তু পড়ে গেলে এক মুহূর্তেই প্রাণ যায়।"
+      }
+    },
+    {
+      "id": "make_mason_safe",
+      "type": "multi_select",
+      "prompt": {
+        "en": "Which actions make Karim safe on the scaffold? Choose all that apply.",
+        "bn": "মাচায় করিমকে নিরাপদ রাখতে কোন কাজগুলো দরকার? সবগুলো সঠিক উত্তর বেছে নিন।"
+      },
+      "options": [
+        { "id": "harness", "text": { "en": "Full-body harness clipped to a strong anchor", "bn": "শক্ত নোঙরে আটকানো ফুল-বডি হারনেস" } },
+        { "id": "hurry", "text": { "en": "Tell him to finish quickly so he spends less time up there", "bn": "তাড়াতাড়ি কাজ শেষ করতে বলা, যাতে কম সময় উপরে থাকেন" } },
+        { "id": "helmet", "text": { "en": "Helmet with the chin strap fastened", "bn": "চিবুকের ফিতা লাগানো হেলমেট" } },
+        { "id": "hold", "text": { "en": "Tell him to hold the bamboo with one hand", "bn": "এক হাতে বাঁশ ধরে রাখতে বলা" } },
+        { "id": "guardrail", "text": { "en": "Guardrail and toe board on the platform edge", "bn": "মাচার কিনারায় রেলিং ও টো-বোর্ড" } }
+      ],
+      "correct": ["harness", "helmet", "guardrail"],
+      "hint": {
+        "en": "Three answers are correct. Rushing and holding on with one hand do not stop a fall.",
+        "bn": "তিনটি উত্তর সঠিক। তাড়াহুড়া বা এক হাতে ধরে রাখা পড়ে যাওয়া ঠেকায় না।"
+      },
+      "explanation": {
+        "en": "A guardrail prevents the fall, a harness stops a fall that does happen, and a helmet protects against falling objects. Rushing makes mistakes more likely.",
+        "bn": "রেলিং পড়ে যাওয়া ঠেকায়, হারনেস পড়ন্ত মানুষকে আটকায়, আর হেলমেট উপর থেকে পড়া জিনিস থেকে মাথা বাঁচায়। তাড়াহুড়ায় ভুলের সম্ভাবনা বাড়ে।"
+      }
+    },
+    {
+      "id": "control_order",
+      "type": "ordering",
+      "prompt": {
+        "en": "Put these fixes in order, from most effective to least effective.",
+        "bn": "এই সমাধানগুলো সবচেয়ে কার্যকর থেকে সবচেয়ে কম কার্যকর ক্রমে সাজান।"
+      },
+      "items": [
+        {
+          "id": "ppe",
+          "text": { "en": "Give helmets, harnesses and safety boots", "bn": "হেলমেট, হারনেস ও সেফটি বুট দেওয়া" },
+          "tag": { "en": "PPE", "bn": "ব্যক্তিগত সুরক্ষা সরঞ্জাম" }
+        },
+        {
+          "id": "guardrail",
+          "text": { "en": "Fit guardrails and toe boards", "bn": "রেলিং ও টো-বোর্ড লাগানো" },
+          "tag": { "en": "Engineering control", "bn": "প্রকৌশলগত নিয়ন্ত্রণ" }
+        },
+        {
+          "id": "replace_pole",
+          "text": { "en": "Replace the cracked bamboo with sound poles or a steel scaffold", "bn": "ফাটা বাঁশ বদলে মজবুত বাঁশ বা স্টিলের মাচা ব্যবহার" },
+          "tag": { "en": "Substitution", "bn": "প্রতিস্থাপন" }
+        },
+        {
+          "id": "barricade",
+          "text": { "en": "Fence off the area below and inspect the scaffold daily", "bn": "নিচের জায়গা ঘিরে দেওয়া ও প্রতিদিন মাচা পরীক্ষা" },
+          "tag": { "en": "Administrative control", "bn": "প্রশাসনিক নিয়ন্ত্রণ" }
+        }
+      ],
+      "correct_order": ["replace_pole", "guardrail", "barricade", "ppe"],
+      "hint": {
+        "en": "PPE is the last line of defence. Fixing the scaffold itself comes first.",
+        "bn": "ব্যক্তিগত সুরক্ষা সরঞ্জাম শেষ প্রতিরক্ষা। আগে মাচাটাই ঠিক করতে হবে।"
+      },
+      "explanation": {
+        "en": "This order is the hierarchy of controls: change the danger itself first, then add physical barriers, then rules and checks, and PPE last. This scaffold needs all four.",
+        "bn": "এই ক্রমকে নিয়ন্ত্রণের স্তরবিন্যাস (hierarchy of controls) বলে: আগে বিপদটাই বদলান, তারপর ভৌত সুরক্ষা, তারপর নিয়ম ও পরিদর্শন, আর সবশেষে ব্যক্তিগত সুরক্ষা সরঞ্জাম। এই মাচায় চারটিই দরকার।"
+      }
+    },
+    {
+      "id": "persuade_karim",
+      "type": "dialogue",
+      "npc": "mason",
+      "npc_name": { "en": "Karim", "bn": "করিম" },
+      "npc_portrait": "res://assets/characters/mason_portrait.png",
+      "prompt": {
+        "en": "Karim does not want to wear the harness. What do you say?",
+        "bn": "করিম হারনেস পরতে চান না। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "Sir, the harness slows me down. I have worked on scaffolds for ten years and never fallen.",
+        "bn": "স্যার, হারনেস পরলে কাজ ধীর হয়ে যায়। দশ বছর ধরে মাচায় কাজ করছি, কোনোদিন পড়িনি।"
+      },
+      "choices": [
+        {
+          "id": "threaten",
+          "quality": "ok",
+          "text": { "en": "Wear it, or you are fired today.", "bn": "পরুন, নইলে আজই চাকরি শেষ।" },
+          "reply": { "en": "...Fine. I will wear it.", "bn": "...ঠিক আছে। পরছি।" },
+          "feedback": {
+            "en": "Karim agreed, but only out of fear. He may take the harness off when you leave.",
+            "bn": "করিম রাজি হলেন, কিন্তু ভয়ে। আপনি চলে গেলে তিনি হয়তো হারনেস খুলে ফেলবেন।"
+          }
+        },
+        {
+          "id": "explain",
+          "quality": "best",
+          "text": {
+            "en": "Most people who fall had never fallen before. Let me show you the anchor point. Clipping on takes ten seconds.",
+            "bn": "যারা পড়ে যান, তাদের বেশিরভাগই আগে কখনো পড়েননি। চলুন নোঙরের জায়গাটা দেখাই। আটকাতে দশ সেকেন্ড লাগে।"
+          },
+          "reply": { "en": "Ten seconds? All right, show me.", "bn": "দশ সেকেন্ড? আচ্ছা, দেখান।" },
+          "feedback": {
+            "en": "Karim understands the reason, so he is likely to keep the harness on.",
+            "bn": "করিম কারণটা বুঝেছেন, তাই তিনি হারনেস পরে থাকবেন বলে আশা করা যায়।"
+          }
+        },
+        {
+          "id": "ignore",
+          "quality": "fail",
+          "text": { "en": "Okay, you know your work. Just be careful.", "bn": "ঠিক আছে, আপনি কাজ বোঝেন। শুধু সাবধানে থাকবেন।" },
+          "reply": { "en": "Thank you, sir!", "bn": "ধন্যবাদ স্যার!" },
+          "feedback": {
+            "en": "Being careful does not stop a fall. As supervisor, you must stop unsafe work.",
+            "bn": "সাবধান থাকলেই পড়ে যাওয়া ঠেকানো যায় না। সুপারভাইজার হিসেবে অনিরাপদ কাজ বন্ধ করা আপনার দায়িত্ব।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Letting unsafe work continue is never the right answer. Try to convince him, not scare him.",
+        "bn": "অনিরাপদ কাজ চলতে দেওয়া কখনোই সঠিক নয়। তাঁকে ভয় না দেখিয়ে বোঝানোর চেষ্টা করুন।"
+      },
+      "explanation": {
+        "en": "Workers keep safety habits when they understand the reason. Threats work only while you are watching.",
+        "bn": "শ্রমিকরা কারণ বুঝলে নিরাপত্তার অভ্যাস ধরে রাখেন। ভয় দেখালে তা কাজ করে শুধু আপনি যতক্ষণ দেখছেন ততক্ষণ।"
+      }
+    },
+    {
+      "id": "equip_rahim",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/labourer_unsafe.png",
+      "prompt": {
+        "en": "Drag the right safety gear onto Rahim before he goes back to work.",
+        "bn": "রহিম কাজে ফেরার আগে সঠিক সুরক্ষা সরঞ্জাম টেনে তাঁর উপর রাখুন।"
+      },
+      "items": [
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } },
+        { "id": "earmuffs", "icon": "res://assets/ppe/earmuffs.png", "text": { "en": "Ear muffs", "bn": "ইয়ারমাফ" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Safety boots", "bn": "সেফটি বুট" } },
+        { "id": "welding_mask", "icon": "res://assets/ppe/welding_mask.png", "text": { "en": "Welding mask", "bn": "ওয়েল্ডিং মাস্ক" } },
+        { "id": "gloves", "icon": "res://assets/ppe/gloves.png", "text": { "en": "Work gloves", "bn": "কাজের গ্লাভস" } }
+      ],
+      "correct": ["helmet", "boots", "gloves"],
+      "hint": {
+        "en": "Rahim carries bricks under the scaffold. Protect his head, feet and hands.",
+        "bn": "রহিম মাচার নিচে ইট বহন করেন। তাঁর মাথা, পা ও হাত সুরক্ষিত করুন।"
+      },
+      "explanation": {
+        "en": "A helmet protects against falling bricks, boots protect against dropped loads and nails, and gloves protect against rough bricks. Ear muffs and welding masks are for other jobs.",
+        "bn": "হেলমেট পড়ন্ত ইট থেকে, বুট ভারী জিনিস ও পেরেক থেকে, আর গ্লাভস খসখসে ইট থেকে রক্ষা করে। ইয়ারমাফ ও ওয়েল্ডিং মাস্ক অন্য কাজের জন্য।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Well done. The scaffold is repaired, the edge is guarded, and both workers are protected.",
+      "bn": "চমৎকার। মাচা মেরামত হয়েছে, কিনারায় রেলিং লেগেছে, আর দুজন শ্রমিকই সুরক্ষিত।"
+    },
+    "fixes": [
+      { "en": "Cracked pole replaced and lashings retied", "bn": "ফাটা বাঁশ বদলে নতুন করে বাঁধা হয়েছে" },
+      { "en": "Guardrail and toe board fitted; bricks moved back from the edge", "bn": "রেলিং ও টো-বোর্ড লাগানো হয়েছে; ইট কিনারা থেকে সরানো হয়েছে" },
+      { "en": "Area below the scaffold fenced off with a warning sign", "bn": "মাচার নিচের জায়গা সতর্কচিহ্নসহ ঘিরে দেওয়া হয়েছে" },
+      { "en": "Karim wears a helmet and a clipped-on harness; Rahim wears a helmet, gloves and boots", "bn": "করিম হেলমেট ও আটকানো হারনেস পরেছেন; রহিম হেলমেট, গ্লাভস ও বুট পরেছেন" }
+    ],
+    "references": [
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety",
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+# Godot cache and editor state
+.godot/
+# Build output and signing keys
+build/
+*.apk
+*.aab
+*.keystore
+*.jks
+export_credentials.cfg
+# Local previews
+/tmp/
