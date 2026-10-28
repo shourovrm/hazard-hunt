@@ -20,6 +20,8 @@ static func create(question: Dictionary) -> QuestionView:
 			view = GateCheckView.new()
 		"permit_check":
 			view = PermitCheckView.new()
+		"cause_chain":
+			view = CauseChainView.new()
 		_:
 			push_error(
 				(
