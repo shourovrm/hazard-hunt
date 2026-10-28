@@ -11,7 +11,7 @@ func test_main_menu_shows_developer_and_version() -> void:
 	t.root.add_child(menu)
 	Loc.set_language("en")
 	var text: String = t.collect_text(menu)
-	t.assert_true("Developed by Riad Mashrub Shourov" in text, "developer credit missing")
+	t.assert_true("Developer: Riad Mashrub Shourov" in text, "developer credit missing")
 	t.assert_true(str(ProjectSettings.get_setting("application/config/version")) in text, "version missing")
 	Loc.set_language("bn")
 	t.assert_true("রিয়াদ মাশরুব সৌরভ" in t.collect_text(menu), "Bangla developer name missing")

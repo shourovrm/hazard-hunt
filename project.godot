@@ -5,7 +5,7 @@ config_version=5
 
 config/name="Hazard Hunt"
 config/description="Occupational safety training game for skills trainees in Bangladesh."
-config/version="0.1.1"
+config/version="0.1.2"
 run/main_scene="res://game/splash.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.png"

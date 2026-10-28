@@ -100,7 +100,7 @@ func _refresh_texts() -> void:
 	_exit_button.text = Loc.ui("exit_game")
 	var version := str(ProjectSettings.get_setting("application/config/version"))
 	_credit_label.text = (
-		"%s %s  ·  %s"
+		"%s: %s  ·  %s"
 		% [Loc.ui("developed_by"), Loc.ui("developer_name"), Loc.ui("version_label", {"version": version})]
 	)
 

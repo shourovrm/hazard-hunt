@@ -75,7 +75,7 @@ The case texts and legal references are drafts. An OSH expert must review them b
 
 ## Credits
 
-- Developed by Riad Mashrub Shourov (রিয়াদ মাশরুব সৌরভ).
+- Developer: Riad Mashrub Shourov (রিয়াদ মাশরুব সৌরভ).
 - Illustrations generated with AI (OpenAI GPT Image) and edited for the game.
 - Fonts: Noto Sans and Noto Sans Bengali, SIL Open Font License (`assets/fonts/OFL.txt`).
 - Sound effects: Kenney (www.kenney.nl), CC0 (`assets/audio/CREDITS.txt`).
