@@ -75,6 +75,7 @@ func next_worker() -> void:
 	_marked_ppe_ids.clear()
 	_decision_state = DecisionState.UNDECIDED
 	_hint_is_shown = false
+	_solution_is_shown = false
 	_rebuild()
 
 
@@ -87,6 +88,24 @@ func _reset_state() -> void:
 
 func _uses_submit_button() -> bool:
 	return false
+
+
+## Only the current worker's decision is wrong at this point; earlier workers were already right.
+func _can_show_answer() -> bool:
+	return _decision_state == DecisionState.WRONG and not _locked
+
+
+## Marks only the current worker's missing gear. The base version would call set_answer(), which
+## records every worker and jumps to the last one, so it does not fit a per-worker decision.
+## The wrong first decision is already recorded, so this changes no score.
+func show_solution() -> void:
+	if not _can_show_answer():
+		return
+	Sfx.play("select")
+	_solution_is_shown = true
+	_marked_ppe_ids.assign(_current_worker()["missing"])
+	_decision_state = DecisionState.UNDECIDED
+	_rebuild()
 
 
 ## The per-worker feedback lives in the right column, so the shared result area shows only the

@@ -12,17 +12,21 @@ const SELECTED_FILL_COLOR := Color(0.16, 0.36, 0.62)
 const CORRECT_COLOR := Color(0.18, 0.62, 0.30)
 const WRONG_COLOR := Color(0.85, 0.25, 0.22)
 const HINT_BUTTON_WIDTH := 160.0
+const SHOW_ANSWER_BUTTON_WIDTH := HINT_BUTTON_WIDTH
 
 var question: Dictionary = {}
 
 var _locked := false
 var _hint_is_shown := false
+var _has_wrong_result := false
+var _solution_is_shown := false
 var _last_result: Dictionary = {}
 var _prompt_label: Label
 var _body: VBoxContainer
 var _result_area: VBoxContainer
 var _submit_button: Button
 var _hint_button: Button
+var _show_answer_button: Button
 var _scroll: ScrollContainer
 
 
@@ -33,6 +37,8 @@ func setup(new_question: Dictionary) -> void:
 	question = new_question
 	_locked = false
 	_hint_is_shown = false
+	_has_wrong_result = false
+	_solution_is_shown = false
 	_last_result = {}
 	size = PANEL_SIZE
 	_reset_state()
@@ -64,6 +70,8 @@ func show_result(result: Dictionary) -> void:
 	_last_result = result
 	if result.get("correct", false):
 		_locked = true
+	else:
+		_has_wrong_result = true
 	_rebuild()
 	_scroll_to_bottom_after_layout()
 
@@ -83,6 +91,20 @@ func show_hint() -> void:
 	_scroll_to_bottom_after_layout()
 
 
+## Show answer after a wrong try: selects the correct answer in the UI so the trainee is never
+## stuck. It never calls submit(), so the trainee still presses Submit, the decision or the
+## dialogue choice to go on. The wrong try already counted, so this changes no score.
+func show_solution() -> void:
+	if not _can_show_answer():
+		return
+	Sfx.play("select")
+	_solution_is_shown = true
+	# Looked up by name: a direct CaseSession.correct_answer() call is a parse error until that
+	# helper exists, and a parse error here would stop every question view from compiling.
+	set_answer(Callable(CaseSession, "correct_answer").call(question))
+	_rebuild()
+
+
 ## Called once from setup() so subclasses can initialise their selection state.
 func _reset_state() -> void:
 	pass
@@ -95,6 +117,11 @@ func _build_body() -> void:
 
 func _is_answer_valid() -> bool:
 	return true
+
+
+## The show answer button needs a wrong try first. Once locked, the answer is already right.
+func _can_show_answer() -> bool:
+	return _has_wrong_result and not _locked
 
 
 ## Dialogue submits by tapping a choice and has no Submit button.
@@ -115,11 +142,15 @@ func _rebuild() -> void:
 	_build_body()
 	_clear_children(_result_area)
 	_build_result_area()
+	if _solution_is_shown:
+		_result_area.add_child(_make_wrapping_label(Loc.ui("solution_shown")))
 	_submit_button.visible = _uses_submit_button() and not _locked
 	_submit_button.text = Loc.ui("submit")
 	_submit_button.disabled = _locked or not _is_answer_valid()
 	_hint_button.text = Loc.ui("hint_button")
 	_hint_button.visible = not _locked and question.has("hint")
+	_show_answer_button.text = Loc.ui("show_answer")
+	_show_answer_button.visible = _can_show_answer()
 
 
 func _build_skeleton() -> void:
@@ -165,6 +196,11 @@ func _build_skeleton() -> void:
 	_submit_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_submit_button.pressed.connect(_on_submit_pressed)
 	footer_row.add_child(_submit_button)
+
+	_show_answer_button = Button.new()
+	_show_answer_button.custom_minimum_size = Vector2(SHOW_ANSWER_BUTTON_WIDTH, MINIMUM_TOUCH_HEIGHT)
+	_show_answer_button.pressed.connect(show_solution)
+	footer_row.add_child(_show_answer_button)
 
 
 func _on_submit_pressed() -> void:

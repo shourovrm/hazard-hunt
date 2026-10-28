@@ -18,6 +18,8 @@ static func create(question: Dictionary) -> QuestionView:
 			view = DragPpeView.new()
 		"gate_check":
 			view = GateCheckView.new()
+		"permit_check":
+			view = PermitCheckView.new()
 		_:
 			push_error(
 				(
