@@ -1,0 +1,273 @@
+{
+  "id": "c07_mixer_rebar",
+  "sector": "construction",
+  "order": 7,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Concrete Mixer and Rebar",
+    "bn": "কংক্রিট মিক্সার ও রড"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "motion_style": "paper",
+    "background": {
+      "unsafe": "res://assets/construction/c07/bg_unsafe.png",
+      "safe": "res://assets/construction/c07/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "mixer_operator",
+        "name": { "en": "Nayeem", "bn": "নাঈম" },
+        "unsafe": "res://assets/characters/nayeem_mixer_unsafe.png",
+        "safe": "res://assets/characters/nayeem_mixer_safe.png",
+        "position": [655, 525],
+        "safe_position": [655, 525],
+        "scale": 0.5,
+        "idle": "work"
+      },
+      {
+        "id": "cement_carrier",
+        "name": { "en": "Shirin", "bn": "শিরিন" },
+        "unsafe": "res://assets/characters/shirin_cement_unsafe.png",
+        "safe": "res://assets/characters/shirin_cement_safe.png",
+        "position": [835, 705],
+        "safe_position": [835, 705],
+        "scale": 0.5,
+        "idle": "breathe"
+      }
+    ],
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, the crew is mixing concrete for the footings. Nayeem runs the mixer and Shirin brings the cement. I can see four hazards. Tap each one you find.",
+    "bn": "সুপারভাইজার, দলটি ভিত্তির জন্য কংক্রিট মেশাচ্ছে। নাঈম মিক্সার চালাচ্ছেন, আর শিরিন সিমেন্ট আনছেন। আমি চারটি বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+  },
+  "hazard_hint": {
+    "en": "Look at the moving parts of the machine, what people are wearing near it, and anything sharp sticking up.",
+    "bn": "যন্ত্রের ঘোরানো অংশ, তার কাছে মানুষ কী পরে আছেন, আর উঁচু হয়ে থাকা ধারালো কিছু আছে কিনা দেখুন।"
+  },
+  "hazards": [
+    {
+      "id": "exposed_gears",
+      "rect": [225, 250, 140, 200],
+      "label": {
+        "en": "Gears and belt with no guard",
+        "bn": "গার্ড ছাড়া গিয়ার ও বেল্ট"
+      },
+      "explain": {
+        "en": "The drive gears and belt turn in the open. A hand, a sleeve or a cloth can be pulled in and crushed.",
+        "bn": "চালানোর গিয়ার ও বেল্ট খোলা অবস্থায় ঘুরছে। হাত, জামার হাতা বা কাপড় টেনে নিয়ে পিষে ফেলতে পারে।"
+      }
+    },
+    {
+      "id": "loose_clothing",
+      "rect": [540, 180, 185, 345],
+      "label": {
+        "en": "Loose clothing next to a turning drum",
+        "bn": "ঘুরন্ত ড্রামের পাশে ঢিলা কাপড়"
+      },
+      "explain": {
+        "en": "Nayeem leans into the turning drum with a loose shirt and a cloth hanging at his waist, and no gloves.",
+        "bn": "নাঈম ঢিলা জামা আর কোমরে ঝোলানো কাপড় নিয়ে, গ্লাভস ছাড়া, ঘুরন্ত ড্রামের দিকে ঝুঁকে আছেন।"
+      }
+    },
+    {
+      "id": "cement_dust",
+      "rect": [730, 300, 215, 405],
+      "label": {
+        "en": "Carrying cement through dust without protection",
+        "bn": "সুরক্ষা ছাড়া ধুলার মধ্যে সিমেন্ট বহন"
+      },
+      "explain": {
+        "en": "Cement dust damages the lungs, and wet cement burns the skin. Shirin has no mask, no gloves, and a heavy bag on her head.",
+        "bn": "সিমেন্টের ধুলা ফুসফুসের ক্ষতি করে, আর ভেজা সিমেন্ট চামড়া পুড়িয়ে দেয়। শিরিনের মাস্ক নেই, গ্লাভস নেই, আর মাথায় ভারী বস্তা।"
+      }
+    },
+    {
+      "id": "uncapped_rebar",
+      "rect": [1015, 315, 255, 280],
+      "label": {
+        "en": "Sharp rebar ends with no caps",
+        "bn": "ক্যাপ ছাড়া রডের ধারালো মাথা"
+      },
+      "explain": {
+        "en": "Anyone who trips here can fall onto the bar ends and be badly cut or pierced.",
+        "bn": "এখানে কেউ হোঁচট খেলে রডের মাথায় পড়ে মারাত্মকভাবে কেটে বা বিঁধে যেতে পারেন।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "why_loose_clothing",
+      "type": "single_choice",
+      "prompt": {
+        "en": "Why is Nayeem's loose shirt and waist cloth dangerous at the mixer?",
+        "bn": "মিক্সারের কাছে নাঈমের ঢিলা জামা আর কোমরের কাপড় কেন বিপজ্জনক?"
+      },
+      "options": [
+        { "id": "dirty", "text": { "en": "It will get covered in cement", "bn": "এতে সিমেন্ট লেগে নোংরা হবে" } },
+        { "id": "hot", "text": { "en": "It makes him too hot", "bn": "এতে তাঁর বেশি গরম লাগবে" } },
+        { "id": "caught", "text": { "en": "It can be caught by the turning parts and pull him in", "bn": "ঘোরানো অংশে আটকে গিয়ে তাঁকে ভেতরে টেনে নিতে পারে" } },
+        { "id": "untidy", "text": { "en": "It looks untidy to visitors", "bn": "দর্শনার্থীদের কাছে অগোছালো দেখায়" } }
+      ],
+      "correct": "caught",
+      "hint": {
+        "en": "Think about what happens when cloth touches something that keeps turning.",
+        "bn": "কাপড় যদি ঘুরতে থাকা কিছুর সঙ্গে লাগে, তাহলে কী হয় ভাবুন।"
+      },
+      "explanation": {
+        "en": "Turning machines grab loose cloth, hair and jewellery faster than anyone can pull back. Clothes near machines must be tight and tucked in.",
+        "bn": "ঘুরন্ত যন্ত্র ঢিলা কাপড়, চুল ও গয়না এত দ্রুত টেনে নেয় যে কেউ সরে আসতে পারেন না। যন্ত্রের কাছে কাপড় আঁটসাঁট ও গুঁজে রাখতে হয়।"
+      }
+    },
+    {
+      "id": "safe_mixer",
+      "type": "multi_select",
+      "prompt": {
+        "en": "Which of these make the mixer safe to work with?",
+        "bn": "এগুলোর মধ্যে কোনগুলো মিক্সারে কাজ নিরাপদ করে?"
+      },
+      "options": [
+        { "id": "guard", "text": { "en": "A fixed guard over the gears and belt", "bn": "গিয়ার ও বেল্টের উপর শক্ত করে আটকানো গার্ড" } },
+        { "id": "more_oil", "text": { "en": "Oil the gears more often", "bn": "গিয়ারে আরও ঘনঘন তেল দেওয়া" } },
+        { "id": "estop", "text": { "en": "An emergency stop button within reach", "bn": "হাতের নাগালে জরুরি বন্ধ করার বোতাম" } },
+        { "id": "stop_first", "text": { "en": "Switch off and wait for it to stop before cleaning or reaching in", "bn": "পরিষ্কার করা বা হাত ঢোকানোর আগে বন্ধ করে থামা পর্যন্ত অপেক্ষা করা" } },
+        { "id": "faster", "text": { "en": "Load the drum faster so it runs for less time", "bn": "ড্রাম দ্রুত ভরানো, যাতে কম সময় চলে" } }
+      ],
+      "correct": ["guard", "estop", "stop_first"],
+      "hint": {
+        "en": "Three answers are correct. They either keep hands away from moving parts or stop the parts quickly.",
+        "bn": "তিনটি উত্তর সঠিক। এগুলো হয় হাতকে ঘোরানো অংশ থেকে দূরে রাখে, নয়তো অংশগুলো দ্রুত থামায়।"
+      },
+      "explanation": {
+        "en": "The guard keeps hands out, the emergency stop ends an accident fast, and stopping before reaching in removes the danger completely.",
+        "bn": "গার্ড হাত দূরে রাখে, জরুরি বোতাম দুর্ঘটনা দ্রুত থামায়, আর হাত ঢোকানোর আগে বন্ধ করলে বিপদ পুরোপুরি দূর হয়।"
+      }
+    },
+    {
+      "id": "persuade_nayeem",
+      "type": "dialogue",
+      "npc": "mixer_operator",
+      "npc_name": { "en": "Nayeem", "bn": "নাঈম" },
+      "npc_portrait": "res://assets/characters/nayeem_portrait.png",
+      "prompt": {
+        "en": "Nayeem took the gear guard off and does not want to put it back. What do you say?",
+        "bn": "নাঈম গিয়ারের গার্ড খুলে রেখেছেন, আবার লাগাতে চান না। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "I have to oil the gears every hour. Taking the guard on and off wastes time.",
+        "bn": "প্রতি ঘণ্টায় গিয়ারে তেল দিতে হয়। বারবার গার্ড খোলা-লাগানোয় সময় নষ্ট হয়।"
+      },
+      "choices": [
+        {
+          "id": "rule",
+          "quality": "ok",
+          "text": { "en": "The guard stays on. That is the rule.", "bn": "গার্ড লাগানো থাকবে। এটাই নিয়ম।" },
+          "reply": { "en": "...All right.", "bn": "...আচ্ছা।" },
+          "feedback": {
+            "en": "He agreed, but his real problem, the oiling, is not solved. He may take it off again.",
+            "bn": "তিনি রাজি হলেন, কিন্তু তাঁর আসল সমস্যা, তেল দেওয়া, সমাধান হয়নি। তিনি আবার খুলে ফেলতে পারেন।"
+          }
+        },
+        {
+          "id": "plan",
+          "quality": "best",
+          "text": {
+            "en": "Switch off and let it stop before you oil it, then refit the guard. I will ask for a guard with an oiling hole.",
+            "bn": "তেল দেওয়ার আগে বন্ধ করে থামতে দিন, তারপর গার্ড আবার লাগান। আমি তেল দেওয়ার ছিদ্রসহ একটি গার্ড চেয়ে নেব।"
+          },
+          "reply": { "en": "An oiling hole would make it easy. Okay.", "bn": "তেলের ছিদ্র থাকলে সহজ হবে। ঠিক আছে।" },
+          "feedback": {
+            "en": "You solved the reason he removed the guard, so it is likely to stay on.",
+            "bn": "যে কারণে তিনি গার্ড খুলেছিলেন, আপনি সেটির সমাধান দিয়েছেন, তাই গার্ড লাগানো থাকবে বলে আশা করা যায়।"
+          }
+        },
+        {
+          "id": "hands_clear",
+          "quality": "fail",
+          "text": { "en": "Fine, leave it off, but keep your hands clear.", "bn": "ঠিক আছে, খোলা থাক, তবে হাত দূরে রাখবেন।" },
+          "reply": { "en": "Of course, sir.", "bn": "অবশ্যই, স্যার।" },
+          "feedback": {
+            "en": "A guard works even when someone slips or forgets. Promises do not.",
+            "bn": "কেউ পিছলে গেলে বা ভুলে গেলেও গার্ড কাজ করে। প্রতিশ্রুতি করে না।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Find out why he removed the guard and fix that problem.",
+        "bn": "তিনি কেন গার্ড খুলেছেন বুঝুন, আর সেই সমস্যার সমাধান দিন।"
+      },
+      "explanation": {
+        "en": "Workers remove guards when the guard gets in the way of their job. Fixing that reason keeps guards in place.",
+        "bn": "গার্ড কাজে বাধা দিলে শ্রমিকরা তা খুলে ফেলেন। সেই কারণটি দূর করলে গার্ড লাগানো থাকে।"
+      }
+    },
+    {
+      "id": "equip_shirin",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/shirin_cement_unsafe.png",
+      "target_image_safe": "res://assets/characters/shirin_cement_safe.png",
+      "prompt": {
+        "en": "Drag the right gear onto Shirin for handling cement.",
+        "bn": "সিমেন্ট নিয়ে কাজের জন্য সঠিক সরঞ্জাম টেনে শিরিনের উপর রাখুন।"
+      },
+      "items": [
+        { "id": "dust_mask", "icon": "res://assets/ppe/dust_mask.png", "text": { "en": "Dust mask", "bn": "ধুলার মাস্ক" } },
+        { "id": "earmuffs", "icon": "res://assets/ppe/earmuffs.png", "text": { "en": "Ear muffs", "bn": "ইয়ারমাফ" } },
+        { "id": "gloves", "icon": "res://assets/ppe/gloves.png", "text": { "en": "Work gloves", "bn": "কাজের গ্লাভস" } },
+        { "id": "welding_mask", "icon": "res://assets/ppe/welding_mask.png", "text": { "en": "Welding mask", "bn": "ওয়েল্ডিং মাস্ক" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Safety boots", "bn": "সেফটি বুট" } },
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } }
+      ],
+      "correct": ["dust_mask", "gloves", "boots", "helmet"],
+      "hint": {
+        "en": "Four items are correct. Protect her lungs, skin, feet and head.",
+        "bn": "চারটি সরঞ্জাম সঠিক। তাঁর ফুসফুস, চামড়া, পা ও মাথা সুরক্ষিত করুন।"
+      },
+      "explanation": {
+        "en": "A dust mask protects the lungs, gloves stop cement burns, boots protect against dropped bags, and a helmet protects the head on site.",
+        "bn": "ধুলার মাস্ক ফুসফুস, গ্লাভস সিমেন্টে পোড়া থেকে চামড়া, বুট পড়ে যাওয়া বস্তা থেকে পা, আর হেলমেট সাইটে মাথা রক্ষা করে।"
+      }
+    },
+    {
+      "id": "rebar_ends",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What best protects people from the sharp rebar ends?",
+        "bn": "রডের ধারালো মাথা থেকে মানুষকে সবচেয়ে ভালোভাবে কী রক্ষা করে?"
+      },
+      "options": [
+        { "id": "paint", "text": { "en": "Paint the bar ends orange so they are easy to see", "bn": "রডের মাথা কমলা রং করা, যাতে সহজে চোখে পড়ে" } },
+        { "id": "careful", "text": { "en": "Tell everyone to walk carefully", "bn": "সবাইকে সাবধানে হাঁটতে বলা" } },
+        { "id": "caps", "text": { "en": "Fit a protective cap on every bar end", "bn": "প্রতিটি রডের মাথায় সুরক্ষা ক্যাপ লাগানো" } },
+        { "id": "sign", "text": { "en": "Put a warning sign at the site gate", "bn": "সাইটের গেটে সতর্কচিহ্ন লাগানো" } }
+      ],
+      "correct": "caps",
+      "hint": {
+        "en": "Which answer still protects someone who has already tripped?",
+        "bn": "কেউ হোঁচট খেয়ে পড়ে গেলেও কোন উত্তরটি তাঁকে রক্ষা করে?"
+      },
+      "explanation": {
+        "en": "Caps spread the force of a fall so the bar cannot pierce the body. Paint and signs only help people notice the bars.",
+        "bn": "ক্যাপ পড়ার ধাক্কা ছড়িয়ে দেয়, ফলে রড শরীরে বিঁধতে পারে না। রং আর চিহ্ন শুধু রড চোখে পড়তে সাহায্য করে।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Good work. The mixer is guarded, the bar ends are capped, and the cement is handled safely.",
+      "bn": "ভালো কাজ। মিক্সারে গার্ড লেগেছে, রডের মাথায় ক্যাপ লেগেছে, আর সিমেন্ট নিরাপদে সামলানো হচ্ছে।"
+    },
+    "fixes": [
+      { "en": "Gears and belt enclosed by a fixed guard; emergency stop fitted", "bn": "গিয়ার ও বেল্ট শক্ত গার্ডে ঢাকা; জরুরি বন্ধের বোতাম লাগানো" },
+      { "en": "Nayeem's shirt tucked in, no loose cloth; he wears gloves and a mask", "bn": "নাঈমের জামা গোঁজা, কোনো ঢিলা কাপড় নেই; তিনি গ্লাভস ও মাস্ক পরেছেন" },
+      { "en": "Shirin moves cement on a trolley and wears a mask, gloves and boots", "bn": "শিরিন ট্রলিতে সিমেন্ট নিচ্ছেন, আর মাস্ক, গ্লাভস ও বুট পরেছেন" },
+      { "en": "Every rebar end capped; cement bags stacked on a covered pallet", "bn": "প্রতিটি রডের মাথায় ক্যাপ; সিমেন্টের বস্তা ঢাকা প্যালেটে সাজানো" }
+    ],
+    "references": [
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety (fencing of machinery)",
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety"
+    ]
+  }
+}

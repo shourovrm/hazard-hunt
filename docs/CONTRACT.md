@@ -363,3 +363,19 @@ a navy round or rounded-square button, at least 64×64 px, top-left corner, alwa
   (`application/config/quit_on_go_back` is disabled in project.godot so the game decides).
 - Test hooks (case player): `request_home()`, `cancel_leave()`, `is_leave_confirm_visible() -> bool`.
   Main menu: `request_quit()`, `is_quit_confirm_visible() -> bool`.
+
+## Paper motion (style D cases)
+
+A case may set `scene.motion_style` to `"paper"` (default `"smooth"`). Paper cases look like
+paper cut-outs moved by hand on a desk:
+
+- Actor idle: instead of smooth tweens, each actor updates at about 8 steps per second with a
+  small random offset (±1.5 px), rotation (±1.2°) and scale (±1 %), always around its rest pose
+  (a "boiling" hand-drawn look). Implemented by a child node named `PaperMotion` on each actor
+  sprite (a small script in `game/paper_motion.gd`), driven by a Timer, not by `_process`.
+- Safe reveal: the safe background slides in from the right like a new sheet of paper (starts
+  rotated about 3° and offset by the screen width, eases to rest in about 0.6 s, with a soft drop
+  shadow under its edge); actors switch texture with a quick card flip (scale.x 1 → 0 → 1).
+- Intro: the unsafe scene drops in the same way once at the start.
+- `animations_enabled = false` makes all of this immediate (tests).
+- Test hook: `motion_style() -> String` on the case player.
