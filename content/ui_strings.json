@@ -138,5 +138,25 @@
   "sound_off": {
     "en": "Sound: off",
     "bn": "শব্দ: বন্ধ"
+  },
+  "worker_counter": {
+    "en": "Worker {number} of {total}",
+    "bn": "শ্রমিক {number} / {total}"
+  },
+  "mark_missing": {
+    "en": "Tap any gear that is missing",
+    "bn": "যে সরঞ্জাম নেই, তাতে ট্যাপ করুন"
+  },
+  "let_in": {
+    "en": "Let in",
+    "bn": "ঢুকতে দিন"
+  },
+  "send_back": {
+    "en": "Send back for gear",
+    "bn": "সরঞ্জামের জন্য ফেরত পাঠান"
+  },
+  "next_worker": {
+    "en": "Next worker",
+    "bn": "পরের শ্রমিক"
   }
 }

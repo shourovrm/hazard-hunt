@@ -1,0 +1,385 @@
+{
+  "id": "c02_gate_check",
+  "sector": "construction",
+  "order": 2,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Morning Gate Check",
+    "bn": "সকালের গেট পরীক্ষা"
+  },
+  "scene": {
+    "size": [
+      1280,
+      720
+    ],
+    "background": {
+      "unsafe": "res://assets/construction/c02/bg_unsafe.png",
+      "safe": "res://assets/construction/c02/bg_safe.png"
+    },
+    "actors": [],
+    "ambient": [
+      "dust"
+    ],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Good morning, Supervisor. Work starts at eight, and everyone comes in through this gate. The site rule is simple: nobody enters without a helmet, safety boots and a high-visibility vest. Check each person in the line.",
+    "bn": "শুভ সকাল, সুপারভাইজার। আটটায় কাজ শুরু, আর সবাই এই গেট দিয়েই ঢোকেন। সাইটের নিয়ম সহজ: হেলমেট, সেফটি বুট আর হাই-ভিজিবিলিটি ভেস্ট ছাড়া কেউ ঢুকতে পারবেন না। লাইনের প্রত্যেককে পরীক্ষা করুন।"
+  },
+  "hazards": [],
+  "questions": [
+    {
+      "id": "gate_line",
+      "type": "gate_check",
+      "prompt": {
+        "en": "Check each worker. Mark any missing gear, then let them in or send them back.",
+        "bn": "প্রত্যেক শ্রমিককে পরীক্ষা করুন। কোনো সরঞ্জাম না থাকলে চিহ্নিত করুন, তারপর ঢুকতে দিন বা ফেরত পাঠান।"
+      },
+      "ppe_items": [
+        {
+          "id": "helmet",
+          "icon": "res://assets/ppe/helmet.png",
+          "text": {
+            "en": "Helmet",
+            "bn": "হেলমেট"
+          }
+        },
+        {
+          "id": "boots",
+          "icon": "res://assets/ppe/boots.png",
+          "text": {
+            "en": "Safety boots",
+            "bn": "সেফটি বুট"
+          }
+        },
+        {
+          "id": "vest",
+          "icon": "res://assets/ppe/vest.png",
+          "text": {
+            "en": "Hi-vis vest",
+            "bn": "হাই-ভিজ ভেস্ট"
+          }
+        }
+      ],
+      "workers": [
+        {
+          "id": "sohel",
+          "name": {
+            "en": "Sohel",
+            "bn": "সোহেল"
+          },
+          "image": "res://assets/characters/gate_sohel.png",
+          "image_safe": "res://assets/characters/gate_sohel.png",
+          "missing": [],
+          "feedback": {
+            "en": "Sohel has a helmet, boots and a vest. He can go in.",
+            "bn": "সোহেলের হেলমেট, বুট ও ভেস্ট আছে। তিনি ঢুকতে পারেন।"
+          }
+        },
+        {
+          "id": "rina",
+          "name": {
+            "en": "Rina",
+            "bn": "রিনা"
+          },
+          "image": "res://assets/characters/gate_rina_unsafe.png",
+          "image_safe": "res://assets/characters/gate_rina_safe.png",
+          "missing": [
+            "boots"
+          ],
+          "feedback": {
+            "en": "Rina is wearing sandals. Without safety boots, a dropped brick or a nail can injure her feet.",
+            "bn": "রিনা স্যান্ডেল পরে আছেন। সেফটি বুট ছাড়া পড়ে যাওয়া ইট বা পেরেকে তাঁর পা জখম হতে পারে।"
+          }
+        },
+        {
+          "id": "jamal",
+          "name": {
+            "en": "Jamal",
+            "bn": "জামাল"
+          },
+          "image": "res://assets/characters/gate_jamal_unsafe.png",
+          "image_safe": "res://assets/characters/gate_jamal_safe.png",
+          "missing": [
+            "helmet"
+          ],
+          "feedback": {
+            "en": "Jamal is carrying his helmet instead of wearing it. A helmet in the hand protects nobody.",
+            "bn": "জামাল হেলমেট মাথায় না পরে হাতে নিয়ে আছেন। হাতে রাখা হেলমেট কাউকে রক্ষা করে না।"
+          }
+        },
+        {
+          "id": "nayeem",
+          "name": {
+            "en": "Nayeem",
+            "bn": "নাঈম"
+          },
+          "image": "res://assets/characters/gate_nayeem_unsafe.png",
+          "image_safe": "res://assets/characters/gate_nayeem_safe.png",
+          "missing": [
+            "vest"
+          ],
+          "feedback": {
+            "en": "Nayeem has no vest. Truck and crane drivers may not see him.",
+            "bn": "নাঈমের ভেস্ট নেই। ট্রাক বা ক্রেনচালক তাঁকে দেখতে নাও পেতে পারেন।"
+          }
+        },
+        {
+          "id": "sumon",
+          "name": {
+            "en": "Sumon",
+            "bn": "সুমন"
+          },
+          "image": "res://assets/characters/gate_sumon.png",
+          "image_safe": "res://assets/characters/gate_sumon.png",
+          "missing": [],
+          "feedback": {
+            "en": "Sumon has a helmet, boots and a vest. He can go in.",
+            "bn": "সুমনের হেলমেট, বুট ও ভেস্ট আছে। তিনি ঢুকতে পারেন।"
+          }
+        },
+        {
+          "id": "foreman",
+          "name": {
+            "en": "Habib, the foreman",
+            "bn": "ফোরম্যান হাবিব"
+          },
+          "image": "res://assets/characters/gate_foreman_unsafe.png",
+          "image_safe": "res://assets/characters/gate_foreman_safe.png",
+          "missing": [
+            "helmet",
+            "vest"
+          ],
+          "feedback": {
+            "en": "The foreman has no helmet and no vest. The rule is the same for everyone.",
+            "bn": "ফোরম্যানের হেলমেট ও ভেস্ট নেই। নিয়ম সবার জন্য একই।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Look at the head, the feet and the body: helmet, boots, vest.",
+        "bn": "মাথা, পা আর শরীর দেখুন: হেলমেট, বুট, ভেস্ট।"
+      },
+      "explanation": {
+        "en": "A gate check stops unsafe work before anyone reaches the work area.",
+        "bn": "গেটে পরীক্ষা করলে কাজের জায়গায় পৌঁছানোর আগেই অনিরাপদ কাজ থামানো যায়।"
+      }
+    },
+    {
+      "id": "persuade_foreman",
+      "type": "dialogue",
+      "npc": "foreman",
+      "npc_name": {
+        "en": "Habib, the foreman",
+        "bn": "ফোরম্যান হাবিব"
+      },
+      "npc_portrait": "res://assets/characters/foreman_portrait.png",
+      "prompt": {
+        "en": "The foreman does not want to wear a helmet and vest. What do you say?",
+        "bn": "ফোরম্যান হেলমেট ও ভেস্ট পরতে চান না। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "I am the foreman. I only need five minutes to check the drawings. I don't need all that.",
+        "bn": "আমি ফোরম্যান। শুধু পাঁচ মিনিট ড্রয়িং দেখব। এসব আমার লাগবে না।"
+      },
+      "choices": [
+        {
+          "id": "let_go",
+          "quality": "fail",
+          "text": {
+            "en": "Of course, sir. Go ahead.",
+            "bn": "অবশ্যই স্যার, যান।"
+          },
+          "reply": {
+            "en": "Good man.",
+            "bn": "বেশ।"
+          },
+          "feedback": {
+            "en": "If the foreman skips PPE, the workers learn that the rule does not matter.",
+            "bn": "ফোরম্যান সরঞ্জাম না পরলে শ্রমিকরা শেখেন যে নিয়মটা জরুরি নয়।"
+          }
+        },
+        {
+          "id": "explain",
+          "quality": "best",
+          "text": {
+            "en": "The rule is for everyone, sir. When the workers see you wearing it, they wear it too.",
+            "bn": "নিয়ম সবার জন্য, স্যার। আপনাকে পরতে দেখলে শ্রমিকরাও পরবেন।"
+          },
+          "reply": {
+            "en": "...You are right. Give me a helmet and a vest.",
+            "bn": "...ঠিক বলেছেন। একটা হেলমেট আর ভেস্ট দিন।"
+          },
+          "feedback": {
+            "en": "The foreman agreed. When leaders follow the rules, everyone else does too.",
+            "bn": "ফোরম্যান রাজি হলেন। নেতারা নিয়ম মানলে বাকিরাও মানেন।"
+          }
+        },
+        {
+          "id": "report",
+          "quality": "ok",
+          "text": {
+            "en": "Sorry, I will have to report this to the project manager.",
+            "bn": "দুঃখিত, বিষয়টি প্রজেক্ট ম্যানেজারকে জানাতে হবে।"
+          },
+          "reply": {
+            "en": "Fine, fine. I will wear it.",
+            "bn": "আচ্ছা, আচ্ছা। পরছি।"
+          },
+          "feedback": {
+            "en": "He agreed, but he is annoyed. Explaining the reason first works better.",
+            "bn": "তিনি রাজি হলেন, কিন্তু বিরক্ত। আগে কারণ বোঝালে আরও ভালো কাজ হয়।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "The rule applies to everyone. Explain why, politely.",
+        "bn": "নিয়ম সবার জন্য। ভদ্রভাবে কারণ বোঝান।"
+      },
+      "explanation": {
+        "en": "Supervisors and foremen set the example. If they skip PPE, others will too.",
+        "bn": "সুপারভাইজার ও ফোরম্যানরাই উদাহরণ তৈরি করেন। তাঁরা সরঞ্জাম না পরলে অন্যরাও পরবেন না।"
+      }
+    },
+    {
+      "id": "site_ppe",
+      "type": "multi_select",
+      "prompt": {
+        "en": "Which gear must everyone wear to enter this site?",
+        "bn": "এই সাইটে ঢুকতে সবাইকে কোন সরঞ্জাম পরতে হবে?"
+      },
+      "options": [
+        {
+          "id": "helmet",
+          "text": {
+            "en": "Helmet",
+            "bn": "হেলমেট"
+          }
+        },
+        {
+          "id": "harness",
+          "text": {
+            "en": "Safety harness",
+            "bn": "সেফটি হারনেস"
+          }
+        },
+        {
+          "id": "boots",
+          "text": {
+            "en": "Safety boots",
+            "bn": "সেফটি বুট"
+          }
+        },
+        {
+          "id": "earmuffs",
+          "text": {
+            "en": "Ear muffs",
+            "bn": "ইয়ারমাফ"
+          }
+        },
+        {
+          "id": "vest",
+          "text": {
+            "en": "Hi-vis vest",
+            "bn": "হাই-ভিজ ভেস্ট"
+          }
+        },
+        {
+          "id": "gloves",
+          "text": {
+            "en": "Work gloves",
+            "bn": "কাজের গ্লাভস"
+          }
+        }
+      ],
+      "correct": [
+        "helmet",
+        "boots",
+        "vest"
+      ],
+      "hint": {
+        "en": "Three items are for everyone. The others depend on the job.",
+        "bn": "তিনটি সরঞ্জাম সবার জন্য। বাকিগুলো কাজের ধরন অনুযায়ী।"
+      },
+      "explanation": {
+        "en": "A helmet, boots and a vest protect against hazards everywhere on site. Harnesses, ear muffs and gloves are added for specific jobs.",
+        "bn": "হেলমেট, বুট ও ভেস্ট পুরো সাইটের বিপদ থেকে রক্ষা করে। হারনেস, ইয়ারমাফ ও গ্লাভস নির্দিষ্ট কাজের জন্য যোগ করা হয়।"
+      }
+    },
+    {
+      "id": "torn_boots",
+      "type": "single_choice",
+      "prompt": {
+        "en": "A worker says his boots are torn and he has no other pair. What should you do?",
+        "bn": "একজন শ্রমিক বলছেন তাঁর বুট ছিঁড়ে গেছে, আর কোনো জোড়া নেই। আপনি কী করবেন?"
+      },
+      "options": [
+        {
+          "id": "let_in",
+          "text": {
+            "en": "Let him work today; he can buy boots later",
+            "bn": "আজ কাজ করতে দিন; পরে বুট কিনে নেবেন"
+          }
+        },
+        {
+          "id": "send_home",
+          "text": {
+            "en": "Send him home without pay",
+            "bn": "বিনা বেতনে বাড়ি পাঠিয়ে দিন"
+          }
+        },
+        {
+          "id": "store",
+          "text": {
+            "en": "Give him a pair from the site PPE store and record it",
+            "bn": "সাইটের সরঞ্জাম স্টোর থেকে এক জোড়া দিন এবং খাতায় লিখে রাখুন"
+          }
+        },
+        {
+          "id": "ground",
+          "text": {
+            "en": "Let him work only on the ground floor",
+            "bn": "শুধু নিচতলায় কাজ করতে দিন"
+          }
+        }
+      ],
+      "correct": "store",
+      "hint": {
+        "en": "Providing PPE is the employer's job. How can he start work safely today?",
+        "bn": "সুরক্ষা সরঞ্জাম দেওয়া নিয়োগকর্তার দায়িত্ব। আজই তিনি কীভাবে নিরাপদে কাজ শুরু করতে পারেন?"
+      },
+      "explanation": {
+        "en": "In Bangladesh the employer must provide PPE to workers. A spare stock at the gate keeps work going safely.",
+        "bn": "বাংলাদেশে শ্রমিকদের সুরক্ষা সরঞ্জাম দেওয়া নিয়োগকর্তার দায়িত্ব। গেটে বাড়তি মজুত থাকলে কাজ নিরাপদে চালু থাকে।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Good work. Everyone, including the foreman, went in wearing a helmet, boots and a vest.",
+      "bn": "ভালো কাজ। ফোরম্যানসহ সবাই হেলমেট, বুট ও ভেস্ট পরে ঢুকেছেন।"
+    },
+    "fixes": [
+      {
+        "en": "Rina got safety boots from the gate store",
+        "bn": "রিনা গেটের স্টোর থেকে সেফটি বুট পেয়েছেন"
+      },
+      {
+        "en": "Jamal is wearing his helmet, not carrying it",
+        "bn": "জামাল হেলমেট হাতে না রেখে মাথায় পরেছেন"
+      },
+      {
+        "en": "Nayeem and the foreman got hi-vis vests",
+        "bn": "নাঈম ও ফোরম্যান হাই-ভিজ ভেস্ট পেয়েছেন"
+      },
+      {
+        "en": "A spare PPE rack now stands at the gate",
+        "bn": "গেটে এখন বাড়তি সরঞ্জামের র‍্যাক রাখা আছে"
+      }
+    ],
+    "references": [
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety",
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety"
+    ]
+  }
+}

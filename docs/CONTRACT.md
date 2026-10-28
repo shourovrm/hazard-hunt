@@ -243,3 +243,45 @@ Where sounds play:
   `start_case` calls `Sfx.play_ambience(scene.ambience)` when the case has one; leaving the case
   player (scene exit) calls `Sfx.stop_ambience()`.
 - Main menu: a sound toggle button showing `Loc.ui("sound_on")` or `Loc.ui("sound_off")`.
+
+## Gate check question type (`gate_check`) and cases without hazards
+
+Reference data: `content/construction/cases/c02_gate_check.json`.
+
+### Core (CaseLoader, CaseSession)
+
+- `hazards` may be an empty array. Then `CaseSession.begin_hazard_hunt()` goes straight from
+  INTRO to QUESTIONS (emitting `phase_changed(QUESTIONS)` once), and `hazard_hint` is optional.
+- `validate` accepts type `gate_check` and checks: `ppe_items` is a non-empty array of
+  `{id, icon, text}`; `workers` is a non-empty array of `{id, name, image, image_safe, missing,
+  feedback}` with unique ids, `name` and `feedback` localized in en and bn, and every `missing` id
+  is a `ppe_items` id (an empty `missing` means the worker may enter).
+- Answer shape: `Dictionary` of worker id → `Array` of ppe ids the player marked missing on their
+  FIRST decision for that worker. The widget lets the player correct mistakes before moving on,
+  so the question always ends complete.
+- `submit_answer` for `gate_check`: if any worker id is absent from the answer → `correct: false`,
+  `quality: "fail"`, hint, +1 mistake. Otherwise `correct: true`, mistakes += number of workers
+  whose first decision did not match `missing` (set comparison), `quality` is `"best"` when that
+  number is 0, else `"ok"`; `explanation` is returned as usual.
+
+### Widget (`ui/questions/gate_check_view.gd`, registered in QuestionFactory)
+
+- Shows one worker at a time: large `image`, `name`, `Loc.ui("worker_counter", {number, total})`,
+  `Loc.ui("mark_missing")`, and one toggle per `ppe_items` entry (icon + text, 64 px+ high).
+- One action button: `Loc.ui("let_in")` when nothing is marked, `Loc.ui("send_back")` otherwise.
+- Pressing it compares the marked set with the worker's `missing`. The first decision for each
+  worker is recorded for the answer. Right: show `Loc.ui("correct")` and the worker's `feedback`,
+  switch the image to `image_safe` if the worker was sent back, and show a
+  `Loc.ui("next_worker")` button (on the last worker, the view calls `submit()` instead).
+  Wrong: show `Loc.ui("try_again")` and the question `hint`; the toggles stay editable.
+- Test hooks: `current_worker_index() -> int`, `set_marked(ppe_id: String, marked: bool)`,
+  `decide() -> bool` (presses the action button, returns whether the decision was right),
+  `next_worker()`. `set_answer(answer: Dictionary)` records those first decisions for every
+  worker and moves to the end so `submit()` emits them; `get_answer()` returns the recorded
+  first decisions.
+- `show_result`: as other views (lock on correct, show explanation).
+
+### Case player
+
+- When the case has no hazards, Continue after the intro goes straight to QUESTIONS (no hunt UI,
+  no hazard counter). `skip_intro()` does the same.
