@@ -11,15 +11,18 @@ const MINIMUM_TOUCH_HEIGHT := 64.0
 const SELECTED_FILL_COLOR := Color(0.16, 0.36, 0.62)
 const CORRECT_COLOR := Color(0.18, 0.62, 0.30)
 const WRONG_COLOR := Color(0.85, 0.25, 0.22)
+const HINT_BUTTON_WIDTH := 160.0
 
 var question: Dictionary = {}
 
 var _locked := false
+var _hint_is_shown := false
 var _last_result: Dictionary = {}
 var _prompt_label: Label
 var _body: VBoxContainer
 var _result_area: VBoxContainer
 var _submit_button: Button
+var _hint_button: Button
 var _scroll: ScrollContainer
 
 
@@ -29,6 +32,7 @@ func setup(new_question: Dictionary) -> void:
 		return
 	question = new_question
 	_locked = false
+	_hint_is_shown = false
 	_last_result = {}
 	size = PANEL_SIZE
 	_reset_state()
@@ -68,6 +72,17 @@ func is_locked() -> bool:
 	return _locked
 
 
+## Free help: shows the question's hint in the feedback area. It never changes the score,
+## so it does not go through submit() or show_result().
+func show_hint() -> void:
+	if _locked or not question.has("hint"):
+		return
+	Sfx.play("select")
+	_hint_is_shown = true
+	_rebuild()
+	_scroll_to_bottom_after_layout()
+
+
 ## Called once from setup() so subclasses can initialise their selection state.
 func _reset_state() -> void:
 	pass
@@ -103,6 +118,8 @@ func _rebuild() -> void:
 	_submit_button.visible = _uses_submit_button() and not _locked
 	_submit_button.text = Loc.ui("submit")
 	_submit_button.disabled = _locked or not _is_answer_valid()
+	_hint_button.text = Loc.ui("hint_button")
+	_hint_button.visible = not _locked and question.has("hint")
 
 
 func _build_skeleton() -> void:
@@ -133,11 +150,21 @@ func _build_skeleton() -> void:
 	_result_area.add_theme_constant_override("separation", 8)
 	scrolled_content.add_child(_result_area)
 
+	var footer_row := HBoxContainer.new()
+	footer_row.add_theme_constant_override("separation", 12)
+	layout.add_child(footer_row)
+
+	_hint_button = Button.new()
+	_hint_button.custom_minimum_size = Vector2(HINT_BUTTON_WIDTH, MINIMUM_TOUCH_HEIGHT)
+	_hint_button.pressed.connect(show_hint)
+	footer_row.add_child(_hint_button)
+
 	_submit_button = Button.new()
 	_submit_button.theme_type_variation = "PrimaryButton"
 	_submit_button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
+	_submit_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_submit_button.pressed.connect(_on_submit_pressed)
-	layout.add_child(_submit_button)
+	footer_row.add_child(_submit_button)
 
 
 func _on_submit_pressed() -> void:
@@ -156,6 +183,8 @@ func _scroll_to_bottom_after_layout() -> void:
 
 func _build_result_area() -> void:
 	if _last_result.is_empty():
+		if _hint_is_shown:
+			_result_area.add_child(_make_wrapping_label(Loc.text(question["hint"])))
 		return
 	_build_result_extras(_last_result)
 	var is_correct: bool = _last_result.get("correct", false)
