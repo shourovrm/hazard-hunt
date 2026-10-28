@@ -79,6 +79,7 @@ var _fixes_panel: PanelContainer
 var _fixes_list: VBoxContainer
 var _result_layer: Control
 var _result_card_holder: CenterContainer
+var _navigation: CaseHomeNavigation
 
 
 func _ready() -> void:
@@ -86,6 +87,9 @@ func _ready() -> void:
 	_soft_dot_texture = _make_soft_dot_texture()
 	_build_world()
 	_build_interface()
+	_navigation = CaseHomeNavigation.new()
+	_navigation.home_pressed.connect(request_home)
+	add_child(_navigation)
 	Loc.language_changed.connect(_on_language_changed)
 	if not GameState.selected_case_path.is_empty():
 		start_case(GameState.selected_case_path)
@@ -170,6 +174,18 @@ func background_state() -> String:
 
 func is_result_visible() -> bool:
 	return _result_visible
+
+
+func request_home() -> void:
+	_navigation.request_leave(_result_visible)
+
+
+func cancel_leave() -> void:
+	_navigation.cancel_leave()
+
+
+func is_leave_confirm_visible() -> bool:
+	return _navigation.is_leave_confirm_visible()
 
 
 # ---- Building the nodes --------------------------------------------------------------------
