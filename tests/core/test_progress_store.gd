@@ -60,12 +60,10 @@ func test_corrupt_file_starts_empty() -> void:
 	store.free()
 
 
-func test_unlocking_follows_case_order() -> void:
+func test_every_listed_case_is_unlocked() -> void:
 	var store := _new_store()
 	var case_ids := ["c01", "c02", "c03"]
 	t.assert_true(store.is_unlocked(case_ids, "c01"))
-	t.assert_false(store.is_unlocked(case_ids, "c02"))
-	store.record_result("c01", 1)
 	t.assert_true(store.is_unlocked(case_ids, "c02"))
-	t.assert_false(store.is_unlocked(case_ids, "c03"))
+	t.assert_true(store.is_unlocked(case_ids, "c03"))
 	store.free()

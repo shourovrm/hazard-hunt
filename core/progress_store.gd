@@ -62,9 +62,8 @@ func is_unlocked(case_ids: Array, case_id: String) -> bool:
 	if position < 0:
 		push_error("ProgressStore: case '%s' is not in case list %s" % [case_id, str(case_ids)])
 		return false
-	if position == 0:
-		return true
-	return is_completed(case_ids[position - 1])
+	# Every case is open from the start so trainers can assign any case in any order.
+	return true
 
 
 func get_language() -> String:

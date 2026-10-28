@@ -117,8 +117,8 @@ func save_progress() -> void        # writes JSON; push_error on failure
 func record_result(case_id: String, stars: int) -> void   # keeps the best stars; saves
 func get_stars(case_id: String) -> int                    # 0 if never completed
 func is_completed(case_id: String) -> bool
-func is_unlocked(case_ids: Array, case_id: String) -> bool  # first case always unlocked;
-                                    # any other needs the previous id in case_ids completed
+func is_unlocked(case_ids: Array, case_id: String) -> bool  # every listed case is unlocked
+                                    # (user decision 2026-10-29); unknown id: push_error, false
 func get_language() -> String       # saved language, "bn" by default
 func set_language(code: String) -> void   # saves
 func reset() -> void                # clears everything in memory and on disk
