@@ -40,6 +40,11 @@ static func load_sector(path: String) -> Dictionary:
 	return _read_json_dictionary(path)
 
 
+## Reads the list of sectors shown on the sector selection page.
+static func load_sector_index(path: String = "res://content/sectors.json") -> Dictionary:
+	return _read_json_dictionary(path)
+
+
 ## Returns one readable message per problem; an empty array means the case is valid.
 static func validate(case_data: Dictionary) -> Array[String]:
 	var problems: Array[String] = []

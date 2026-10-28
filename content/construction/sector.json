@@ -14,5 +14,6 @@
     "res://content/construction/cases/c08_crane_lifting.json",
     "res://content/construction/cases/c12_near_miss_investigation.json"
   ],
-  "coming_soon": []
+  "coming_soon": [],
+  "thumbnail": "res://assets/construction/c01/bg_safe.png"
 }

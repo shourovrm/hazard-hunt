@@ -420,3 +420,18 @@ Reference data: `content/construction/cases/c12_near_miss_investigation.json`.
 
 All three: hint and show-answer behave as in every other view; locked views show the correct
 state (all cards flipped / correct chain / correct matches highlighted green).
+
+## Sector selection page
+
+- `content/sectors.json`: `sectors` (array of sector file paths) and `coming_soon` (array of
+  `{title: localized}`). Each sector file may set `thumbnail` (image path).
+- `CaseLoader.load_sector_index(path := "res://content/sectors.json") -> Dictionary`; `{}` with
+  `push_error` on failure.
+- Flow: main menu Start → `game/sector_select.tscn` → `game/sector_map.tscn` → case player.
+  `GameState.selected_sector_path` (default the construction sector) carries the choice.
+- Sector select: header with the Home button (`home`, to main menu) and title
+  `Loc.ui("choose_sector")`; one card per sector (thumbnail, title, `case_count`, total stars
+  earned out of 3 × cases, `open_sector` button) and one muted `coming_soon` card per entry.
+  Android back → main menu.
+- Sector map loads `GameState.selected_sector_path`; its header adds a `Loc.ui("sectors")` button
+  back to sector select (Home still goes to the main menu). Android back → sector select.

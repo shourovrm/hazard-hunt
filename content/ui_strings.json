@@ -242,5 +242,21 @@
   "clear_chain": {
     "en": "Clear",
     "bn": "মুছে ফেলুন"
+  },
+  "choose_sector": {
+    "en": "Choose a sector",
+    "bn": "একটি খাত বেছে নিন"
+  },
+  "case_count": {
+    "en": "{count} cases",
+    "bn": "{count}টি কেস"
+  },
+  "open_sector": {
+    "en": "Open",
+    "bn": "খুলুন"
+  },
+  "sectors": {
+    "en": "Sectors",
+    "bn": "খাতসমূহ"
   }
 }

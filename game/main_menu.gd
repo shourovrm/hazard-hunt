@@ -1,7 +1,7 @@
 extends Control
 ## Title screen: Start button and the language switch.
 
-const SECTOR_MAP_SCENE := "res://game/sector_map.tscn"
+const SECTOR_SELECT_SCENE := "res://game/sector_select.tscn"
 const EXIT_ICON_PATH := "res://assets/icons/exit.svg"
 const BUTTON_SIZE := Vector2(360, 80)
 
@@ -116,7 +116,7 @@ func _on_quit_confirmed() -> void:
 
 func _on_start_pressed() -> void:
 	Sfx.play("tap")
-	get_tree().change_scene_to_file(SECTOR_MAP_SCENE)
+	get_tree().change_scene_to_file(SECTOR_SELECT_SCENE)
 
 
 func _on_language_switch_pressed() -> void:

@@ -1,0 +1,19 @@
+{
+  "sectors": [
+    "res://content/construction/sector.json"
+  ],
+  "coming_soon": [
+    {
+      "title": {
+        "en": "Garments (RMG) Factory",
+        "bn": "পোশাক (আরএমজি) কারখানা"
+      }
+    },
+    {
+      "title": {
+        "en": "Light Engineering",
+        "bn": "হালকা প্রকৌশল"
+      }
+    }
+  ]
+}

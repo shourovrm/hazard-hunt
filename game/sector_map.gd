@@ -1,8 +1,8 @@
 extends Control
-## Site map: one card per case of the sector, then one disabled card per coming-soon entry.
+## Site map of the selected sector: one card per case of the sector, then one disabled card per coming-soon entry.
 
-const SECTOR_PATH := "res://content/construction/sector.json"
 const MAIN_MENU_SCENE := "res://game/main_menu.tscn"
+const SECTOR_SELECT_SCENE := "res://game/sector_select.tscn"
 const CASE_PLAYER_SCENE := "res://game/case_player.tscn"
 const HOME_ICON_PATH := "res://assets/icons/home.svg"
 # Two rows of four cards fit a 720 px tall screen without scrolling; more cases scroll vertically.
@@ -14,13 +14,17 @@ var _sector: Dictionary = {}
 var _case_entries: Array[Dictionary] = []
 var _title_label: Label
 var _home_button: NavigationButton
+var _sectors_button: Button
 var _card_row: GridContainer
 
 
 func _ready() -> void:
-	_sector = CaseLoader.load_sector(SECTOR_PATH)
+	var sector_path := GameState.selected_sector_path
+	if sector_path.is_empty():
+		sector_path = GameState.DEFAULT_SECTOR_PATH
+	_sector = CaseLoader.load_sector(sector_path)
 	if _sector.is_empty():
-		push_error("SectorMap: cannot show the map without '%s'" % SECTOR_PATH)
+		push_error("SectorMap: cannot show the map without '%s'" % sector_path)
 		return
 	_load_case_entries()
 	ScreenBackground.add_to(self, 0.72)
@@ -53,6 +57,10 @@ func _build_layout() -> void:
 	_home_button = NavigationButton.new(HOME_ICON_PATH, Vector2(160, 64))
 	_home_button.pressed.connect(_on_home_pressed)
 	header.add_child(_home_button)
+	_sectors_button = Button.new()
+	_sectors_button.custom_minimum_size = Vector2(0, 64)
+	_sectors_button.pressed.connect(_on_sectors_pressed)
+	header.add_child(_sectors_button)
 	_title_label = Label.new()
 	_title_label.theme_type_variation = "TitleLabel"
 	_title_label.add_theme_font_size_override("font_size", 48)
@@ -77,6 +85,7 @@ func _build_layout() -> void:
 func _refresh() -> void:
 	_title_label.text = Loc.text(_sector["title"])
 	_home_button.text = Loc.ui("home")
+	_sectors_button.text = Loc.ui("sectors")
 	for existing_card in _card_row.get_children():
 		_card_row.remove_child(existing_card)
 		existing_card.queue_free()
@@ -160,15 +169,20 @@ func _on_play_pressed(case_path: String) -> void:
 	get_tree().change_scene_to_file(CASE_PLAYER_SCENE)
 
 
+func _on_sectors_pressed() -> void:
+	Sfx.play("tap")
+	get_tree().change_scene_to_file(SECTOR_SELECT_SCENE)
+
+
 func _on_home_pressed() -> void:
 	Sfx.play("tap")
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 
-## Android back goes home directly; the map has no unsaved state to protect.
+## Android back returns to the sector page; the map has no unsaved state to protect.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
-		_on_home_pressed()
+		_on_sectors_pressed()
 
 
 func _on_language_changed(_language: String) -> void:
