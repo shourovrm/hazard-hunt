@@ -4,13 +4,14 @@ extends Control
 const SECTOR_PATH := "res://content/construction/sector.json"
 const MAIN_MENU_SCENE := "res://game/main_menu.tscn"
 const CASE_PLAYER_SCENE := "res://game/case_player.tscn"
+const HOME_ICON_PATH := "res://assets/icons/home.svg"
 const CARD_SIZE := Vector2(272, 400)
 const THUMBNAIL_SIZE := Vector2(240, 135)
 
 var _sector: Dictionary = {}
 var _case_entries: Array[Dictionary] = []
 var _title_label: Label
-var _back_button: Button
+var _home_button: NavigationButton
 var _card_row: HBoxContainer
 
 
@@ -47,10 +48,9 @@ func _build_layout() -> void:
 	var header := HBoxContainer.new()
 	header.add_theme_constant_override("separation", 24)
 	column.add_child(header)
-	_back_button = Button.new()
-	_back_button.custom_minimum_size = Vector2(160, 64)
-	_back_button.pressed.connect(_on_back_pressed)
-	header.add_child(_back_button)
+	_home_button = NavigationButton.new(HOME_ICON_PATH, Vector2(160, 64))
+	_home_button.pressed.connect(_on_home_pressed)
+	header.add_child(_home_button)
 	_title_label = Label.new()
 	_title_label.theme_type_variation = "TitleLabel"
 	_title_label.add_theme_font_size_override("font_size", 48)
@@ -68,7 +68,7 @@ func _build_layout() -> void:
 ## Rebuilds every card so text and star counts match the current language and saved progress.
 func _refresh() -> void:
 	_title_label.text = Loc.text(_sector["title"])
-	_back_button.text = Loc.ui("back")
+	_home_button.text = Loc.ui("home")
 	for existing_card in _card_row.get_children():
 		_card_row.remove_child(existing_card)
 		existing_card.queue_free()
@@ -152,9 +152,15 @@ func _on_play_pressed(case_path: String) -> void:
 	get_tree().change_scene_to_file(CASE_PLAYER_SCENE)
 
 
-func _on_back_pressed() -> void:
+func _on_home_pressed() -> void:
 	Sfx.play("tap")
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
+
+
+## Android back goes home directly; the map has no unsaved state to protect.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_on_home_pressed()
 
 
 func _on_language_changed(_language: String) -> void:
