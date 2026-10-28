@@ -271,8 +271,73 @@ func _is_correct_non_dialogue(question: Dictionary, answer: Variant) -> bool:
 			return answer is Array and _as_sorted_strings(answer) == _as_sorted_strings(question["correct"])
 		"ordering":
 			return answer is Array and _as_strings(answer) == _as_strings(question["correct_order"])
+		"permit_check":
+			return _is_correct_permit_check(question, answer)
 	push_error("CaseSession: unknown question type '%s'" % str(question["type"]))
 	return false
+
+
+func _is_correct_permit_check(question: Dictionary, answer: Variant) -> bool:
+	if not answer is Dictionary:
+		push_error("CaseSession: permit_check '%s' needs a Dictionary answer, got %s" % [question["id"], str(answer)])
+		return false
+	var decision_matches := str(answer.get("decision")) == str(question["correct_decision"])
+	return decision_matches and _permit_marks_match(question["checks"], answer.get("marks"))
+
+
+# Every check must be marked, and marked with its own status. Extra marks are ignored.
+func _permit_marks_match(checks: Array, marks: Variant) -> bool:
+	if not marks is Dictionary:
+		return false
+	for check in checks:
+		var check_id := str(check["id"])
+		if not marks.has(check_id) or str(marks[check_id]) != str(check["status"]):
+			return false
+	return true
+
+
+## The answer `submit_answer` accepts as fully correct; the UI's "Show answer" selects it.
+static func correct_answer(question: Dictionary) -> Variant:
+	match question["type"]:
+		"single_choice":
+			return question["correct"]
+		"multi_select", "drag_ppe":
+			var correct_ids: Array = question["correct"]
+			return correct_ids.duplicate()
+		"ordering":
+			var correct_order: Array = question["correct_order"]
+			return correct_order.duplicate()
+		"dialogue":
+			return _first_best_choice_id(question)
+		"gate_check":
+			return _gate_check_correct_answer(question)
+		"permit_check":
+			return _permit_check_correct_answer(question)
+	push_error("CaseSession: correct_answer has no rule for question type '%s'" % str(question["type"]))
+	return null
+
+
+static func _first_best_choice_id(question: Dictionary) -> String:
+	for choice in question["choices"]:
+		if choice["quality"] == "best":
+			return str(choice["id"])
+	push_error("CaseSession: dialogue '%s' has no choice with quality 'best'" % question["id"])
+	return ""
+
+
+static func _gate_check_correct_answer(question: Dictionary) -> Dictionary:
+	var correct_answer: Dictionary = {}
+	for worker in question["workers"]:
+		var missing_ids: Array = worker["missing"]
+		correct_answer[worker["id"]] = missing_ids.duplicate()
+	return correct_answer
+
+
+static func _permit_check_correct_answer(question: Dictionary) -> Dictionary:
+	var marks: Dictionary = {}
+	for check in question["checks"]:
+		marks[str(check["id"])] = str(check["status"])
+	return {"marks": marks, "decision": str(question["correct_decision"])}
 
 
 # Answers may arrive as untyped Arrays, so compare as plain string arrays.

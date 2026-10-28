@@ -5,11 +5,13 @@ extends RefCounted
 
 const REQUIRED_CASE_KEYS: Array[String] = ["id", "title", "scene", "intro", "hazards", "questions", "outcome"]
 const QUESTION_TYPES: Array[String] = [
-	"single_choice", "multi_select", "ordering", "dialogue", "drag_ppe", "gate_check"
+	"single_choice", "multi_select", "ordering", "dialogue", "drag_ppe", "gate_check", "permit_check"
 ]
 const DIALOGUE_QUALITIES: Array[String] = ["best", "ok", "fail"]
 const REQUIRED_LANGUAGES: Array[String] = ["en", "bn"]
 const GATE_WORKER_KEYS: Array[String] = ["id", "name", "image", "image_safe", "missing", "feedback"]
+const PERMIT_STATUSES: Array[String] = ["ok", "not_ok"]
+const PERMIT_DECISIONS: Array[String] = ["approve", "refuse"]
 
 
 static func load_case(path: String) -> Dictionary:
@@ -145,6 +147,8 @@ static func _check_question(question: Dictionary, where: String, problems: Array
 			_check_dialogue(question, where, problems)
 		"gate_check":
 			_check_gate_check(question, where, problems)
+		"permit_check":
+			_check_permit_check(question, where, problems)
 
 
 ## Validates the entries of `list_key` (options or items) and returns their ids.
@@ -269,3 +273,51 @@ static func _check_missing_items(missing: Variant, ppe_ids: Array, where: String
 	for ppe_id in missing:
 		if ppe_id not in ppe_ids:
 			problems.append("%s: missing '%s' is not a ppe_items id" % [where, str(ppe_id)])
+
+
+static func _check_permit_check(question: Dictionary, where: String, problems: Array[String]) -> void:
+	if not question.has("permit_title"):
+		problems.append("%s: missing 'permit_title'" % where)
+	_check_localized(question.get("permit_title"), where + " permit_title", problems)
+	var statuses := _check_permit_checks(question.get("checks"), where, problems)
+	_check_permit_decision(question.get("correct_decision"), statuses, where, problems)
+
+
+## Returns the status of every valid check, so the decision can be checked against them.
+static func _check_permit_checks(checks: Variant, where: String, problems: Array[String]) -> Array[String]:
+	var statuses: Array[String] = []
+	if not checks is Array or checks.is_empty():
+		problems.append("%s: 'checks' must be a non-empty array" % where)
+		return statuses
+	var seen_check_ids: Array = []
+	for check in checks:
+		if not check is Dictionary or not check.has("id"):
+			problems.append("%s: every check needs an 'id'" % where)
+			continue
+		var check_where := "%s check '%s'" % [where, str(check["id"])]
+		if check["id"] in seen_check_ids:
+			problems.append("%s: duplicate check id" % check_where)
+		seen_check_ids.append(check["id"])
+		_check_localized(check.get("text"), check_where + " text", problems)
+		var status := str(check.get("status", ""))
+		if status not in PERMIT_STATUSES:
+			problems.append("%s: status must be ok or not_ok, got '%s'" % [check_where, status])
+		else:
+			statuses.append(status)
+	return statuses
+
+
+# The permit must be refused when any check failed and approved only when every check passed.
+static func _check_permit_decision(
+	decision: Variant, statuses: Array[String], where: String, problems: Array[String]
+) -> void:
+	if str(decision) not in PERMIT_DECISIONS:
+		problems.append("%s: correct_decision must be approve or refuse, got '%s'" % [where, str(decision)])
+		return
+	if statuses.is_empty():
+		return  # the check problems above already explain why there is nothing to compare
+	var expected_decision := "refuse" if "not_ok" in statuses else "approve"
+	if str(decision) != expected_decision:
+		problems.append(
+			"%s: correct_decision is '%s' but the checks require '%s'" % [where, str(decision), expected_decision]
+		)
