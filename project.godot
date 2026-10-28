@@ -7,6 +7,7 @@ config/name="OSH Safety Supervisor"
 config/description="Occupational safety training game for skills trainees in Bangladesh."
 run/main_scene="res://game/main_menu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://assets/icon.png"
 
 [autoload]
 
