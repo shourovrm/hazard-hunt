@@ -81,4 +81,4 @@ The case texts and legal references are drafts. An OSH expert must review them b
 
 ## License
 
-Copyright © 2026 Riad Mashrub Shourov. All rights reserved; see `LICENSE`. The bundled fonts and sounds keep their own licences.
+MIT, see [`LICENSE`](LICENSE). The bundled fonts (SIL Open Font License) and sounds (CC0) keep their own licences.
