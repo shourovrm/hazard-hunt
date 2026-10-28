@@ -1,1 +1,1 @@
-PLACEHOLDER art (replace before release): c02 bg_safe, gate_*_safe, gate_sohel, gate_nayeem_*, gate_sumon, gate_foreman_*, foreman_portrait, ppe/vest
+PLACEHOLDER art (replace before release): c02 bg_safe, gate_rina_safe, gate_jamal_safe, gate_sohel, gate_nayeem_unsafe, gate_nayeem_safe, gate_sumon, gate_foreman_unsafe, gate_foreman_safe, foreman_portrait

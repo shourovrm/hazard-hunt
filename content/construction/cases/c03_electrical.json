@@ -1,0 +1,271 @@
+{
+  "id": "c03_electrical",
+  "sector": "construction",
+  "order": 3,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Temporary Electrical Wiring",
+    "bn": "অস্থায়ী বৈদ্যুতিক তার"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "background": {
+      "unsafe": "res://assets/construction/c03/bg_unsafe.png",
+      "safe": "res://assets/construction/c03/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "electrician",
+        "name": { "en": "Sumon", "bn": "সুমন" },
+        "unsafe": "res://assets/characters/sumon_unsafe.png",
+        "safe": "res://assets/characters/sumon_safe.png",
+        "position": [272, 630],
+        "safe_position": [272, 630],
+        "scale": 0.5,
+        "idle": "work"
+      },
+      {
+        "id": "helper",
+        "name": { "en": "Tanvir", "bn": "তানভীর" },
+        "unsafe": "res://assets/characters/tanvir_unsafe.png",
+        "safe": "res://assets/characters/tanvir_safe.png",
+        "position": [1040, 650],
+        "safe_position": [1040, 650],
+        "scale": 0.5,
+        "idle": "work"
+      }
+    ],
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, the power keeps tripping on the ground floor. Sumon is fixing the board, and Tanvir is drilling the wall. I can see four electrical hazards. Tap each one you find.",
+    "bn": "সুপারভাইজার, নিচতলায় বারবার বিদ্যুৎ চলে যাচ্ছে। সুমন বোর্ড ঠিক করছেন, আর তানভীর দেয়ালে ড্রিল করছেন। আমি চারটি বৈদ্যুতিক বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+  },
+  "hazard_hint": {
+    "en": "Follow the cables: from the board, across the floor, over your head, and into the socket.",
+    "bn": "তারগুলো অনুসরণ করুন: বোর্ড থেকে মেঝে হয়ে, মাথার উপর দিয়ে, সকেট পর্যন্ত।"
+  },
+  "hazards": [
+    {
+      "id": "live_board",
+      "rect": [30, 140, 310, 200],
+      "label": {
+        "en": "Working on a live board without protection",
+        "bn": "সুরক্ষা ছাড়া চালু বোর্ডে কাজ"
+      },
+      "explain": {
+        "en": "Sumon is working inside the board while the power is on, with bare hands and in sandals. One touch on a live part can stop his heart.",
+        "bn": "বিদ্যুৎ চালু রেখেই সুমন খালি হাতে, স্যান্ডেল পরে বোর্ডের ভেতরে কাজ করছেন। চালু অংশে একবার ছোঁয়া লাগলেই হৃৎপিণ্ড থেমে যেতে পারে।"
+      }
+    },
+    {
+      "id": "cable_in_water",
+      "rect": [440, 530, 370, 100],
+      "label": {
+        "en": "Cable lying in water",
+        "bn": "পানিতে পড়ে থাকা তার"
+      },
+      "explain": {
+        "en": "Water conducts electricity. If this cable is damaged, the whole puddle becomes live and can shock anyone who steps in it.",
+        "bn": "পানি বিদ্যুৎ পরিবহন করে। তারটি ক্ষতিগ্রস্ত হলে পুরো পানিতে বিদ্যুৎ ছড়াবে, আর যে পা দেবে সে শক খেতে পারে।"
+      }
+    },
+    {
+      "id": "taped_cable",
+      "rect": [330, 90, 700, 110],
+      "label": {
+        "en": "Damaged cable joined with plastic tape",
+        "bn": "প্লাস্টিক টেপে জোড়া দেওয়া নষ্ট তার"
+      },
+      "explain": {
+        "en": "Tape joints come loose and expose live copper. A damaged cable must be replaced, not taped.",
+        "bn": "টেপের জোড়া খুলে গিয়ে চালু তামার তার বেরিয়ে পড়ে। নষ্ট তার টেপ দিয়ে নয়, বদলে ঠিক করতে হয়।"
+      }
+    },
+    {
+      "id": "bare_wires",
+      "rect": [1050, 540, 160, 110],
+      "label": {
+        "en": "Bare wire ends pushed into a socket",
+        "bn": "প্লাগ ছাড়া খোলা তার সকেটে ঢোকানো"
+      },
+      "explain": {
+        "en": "Without a plug there is no earth connection and the wires can slip out while live. Tanvir's drill gets its power this way.",
+        "bn": "প্লাগ ছাড়া কোনো আর্থিং থাকে না, আর চালু অবস্থায় তার খুলে আসতে পারে। তানভীরের ড্রিল এভাবেই বিদ্যুৎ পাচ্ছে।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "before_repair",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What must Sumon do before he touches anything inside the board?",
+        "bn": "বোর্ডের ভেতরে কিছু ছোঁয়ার আগে সুমনকে কী করতে হবে?"
+      },
+      "options": [
+        { "id": "quick", "text": { "en": "Work fast so he touches the parts for less time", "bn": "তাড়াতাড়ি কাজ করা, যাতে কম সময় ছুঁতে হয়" } },
+        { "id": "watcher", "text": { "en": "Ask Tanvir to watch him while he works", "bn": "কাজের সময় তানভীরকে পাশে দাঁড়িয়ে দেখতে বলা" } },
+        { "id": "isolate", "text": { "en": "Switch off the main supply, lock it, and hang his own tag on it", "bn": "মূল সংযোগ বন্ধ করে তালা দেওয়া এবং নিজের ট্যাগ ঝোলানো" } },
+        { "id": "dry_hands", "text": { "en": "Make sure his hands are dry", "bn": "হাত শুকনো আছে কিনা দেখে নেওয়া" } }
+      ],
+      "correct": "isolate",
+      "hint": {
+        "en": "The safest live wire is one that is not live. How can he make sure nobody switches it back on?",
+        "bn": "সবচেয়ে নিরাপদ তার হলো যেটিতে বিদ্যুৎ নেই। কেউ যেন আবার চালু করতে না পারে, তা কীভাবে নিশ্চিত করবেন?"
+      },
+      "explanation": {
+        "en": "This is called lock-out, tag-out. The lock stops anyone from switching the power back on, and the tag shows who is working.",
+        "bn": "একে লক-আউট, ট্যাগ-আউট বলে। তালা থাকলে কেউ আবার বিদ্যুৎ চালু করতে পারে না, আর ট্যাগ দেখে বোঝা যায় কে কাজ করছেন।"
+      }
+    },
+    {
+      "id": "safe_wiring",
+      "type": "multi_select",
+      "prompt": {
+        "en": "Which changes make the temporary wiring safe?",
+        "bn": "কোন পরিবর্তনগুলো অস্থায়ী তারের ব্যবস্থাকে নিরাপদ করে?"
+      },
+      "options": [
+        { "id": "plugs", "text": { "en": "Use proper plugs, never bare wire ends", "bn": "সবসময় ঠিকঠাক প্লাগ ব্যবহার করা, খোলা তার কখনো নয়" } },
+        { "id": "more_tape", "text": { "en": "Wrap the joints with more plastic tape", "bn": "জোড়াগুলোতে আরও প্লাস্টিক টেপ পেঁচানো" } },
+        { "id": "rcd", "text": { "en": "Fit an earth-leakage circuit breaker at the board", "bn": "বোর্ডে আর্থ-লিকেজ সার্কিট ব্রেকার লাগানো" } },
+        { "id": "bricks", "text": { "en": "Put bricks on the cables so they stay in place", "bn": "তার যেন না সরে, তাই তার উপর ইট চাপা দেওয়া" } },
+        { "id": "route_high", "text": { "en": "Run cables high on hooks, away from water and walkways", "bn": "পানি ও চলাচলের পথ থেকে দূরে, হুকে করে উঁচু দিয়ে তার নেওয়া" } }
+      ],
+      "correct": ["plugs", "rcd", "route_high"],
+      "hint": {
+        "en": "Three answers are correct. Tape and bricks damage cables or hide the damage.",
+        "bn": "তিনটি উত্তর সঠিক। টেপ আর ইট তারের ক্ষতি করে বা ক্ষতি ঢেকে রাখে।"
+      },
+      "explanation": {
+        "en": "An earth-leakage breaker cuts the power in a fraction of a second when current leaks to a person. Plugs and high routing stop the leak from happening.",
+        "bn": "কারও শরীর দিয়ে বিদ্যুৎ লিক হলে আর্থ-লিকেজ ব্রেকার মুহূর্তেই সংযোগ কেটে দেয়। প্লাগ আর উঁচু দিয়ে তার নিলে লিক হওয়াই ঠেকানো যায়।"
+      }
+    },
+    {
+      "id": "persuade_sumon",
+      "type": "dialogue",
+      "npc": "electrician",
+      "npc_name": { "en": "Sumon", "bn": "সুমন" },
+      "npc_portrait": "res://assets/characters/sumon_portrait.png",
+      "prompt": {
+        "en": "Sumon does not want to switch off the power. What do you say?",
+        "bn": "সুমন বিদ্যুৎ বন্ধ করতে চান না। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "If I switch off, the whole floor stops working. I have fixed live boards many times. It's fine.",
+        "bn": "বন্ধ করলে পুরো ফ্লোরের কাজ থেমে যাবে। চালু বোর্ড আমি অনেকবার ঠিক করেছি। কিছু হবে না।"
+      },
+      "choices": [
+        {
+          "id": "gloves_only",
+          "quality": "fail",
+          "text": { "en": "All right, but put on rubber gloves first.", "bn": "ঠিক আছে, তবে আগে রাবারের গ্লাভস পরে নিন।" },
+          "reply": { "en": "Sure, sir.", "bn": "আচ্ছা, স্যার।" },
+          "feedback": {
+            "en": "Gloves alone do not make live work safe. The power must be off and locked.",
+            "bn": "শুধু গ্লাভস পরলেই চালু লাইনে কাজ নিরাপদ হয় না। বিদ্যুৎ বন্ধ করে তালা দিতে হবে।"
+          }
+        },
+        {
+          "id": "threaten",
+          "quality": "ok",
+          "text": { "en": "Switch it off now, or you are off this site.", "bn": "এখনই বন্ধ করুন, নইলে সাইট থেকে বের হয়ে যান।" },
+          "reply": { "en": "...Fine. Switching off.", "bn": "...আচ্ছা। বন্ধ করছি।" },
+          "feedback": {
+            "en": "Sumon switched off, but he is angry and may skip the lock next time.",
+            "bn": "সুমন বন্ধ করলেন, কিন্তু রেগে আছেন। পরের বার হয়তো তালা দেবেন না।"
+          }
+        },
+        {
+          "id": "plan",
+          "quality": "best",
+          "text": {
+            "en": "Nobody works on a live board. Switch off, lock it and hang your tag. I will tell the floor it is a 15-minute break.",
+            "bn": "চালু বোর্ডে কেউ কাজ করবে না। বন্ধ করুন, তালা দিন, নিজের ট্যাগ ঝোলান। আমি ফ্লোরে জানিয়ে দিচ্ছি যে ১৫ মিনিট বিরতি।"
+          },
+          "reply": { "en": "Fifteen minutes is fine. I'll lock it.", "bn": "১৫ মিনিট হলে সমস্যা নেই। তালা দিচ্ছি।" },
+          "feedback": {
+            "en": "You solved his real worry, the stopped work, so he agreed to work safely.",
+            "bn": "আপনি তাঁর আসল দুশ্চিন্তা, মানে কাজ থেমে যাওয়ার সমাধান দিয়েছেন, তাই তিনি নিরাপদে কাজ করতে রাজি হলেন।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Find out what he is worried about, and solve that problem too.",
+        "bn": "তিনি কী নিয়ে চিন্তিত, তা বুঝুন, আর সেই সমস্যারও সমাধান দিন।"
+      },
+      "explanation": {
+        "en": "Live work kills experienced electricians too. Planning a short shutdown removes the reason to take the risk.",
+        "bn": "চালু লাইনে কাজ করতে গিয়ে অভিজ্ঞ ইলেকট্রিশিয়ানও মারা যান। ছোট একটি বিরতির পরিকল্পনা করলে ঝুঁকি নেওয়ার কারণই থাকে না।"
+      }
+    },
+    {
+      "id": "equip_sumon",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/sumon_unsafe.png",
+      "target_image_safe": "res://assets/characters/sumon_safe.png",
+      "prompt": {
+        "en": "Drag the right gear onto Sumon for electrical work.",
+        "bn": "বৈদ্যুতিক কাজের জন্য সঠিক সরঞ্জাম টেনে সুমনের উপর রাখুন।"
+      },
+      "items": [
+        { "id": "work_gloves", "icon": "res://assets/ppe/gloves.png", "text": { "en": "Leather work gloves", "bn": "চামড়ার কাজের গ্লাভস" } },
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } },
+        { "id": "insulating_gloves", "icon": "res://assets/ppe/insulating_gloves.png", "text": { "en": "Rubber insulating gloves", "bn": "রাবারের ইনসুলেটেড গ্লাভস" } },
+        { "id": "earmuffs", "icon": "res://assets/ppe/earmuffs.png", "text": { "en": "Ear muffs", "bn": "ইয়ারমাফ" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Rubber-soled safety boots", "bn": "রাবার-সোলের সেফটি বুট" } }
+      ],
+      "correct": ["helmet", "insulating_gloves", "boots"],
+      "hint": {
+        "en": "Electricity needs a path through the body. Block it at the hands and the feet, and protect the head.",
+        "bn": "বিদ্যুৎ শরীরের ভেতর দিয়ে পথ খোঁজে। হাত ও পায়ে সেই পথ বন্ধ করুন, আর মাথা সুরক্ষিত রাখুন।"
+      },
+      "explanation": {
+        "en": "Rubber insulating gloves and rubber-soled boots block the current. Leather work gloves do not insulate, and they get wet.",
+        "bn": "রাবারের ইনসুলেটেড গ্লাভস ও রাবার-সোলের বুট বিদ্যুৎ আটকায়। চামড়ার গ্লাভস বিদ্যুৎ আটকায় না, আর সহজে ভিজে যায়।"
+      }
+    },
+    {
+      "id": "shock_first_aid",
+      "type": "single_choice",
+      "prompt": {
+        "en": "Tanvir gets a shock from the drill and cannot let go. What do you do first?",
+        "bn": "ড্রিল থেকে তানভীর শক খেয়েছেন এবং ছাড়তে পারছেন না। আপনি প্রথমে কী করবেন?"
+      },
+      "options": [
+        { "id": "pull", "text": { "en": "Grab him and pull him away", "bn": "তাঁকে ধরে টেনে সরিয়ে আনা" } },
+        { "id": "water", "text": { "en": "Throw water on him", "bn": "তাঁর গায়ে পানি ঢালা" } },
+        { "id": "switch_off", "text": { "en": "Switch off the power, or push the cable away with a dry piece of wood", "bn": "বিদ্যুৎ বন্ধ করা, অথবা শুকনো কাঠ দিয়ে তারটি সরিয়ে দেওয়া" } },
+        { "id": "call", "text": { "en": "Phone the site office and wait", "bn": "সাইট অফিসে ফোন করে অপেক্ষা করা" } }
+      ],
+      "correct": "switch_off",
+      "hint": {
+        "en": "If you touch him while the current flows, it flows through you too.",
+        "bn": "বিদ্যুৎ চলার সময় তাঁকে ছুঁলে বিদ্যুৎ আপনার শরীর দিয়েও যাবে।"
+      },
+      "explanation": {
+        "en": "Break the current first without touching him. Then call for medical help and start first aid if he is not breathing.",
+        "bn": "আগে তাঁকে না ছুঁয়ে বিদ্যুৎ সংযোগ বিচ্ছিন্ন করুন। তারপর চিকিৎসা সহায়তা ডাকুন, আর শ্বাস না নিলে প্রাথমিক চিকিৎসা শুরু করুন।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Well done. The board is locked off for repair, and every cable is safe and out of the way.",
+      "bn": "চমৎকার। মেরামতের জন্য বোর্ড তালাবদ্ধ, আর সব তার নিরাপদে সরিয়ে রাখা হয়েছে।"
+    },
+    "fixes": [
+      { "en": "Main supply switched off, locked and tagged during repair", "bn": "মেরামতের সময় মূল সংযোগ বন্ধ, তালাবদ্ধ ও ট্যাগ লাগানো" },
+      { "en": "Earth-leakage breaker fitted at the board", "bn": "বোর্ডে আর্থ-লিকেজ ব্রেকার লাগানো হয়েছে" },
+      { "en": "Cables run high on hooks, away from water; the taped cable is replaced", "bn": "তার পানি থেকে দূরে, হুকে করে উঁচু দিয়ে নেওয়া হয়েছে; টেপ লাগানো তার বদলানো হয়েছে" },
+      { "en": "The drill uses a proper plug; Sumon and Tanvir wear the right PPE", "bn": "ড্রিলে ঠিকঠাক প্লাগ লাগানো; সুমন ও তানভীর সঠিক সরঞ্জাম পরেছেন" }
+    ],
+    "references": [
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety",
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety"
+    ]
+  }
+}

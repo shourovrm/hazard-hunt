@@ -960,6 +960,9 @@ func _hazard_by_id(hazard_id: String) -> Dictionary:
 
 
 func _union_of_hazard_rects(hazards: Array) -> Rect2:
+	# Cases without hazards (the gate check) frame the whole scene instead.
+	if hazards.is_empty():
+		return Rect2(Vector2.ZERO, Vector2(1280, 720))
 	var bounds := _rect_from(hazards[0]["rect"])
 	for hazard: Dictionary in hazards:
 		bounds = bounds.merge(_rect_from(hazard["rect"]))

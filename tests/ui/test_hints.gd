@@ -3,6 +3,7 @@ extends RefCounted
 const CASE_PATHS := [
 	"res://content/construction/cases/c01_bamboo_scaffold.json",
 	"res://content/construction/cases/c02_gate_check.json",
+	"res://content/construction/cases/c03_electrical.json",
 ]
 
 var t

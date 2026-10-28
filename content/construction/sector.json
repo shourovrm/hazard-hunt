@@ -6,16 +6,13 @@
   },
   "cases": [
     "res://content/construction/cases/c01_bamboo_scaffold.json",
-    "res://content/construction/cases/c02_gate_check.json"
+    "res://content/construction/cases/c02_gate_check.json",
+    "res://content/construction/cases/c03_electrical.json"
   ],
   "coming_soon": [
     {
       "en": "Trench digging",
       "bn": "পরিখা খনন"
-    },
-    {
-      "en": "Electrical cables on site",
-      "bn": "সাইটে বৈদ্যুতিক তার"
     }
   ]
 }
