@@ -24,24 +24,6 @@ func _collect_resource_paths(value: Variant, found: Array[String]) -> void:
 			_collect_resource_paths(item, found)
 
 
-func _perfect_answer(question: Dictionary) -> Variant:
-	match question["type"]:
-		"single_choice", "multi_select", "drag_ppe":
-			return question["correct"]
-		"ordering":
-			return question["correct_order"]
-		"dialogue":
-			for choice in question["choices"]:
-				if choice["quality"] == "best":
-					return choice["id"]
-		"gate_check":
-			var answer := {}
-			for worker in question["workers"]:
-				answer[worker["id"]] = worker["missing"]
-			return answer
-	return null
-
-
 func test_every_case_is_valid() -> void:
 	for path in _case_paths():
 		var case_data := CaseLoader.load_case(path)
@@ -67,7 +49,7 @@ func test_every_case_can_be_won_with_three_stars() -> void:
 			t.assert_true(session.finish_hazard_hunt(), "hazards not all findable by centre tap in %s" % path)
 		var moved := true
 		while moved:
-			session.submit_answer(_perfect_answer(session.current_question()))
+			session.submit_answer(CaseSession.correct_answer(session.current_question()))
 			moved = session.next_question()
 		session.finish_reveal()
 		t.assert_eq(session.stars(), 3, path)
