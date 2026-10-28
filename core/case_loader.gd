@@ -4,9 +4,12 @@ extends RefCounted
 ## enough to play, so the UI never meets missing data.
 
 const REQUIRED_CASE_KEYS: Array[String] = ["id", "title", "scene", "intro", "hazards", "questions", "outcome"]
-const QUESTION_TYPES: Array[String] = ["single_choice", "multi_select", "ordering", "dialogue", "drag_ppe"]
+const QUESTION_TYPES: Array[String] = [
+	"single_choice", "multi_select", "ordering", "dialogue", "drag_ppe", "gate_check"
+]
 const DIALOGUE_QUALITIES: Array[String] = ["best", "ok", "fail"]
 const REQUIRED_LANGUAGES: Array[String] = ["en", "bn"]
+const GATE_WORKER_KEYS: Array[String] = ["id", "name", "image", "image_safe", "missing", "feedback"]
 
 
 static func load_case(path: String) -> Dictionary:
@@ -68,8 +71,9 @@ static func _check_localized(value: Variant, where: String, problems: Array[Stri
 static func _check_hazards(hazards: Variant, problems: Array[String]) -> void:
 	if hazards == null:
 		return
-	if not hazards is Array or hazards.is_empty():
-		problems.append("hazards: expected a non-empty array")
+	# An empty list is valid: a case such as the morning gate check has no hunt.
+	if not hazards is Array:
+		problems.append("hazards: expected an array")
 		return
 	for hazard in hazards:
 		if not hazard is Dictionary:
@@ -139,6 +143,8 @@ static func _check_question(question: Dictionary, where: String, problems: Array
 			_check_ordering(question, where, problems)
 		"dialogue":
 			_check_dialogue(question, where, problems)
+		"gate_check":
+			_check_gate_check(question, where, problems)
 
 
 ## Validates the entries of `list_key` (options or items) and returns their ids.
@@ -213,3 +219,53 @@ static func _check_dialogue(question: Dictionary, where: String, problems: Array
 			best_count += 1
 	if best_count == 0:
 		problems.append("%s: needs at least one choice with quality 'best'" % where)
+
+
+static func _check_gate_check(question: Dictionary, where: String, problems: Array[String]) -> void:
+	var ppe_ids := _check_entries(question, "ppe_items", where, problems)
+	_check_ppe_icons(question.get("ppe_items"), where, problems)
+	_check_gate_workers(question.get("workers"), ppe_ids, where, problems)
+
+
+static func _check_ppe_icons(ppe_items: Variant, where: String, problems: Array[String]) -> void:
+	if not ppe_items is Array:
+		return  # _check_entries already reported the missing array
+	for item in ppe_items:
+		if not item is Dictionary:
+			continue  # _check_entries already reported the bad entry
+		var icon: Variant = item.get("icon")
+		if not icon is String or icon == "":
+			problems.append("%s: ppe item '%s' needs an 'icon' path" % [where, str(item.get("id", "?"))])
+
+
+static func _check_gate_workers(workers: Variant, ppe_ids: Array, where: String, problems: Array[String]) -> void:
+	if not workers is Array or workers.is_empty():
+		problems.append("%s: 'workers' must be a non-empty array" % where)
+		return
+	var seen_worker_ids: Array = []
+	for worker in workers:
+		if not worker is Dictionary:
+			problems.append("%s: every worker must be an object" % where)
+			continue
+		var worker_where := "%s worker '%s'" % [where, str(worker.get("id", "?"))]
+		for key in GATE_WORKER_KEYS:
+			if not worker.has(key):
+				problems.append("%s: missing '%s'" % [worker_where, key])
+		if worker.has("id"):
+			if worker["id"] in seen_worker_ids:
+				problems.append("%s: duplicate worker id" % worker_where)
+			seen_worker_ids.append(worker["id"])
+		_check_localized(worker.get("name"), worker_where + " name", problems)
+		_check_localized(worker.get("feedback"), worker_where + " feedback", problems)
+		_check_missing_items(worker.get("missing"), ppe_ids, worker_where, problems)
+
+
+static func _check_missing_items(missing: Variant, ppe_ids: Array, where: String, problems: Array[String]) -> void:
+	if missing == null:
+		return  # a missing key is reported by the caller
+	if not missing is Array:
+		problems.append("%s: 'missing' must be an array of ppe ids" % where)
+		return
+	for ppe_id in missing:
+		if ppe_id not in ppe_ids:
+			problems.append("%s: missing '%s' is not a ppe_items id" % [where, str(ppe_id)])

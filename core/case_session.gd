@@ -28,6 +28,10 @@ func _init(new_case_data: Dictionary) -> void:
 func begin_hazard_hunt() -> void:
 	if not _require_phase(Phase.INTRO, "begin_hazard_hunt"):
 		return
+	# With no hazards there is nothing to hunt, so the intro leads straight to the questions.
+	if case_data["hazards"].is_empty():
+		_change_phase(Phase.QUESTIONS)
+		return
 	_change_phase(Phase.HAZARD_HUNT)
 
 
@@ -85,7 +89,7 @@ func submit_answer(answer: Variant) -> Dictionary:
 		return _last_correct_result
 	var question: Dictionary = case_data["questions"][_question_index]
 	var result_data := _evaluate_answer(question, answer)
-	_mistake_count += _mistakes_for_result(result_data)
+	_mistake_count += _mistakes_for_answer(question, answer, result_data)
 	if result_data["correct"]:
 		_current_question_answered = true
 		_last_correct_result = result_data
@@ -193,6 +197,8 @@ func _evaluate_answer(question: Dictionary, answer: Variant) -> Dictionary:
 	if question["type"] == "dialogue":
 		chosen_choice = _find_choice(question, answer)
 		quality = chosen_choice.get("quality", "fail")
+	elif question["type"] == "gate_check":
+		quality = _gate_check_quality(question, answer)
 	elif _is_correct_non_dialogue(question, answer):
 		quality = "best"
 	var correct := quality != "fail"
@@ -206,11 +212,47 @@ func _evaluate_answer(question: Dictionary, answer: Variant) -> Dictionary:
 	}
 
 
-func _mistakes_for_result(result_data: Dictionary) -> int:
-	# A wrong answer and a merely acceptable ("ok") dialogue choice each cost one mistake.
-	if not result_data["correct"] or result_data["quality"] == "ok":
+func _mistakes_for_answer(question: Dictionary, answer: Variant, result_data: Dictionary) -> int:
+	# A wrong submission costs one mistake. A complete gate check costs one per worker whose
+	# first decision was wrong. A merely acceptable ("ok") dialogue choice costs one.
+	if not result_data["correct"]:
+		return 1
+	if question["type"] == "gate_check":
+		return _count_wrong_workers(question, answer)
+	if result_data["quality"] == "ok":
 		return 1
 	return 0
+
+
+# Quality for a gate check: "fail" when a worker is missing from the answer, else "best" when
+# every first decision matched and "ok" when some did not.
+func _gate_check_quality(question: Dictionary, answer: Variant) -> String:
+	if not answer is Dictionary:
+		push_error("CaseSession: gate_check '%s' needs a Dictionary answer, got %s" % [question["id"], str(answer)])
+		return "fail"
+	for worker in question["workers"]:
+		if not answer.has(worker["id"]):
+			return "fail"
+		if not answer[worker["id"]] is Array:
+			push_error(
+				(
+					"CaseSession: gate_check '%s' answer for worker '%s' must be an Array"
+					% [question["id"], str(worker["id"])]
+				)
+			)
+			return "fail"
+	if _count_wrong_workers(question, answer) == 0:
+		return "best"
+	return "ok"
+
+
+func _count_wrong_workers(question: Dictionary, answer: Dictionary) -> int:
+	var wrong_worker_count := 0
+	for worker in question["workers"]:
+		var marked_ids := _as_sorted_strings(answer[worker["id"]])
+		if marked_ids != _as_sorted_strings(worker["missing"]):
+			wrong_worker_count += 1
+	return wrong_worker_count
 
 
 func _find_choice(question: Dictionary, choice_id: Variant) -> Dictionary:
