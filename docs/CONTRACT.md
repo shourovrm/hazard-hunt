@@ -298,3 +298,33 @@ Hints never change scoring: they add no mistake and do not lower stars.
 - Case player, HAZARD_HUNT: a Hint button (`Loc.ui("hint_button")`) next to the hazard counter.
   Pressing it, or calling `request_hint()`, pulses the ring at `session.hint_hazard_id()` and the
   mentor shows `hazard_hint`. It does not change `session.mistakes()`. Hidden outside the hunt.
+
+## Permit check question type (`permit_check`)
+
+Reference data: the `dig_permit` question in `content/construction/cases/c04_trench.json`.
+The player inspects the scene, marks each permit condition OK or Not OK, then approves or refuses.
+
+### Core
+
+- `validate`: `permit_title` localized (en, bn); `checks` is a non-empty array of
+  `{id, text, status}` with unique ids, `text` localized, `status` either `"ok"` or `"not_ok"`;
+  `correct_decision` is `"approve"` or `"refuse"`, and it must be `"refuse"` when any check is
+  `"not_ok"` and `"approve"` when all are `"ok"` (report a mismatch).
+- Answer shape: `{"marks": {check_id: "ok" | "not_ok", ...}, "decision": "approve" | "refuse"}`.
+- `submit_answer`: correct only when every check id is marked with its `status` and `decision`
+  equals `correct_decision`. Otherwise the normal wrong result (hint, +1 mistake, retry).
+
+### Widget (`ui/questions/permit_check_view.gd`, registered in QuestionFactory)
+
+- Looks like a paper permit form inside the panel: `permit_title` as a heading, then one row per
+  check: the check text and two toggle buttons `Loc.ui("check_ok")` and `Loc.ui("check_not_ok")`
+  (exactly one can be selected per row; 64 px+ touch height; text wraps).
+- Below: two buttons, `Loc.ui("approve_permit")` and `Loc.ui("refuse_permit")` (refuse uses the
+  PrimaryButton look). Both are disabled until every row is marked. Pressing one sets the
+  decision and calls `submit()`. There is no separate Submit button (`_uses_submit_button()`
+  false). The Hint button from QuestionView stays.
+- Wrong result: try_again + hint, marks stay editable. Correct result: lock, explanation, and
+  each row shows its correct status in green (OK) or red (Not OK).
+- Test hooks: `set_mark(check_id: String, status: String)`, `choose_decision(decision: String)`
+  (sets the decision and submits, only if all rows are marked), plus the usual
+  `get_answer()` / `set_answer(answer)` with the answer shape above.

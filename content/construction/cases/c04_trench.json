@@ -1,0 +1,277 @@
+{
+  "id": "c04_trench",
+  "sector": "construction",
+  "order": 4,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Foundation Trench",
+    "bn": "ভিত্তির পরিখা"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "background": {
+      "unsafe": "res://assets/construction/c04/bg_unsafe.png",
+      "safe": "res://assets/construction/c04/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "digger",
+        "name": { "en": "Jamal", "bn": "জামাল" },
+        "unsafe": "res://assets/characters/jamal_dig_unsafe.png",
+        "safe": "res://assets/characters/jamal_dig_safe.png",
+        "position": [640, 682],
+        "safe_position": [640, 682],
+        "scale": 0.5,
+        "idle": "work"
+      },
+      {
+        "id": "carrier",
+        "name": { "en": "Rina", "bn": "রিনা" },
+        "unsafe": "res://assets/characters/rina_carry_unsafe.png",
+        "safe": "res://assets/characters/rina_carry_safe.png",
+        "position": [1060, 472],
+        "safe_position": [1190, 472],
+        "scale": 0.5,
+        "idle": "breathe"
+      }
+    ],
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, Jamal's crew is digging the foundation trench. It is already two metres deep, and they want to go deeper today. Before you sign their permit, look around. I can see four hazards.",
+    "bn": "সুপারভাইজার, জামালের দল ভিত্তির পরিখা খুঁড়ছে। এটি এখনই দুই মিটার গভীর, আর আজ তারা আরও গভীরে যেতে চায়। তাদের পারমিটে সই করার আগে চারপাশ দেখুন। আমি চারটি বিপদ দেখছি।"
+  },
+  "hazard_hint": {
+    "en": "Look at the trench walls, the way in and out, the soil pile, and the edge.",
+    "bn": "পরিখার দেয়াল, ঢোকা-বের হওয়ার পথ, মাটির স্তূপ আর কিনারা দেখুন।"
+  },
+  "hazards": [
+    {
+      "id": "no_shoring",
+      "rect": [300, 465, 110, 220],
+      "label": {
+        "en": "Unsupported trench wall with a crack",
+        "bn": "ঠেস ছাড়া পরিখার দেয়ালে ফাটল"
+      },
+      "explain": {
+        "en": "The walls are straight and have no supports. The crack shows the soil is already moving. A collapse can bury Jamal in seconds.",
+        "bn": "দেয়ালগুলো খাড়া, কোনো ঠেস নেই। ফাটল দেখাচ্ছে মাটি ইতিমধ্যে সরছে। ধসে পড়লে কয়েক সেকেন্ডে জামাল চাপা পড়তে পারেন।"
+      }
+    },
+    {
+      "id": "spoil_at_edge",
+      "rect": [0, 300, 345, 170],
+      "label": {
+        "en": "Dug soil piled at the trench edge",
+        "bn": "পরিখার কিনারায় খোঁড়া মাটির স্তূপ"
+      },
+      "explain": {
+        "en": "The heavy soil pile pushes on the trench wall and can slide back into the trench.",
+        "bn": "ভারী মাটির স্তূপ পরিখার দেয়ালে চাপ দেয়, আর গড়িয়ে আবার পরিখায় পড়তে পারে।"
+      }
+    },
+    {
+      "id": "no_ladder",
+      "rect": [375, 545, 110, 90],
+      "label": {
+        "en": "Loose bricks used as steps",
+        "bn": "সিঁড়ির বদলে আলগা ইট"
+      },
+      "explain": {
+        "en": "There is no ladder. If the wall starts to fall, Jamal has no quick way out.",
+        "bn": "কোনো মই নেই। দেয়াল ধসে পড়তে শুরু করলে জামালের দ্রুত বের হওয়ার উপায় নেই।"
+      }
+    },
+    {
+      "id": "open_edge",
+      "rect": [1000, 250, 120, 225],
+      "label": {
+        "en": "Walking at an unfenced trench edge",
+        "bn": "বেড়া ছাড়া পরিখার কিনারা দিয়ে হাঁটা"
+      },
+      "explain": {
+        "en": "Rina walks along the edge carrying a heavy load, with no barrier and no helmet. One slip and she falls two metres.",
+        "bn": "রিনা ভারী বোঝা নিয়ে কিনারা দিয়ে হাঁটছেন, কোনো বেড়া নেই, হেলমেটও নেই। একবার পা পিছলালেই দুই মিটার নিচে পড়বেন।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "dig_permit",
+      "type": "permit_check",
+      "prompt": {
+        "en": "Jamal's crew asks for a permit to dig deeper. Check each condition, then approve or refuse the permit.",
+        "bn": "জামালের দল আরও গভীরে খোঁড়ার পারমিট চাইছে। প্রতিটি শর্ত যাচাই করুন, তারপর পারমিট অনুমোদন বা বাতিল করুন।"
+      },
+      "permit_title": {
+        "en": "Permit to work: deepen trench to 3 m",
+        "bn": "কাজের পারমিট: পরিখা ৩ মিটার পর্যন্ত গভীর করা"
+      },
+      "checks": [
+        {
+          "id": "shoring",
+          "text": { "en": "Trench walls are shored or cut back at a safe slope", "bn": "পরিখার দেয়ালে ঠেস দেওয়া আছে বা নিরাপদ ঢালে কাটা" },
+          "status": "not_ok"
+        },
+        {
+          "id": "ladder",
+          "text": { "en": "A ladder is in place and reaches above the edge", "bn": "মই লাগানো আছে এবং কিনারার উপর পর্যন্ত পৌঁছায়" },
+          "status": "not_ok"
+        },
+        {
+          "id": "spoil",
+          "text": { "en": "Dug soil is kept back from the edge", "bn": "খোঁড়া মাটি কিনারা থেকে দূরে রাখা" },
+          "status": "not_ok"
+        },
+        {
+          "id": "utilities",
+          "text": { "en": "Underground cables and pipes were checked before digging", "bn": "খোঁড়ার আগে মাটির নিচের তার ও পাইপ পরীক্ষা করা হয়েছে" },
+          "status": "ok"
+        },
+        {
+          "id": "barrier",
+          "text": { "en": "The edge has a barrier and warning signs", "bn": "কিনারায় বেড়া ও সতর্কচিহ্ন আছে" },
+          "status": "not_ok"
+        },
+        {
+          "id": "water",
+          "text": { "en": "Water is pumped out of the trench", "bn": "পরিখা থেকে পানি সেচে ফেলা হয়েছে" },
+          "status": "not_ok"
+        }
+      ],
+      "correct_decision": "refuse",
+      "hint": {
+        "en": "Compare each line with the scene. The site office has confirmed the cable and pipe check.",
+        "bn": "প্রতিটি লাইন দৃশ্যের সঙ্গে মিলিয়ে দেখুন। তার ও পাইপ পরীক্ষার বিষয়টি সাইট অফিস নিশ্চিত করেছে।"
+      },
+      "explanation": {
+        "en": "A permit is only signed when every condition is met. Here five of six are missing, so the permit is refused until they are fixed.",
+        "bn": "সব শর্ত পূরণ হলেই কেবল পারমিটে সই করা হয়। এখানে ছয়টির মধ্যে পাঁচটিই পূরণ হয়নি, তাই ঠিক না হওয়া পর্যন্ত পারমিট বাতিল।"
+      }
+    },
+    {
+      "id": "persuade_jamal",
+      "type": "dialogue",
+      "npc": "digger",
+      "npc_name": { "en": "Jamal", "bn": "জামাল" },
+      "npc_portrait": "res://assets/characters/jamal_portrait.png",
+      "prompt": {
+        "en": "Jamal is unhappy that you refused the permit. What do you say?",
+        "bn": "পারমিট বাতিল করায় জামাল অসন্তুষ্ট। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "We always dig like this. The soil here is hard. Shoring will waste half a day.",
+        "bn": "আমরা সবসময় এভাবেই খুঁড়ি। এখানকার মাটি শক্ত। ঠেস দিতে গেলে অর্ধেক দিন নষ্ট হবে।"
+      },
+      "choices": [
+        {
+          "id": "explain",
+          "quality": "best",
+          "text": {
+            "en": "Hard soil still collapses, and that crack shows it is moving. Let's shore it together this morning, then you can dig all afternoon.",
+            "bn": "শক্ত মাটিও ধসে পড়ে, আর ওই ফাটল দেখাচ্ছে মাটি সরছে। চলুন সকালে একসঙ্গে ঠেস দিই, তারপর বিকেল জুড়ে খুঁড়তে পারবেন।"
+          },
+          "reply": { "en": "If you help us set it up, fine.", "bn": "আপনি সাহায্য করলে, ঠিক আছে।" },
+          "feedback": {
+            "en": "You gave a reason he can see and a plan that keeps the work moving.",
+            "bn": "আপনি এমন কারণ দেখিয়েছেন যা তিনি নিজের চোখে দেখতে পান, আর এমন পরিকল্পনা দিয়েছেন যাতে কাজ থেমে থাকে না।"
+          }
+        },
+        {
+          "id": "careful",
+          "quality": "fail",
+          "text": { "en": "All right, dig, but watch the walls.", "bn": "ঠিক আছে, খুঁড়ুন, তবে দেয়ালের দিকে খেয়াল রাখবেন।" },
+          "reply": { "en": "Don't worry, sir.", "bn": "চিন্তা করবেন না, স্যার।" },
+          "feedback": {
+            "en": "A trench wall can fall faster than anyone can run. Watching is not protection.",
+            "bn": "পরিখার দেয়াল এত দ্রুত ধসে পড়তে পারে যে কেউ দৌড়ে বাঁচতে পারে না। শুধু খেয়াল রাখা কোনো সুরক্ষা নয়।"
+          }
+        },
+        {
+          "id": "order",
+          "quality": "ok",
+          "text": { "en": "No permit, no digging. That is final.", "bn": "পারমিট নেই, খোঁড়াও নেই। এটাই শেষ কথা।" },
+          "reply": { "en": "...Fine. We'll wait.", "bn": "...আচ্ছা। আমরা অপেক্ষা করব।" },
+          "feedback": {
+            "en": "Work stopped, which is correct, but Jamal does not understand why. Explain and help him fix it.",
+            "bn": "কাজ থামানো ঠিক হয়েছে, কিন্তু জামাল কারণ বোঝেননি। কারণ বুঝিয়ে ঠিক করতে সাহায্য করুন।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Point to what he can see himself, and offer a way to finish the work safely.",
+        "bn": "তিনি নিজে যা দেখতে পান তা দেখান, আর নিরাপদে কাজ শেষ করার উপায় দিন।"
+      },
+      "explanation": {
+        "en": "Trench collapses kill without warning. Shoring takes hours; a collapse rescue can take a life.",
+        "bn": "পরিখা ধস কোনো সতর্কতা ছাড়াই প্রাণ নেয়। ঠেস দিতে কয়েক ঘণ্টা লাগে; ধসের উদ্ধারে একটি জীবন চলে যেতে পারে।"
+      }
+    },
+    {
+      "id": "collapse_response",
+      "type": "single_choice",
+      "prompt": {
+        "en": "Part of a trench wall falls and covers a worker's legs. What should the crew do first?",
+        "bn": "পরিখার দেয়ালের একাংশ ধসে একজন শ্রমিকের পা চাপা পড়েছে। দলটির প্রথমে কী করা উচিত?"
+      },
+      "options": [
+        { "id": "jump_in", "text": { "en": "Everyone jumps in and digs him out with their hands", "bn": "সবাই নেমে হাত দিয়ে মাটি সরিয়ে তাঁকে বের করা" } },
+        { "id": "pull", "text": { "en": "Pull him out by the arms straight away", "bn": "সঙ্গে সঙ্গে হাত ধরে টেনে বের করা" } },
+        { "id": "secure", "text": { "en": "Call for help, keep people back from the edge, and support the wall before going in", "bn": "সাহায্য ডাকা, সবাইকে কিনারা থেকে দূরে রাখা, আর নামার আগে দেয়ালে ঠেস দেওয়া" } },
+        { "id": "wait", "text": { "en": "Wait for the soil to dry", "bn": "মাটি শুকানোর অপেক্ষা করা" } }
+      ],
+      "correct": "secure",
+      "hint": {
+        "en": "A second collapse often follows the first. Who else could be buried?",
+        "bn": "প্রথম ধসের পর প্রায়ই আরেকটি ধস হয়। আর কে চাপা পড়তে পারেন?"
+      },
+      "explanation": {
+        "en": "Many trench deaths are rescuers caught by a second collapse. Make the trench safe first, then rescue.",
+        "bn": "পরিখায় অনেক মৃত্যু হয় উদ্ধারকারীদের, যারা দ্বিতীয় ধসে চাপা পড়েন। আগে পরিখা নিরাপদ করুন, তারপর উদ্ধার।"
+      }
+    },
+    {
+      "id": "equip_rina",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/rina_carry_unsafe.png",
+      "target_image_safe": "res://assets/characters/rina_carry_safe.png",
+      "prompt": {
+        "en": "Drag the right gear onto Rina before she carries soil again.",
+        "bn": "রিনা আবার মাটি বহন করার আগে সঠিক সরঞ্জাম টেনে তাঁর উপর রাখুন।"
+      },
+      "items": [
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } },
+        { "id": "welding_mask", "icon": "res://assets/ppe/welding_mask.png", "text": { "en": "Welding mask", "bn": "ওয়েল্ডিং মাস্ক" } },
+        { "id": "vest", "icon": "res://assets/ppe/vest.png", "text": { "en": "Hi-vis vest", "bn": "হাই-ভিজ ভেস্ট" } },
+        { "id": "insulating_gloves", "icon": "res://assets/ppe/insulating_gloves.png", "text": { "en": "Rubber insulating gloves", "bn": "রাবারের ইনসুলেটেড গ্লাভস" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Safety boots", "bn": "সেফটি বুট" } }
+      ],
+      "correct": ["helmet", "vest", "boots"],
+      "hint": {
+        "en": "She is near an open trench and machines. Think head, visibility and feet.",
+        "bn": "তিনি খোলা পরিখা ও যন্ত্রের কাছে আছেন। মাথা, দৃশ্যমানতা আর পায়ের কথা ভাবুন।"
+      },
+      "explanation": {
+        "en": "A helmet protects against falling soil and tools, a vest makes her visible to drivers, and boots protect her feet on rough ground.",
+        "bn": "হেলমেট পড়ন্ত মাটি ও যন্ত্রপাতি থেকে, ভেস্ট চালকদের চোখে পড়তে, আর বুট এবড়োখেবড়ো মাটিতে পা রক্ষা করে।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Good decision. The trench is shored, the edge is fenced, and now the permit can be signed.",
+      "bn": "ভালো সিদ্ধান্ত। পরিখায় ঠেস দেওয়া হয়েছে, কিনারায় বেড়া লেগেছে, এখন পারমিটে সই করা যায়।"
+    },
+    "fixes": [
+      { "en": "Trench walls shored with timber and steel props", "bn": "কাঠ ও স্টিলের ঠেস দিয়ে পরিখার দেয়াল আটকানো" },
+      { "en": "A proper ladder fixed in the trench; water pumped out", "bn": "পরিখায় ঠিকঠাক মই লাগানো; পানি সেচে ফেলা" },
+      { "en": "Soil pile moved back from the edge", "bn": "মাটির স্তূপ কিনারা থেকে সরানো" },
+      { "en": "Edge fenced with warning signs; Rina and Jamal wear their PPE", "bn": "কিনারায় সতর্কচিহ্নসহ বেড়া; রিনা ও জামাল সুরক্ষা সরঞ্জাম পরেছেন" }
+    ],
+    "references": [
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety",
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety"
+    ]
+  }
+}

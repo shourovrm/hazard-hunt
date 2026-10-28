@@ -162,5 +162,21 @@
   "hint_button": {
     "en": "Hint",
     "bn": "ইঙ্গিত"
+  },
+  "check_ok": {
+    "en": "OK",
+    "bn": "ঠিক আছে"
+  },
+  "check_not_ok": {
+    "en": "Not OK",
+    "bn": "ঠিক নেই"
+  },
+  "approve_permit": {
+    "en": "Approve permit",
+    "bn": "পারমিট অনুমোদন"
+  },
+  "refuse_permit": {
+    "en": "Refuse permit",
+    "bn": "পারমিট বাতিল"
   }
 }
