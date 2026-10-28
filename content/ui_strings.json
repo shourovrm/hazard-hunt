@@ -214,5 +214,33 @@
   "leave": {
     "en": "Leave",
     "bn": "ছেড়ে যান"
+  },
+  "tap_to_flip": {
+    "en": "Tap a photo to turn it over",
+    "bn": "ছবিতে ট্যাপ করে উল্টে দেখুন"
+  },
+  "cards_seen": {
+    "en": "{seen} of {total} photos studied",
+    "bn": "{total}টির মধ্যে {seen}টি ছবি দেখা হয়েছে"
+  },
+  "done_studying": {
+    "en": "I have studied the evidence",
+    "bn": "প্রমাণ দেখা শেষ"
+  },
+  "why_slot": {
+    "en": "Why? ({number})",
+    "bn": "কেন? ({number})"
+  },
+  "what_happened": {
+    "en": "What happened",
+    "bn": "কী ঘটেছে"
+  },
+  "root_cause": {
+    "en": "Root cause",
+    "bn": "মূল কারণ"
+  },
+  "clear_chain": {
+    "en": "Clear",
+    "bn": "মুছে ফেলুন"
   }
 }

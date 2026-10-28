@@ -5,6 +5,7 @@ const CASE_PATHS := [
 	"res://content/construction/cases/c02_gate_check.json",
 	"res://content/construction/cases/c03_electrical.json",
 	"res://content/construction/cases/c04_trench.json",
+	"res://content/construction/cases/c12_near_miss_investigation.json",
 ]
 
 var t

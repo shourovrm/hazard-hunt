@@ -1,0 +1,297 @@
+{
+  "id": "c12_near_miss_investigation",
+  "sector": "construction",
+  "order": 12,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Near-Miss Investigation",
+    "bn": "অল্পের জন্য দুর্ঘটনা: তদন্ত"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "motion_style": "paper",
+    "background": {
+      "unsafe": "res://assets/construction/c12/bg_office.png",
+      "safe": "res://assets/construction/c12/bg_safe.png"
+    },
+    "actors": [],
+    "ambient": [],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, yesterday a steel rod fell from the fifth floor onto the public footpath. It landed next to a man with his shopping. Nobody was hurt, this time. Let's find out why it happened, so it never happens again.",
+    "bn": "সুপারভাইজার, গতকাল পাঁচতলা থেকে একটি রড জনসাধারণের ফুটপাতে পড়েছে। বাজার হাতে এক ব্যক্তির ঠিক পাশে পড়েছে। এবার কেউ আহত হননি। চলুন খুঁজে বের করি কেন এমন হলো, যাতে আর কখনো না হয়।"
+  },
+  "hazards": [],
+  "questions": [
+    {
+      "id": "study_evidence",
+      "type": "evidence_board",
+      "prompt": {
+        "en": "Study the evidence. Tap each photo to turn it over and read what it shows.",
+        "bn": "প্রমাণগুলো দেখুন। প্রতিটি ছবিতে ট্যাপ করে উল্টে দেখুন, কী দেখা যাচ্ছে পড়ুন।"
+      },
+      "cards": [
+        {
+          "id": "rods_loose",
+          "image": "res://assets/construction/c12/card_rods_loose.png",
+          "caption": { "en": "Rods were stacked loose, not tied, right at the slab edge.", "bn": "রডগুলো বাঁধা ছাড়া, ঠিক মেঝের কিনারায় আলগা করে রাখা ছিল।" }
+        },
+        {
+          "id": "open_edge",
+          "image": "res://assets/construction/c12/card_open_edge.png",
+          "caption": { "en": "The fifth-floor edge has no toe board and no safety net.", "bn": "পাঁচতলার কিনারায় কোনো টো-বোর্ড বা সেফটি নেট নেই।" }
+        },
+        {
+          "id": "passer_by",
+          "image": "res://assets/construction/c12/card_passer_by.png",
+          "caption": { "en": "The rod landed on the open public footpath, a step from a passer-by.", "bn": "রডটি খোলা জনসাধারণের ফুটপাতে, এক পথচারীর এক পা দূরে পড়েছে।" }
+        },
+        {
+          "id": "hand_rope",
+          "image": "res://assets/construction/c12/card_hand_rope.png",
+          "caption": { "en": "Rods were being pulled up by hand with a rope, not with the hoist.", "bn": "রডগুলো হয়েস্ট দিয়ে নয়, দড়ি দিয়ে হাতে টেনে তোলা হচ্ছিল।" }
+        },
+        {
+          "id": "empty_store",
+          "image": "res://assets/construction/c12/card_empty_store.png",
+          "caption": { "en": "The store shelf for toe boards and nets has been empty for a week.", "bn": "টো-বোর্ড ও নেটের জন্য স্টোরের তাক এক সপ্তাহ ধরে খালি।" }
+        },
+        {
+          "id": "deadline",
+          "image": "res://assets/construction/c12/card_deadline.png",
+          "caption": { "en": "The slab deadline is this Friday. The crew is working overtime.", "bn": "ছাদ ঢালাইয়ের শেষ সময় এই শুক্রবার। দলটি ওভারটাইম করছে।" }
+        }
+      ],
+      "hint": {
+        "en": "Turn over every photo. Each one holds a clue.",
+        "bn": "প্রতিটি ছবি উল্টে দেখুন। প্রতিটিতে একটি সূত্র আছে।"
+      },
+      "explanation": {
+        "en": "Good investigators look at all the evidence before deciding anything.",
+        "bn": "ভালো তদন্তকারী কোনো সিদ্ধান্তের আগে সব প্রমাণ দেখেন।"
+      }
+    },
+    {
+      "id": "interview_sohel",
+      "type": "dialogue",
+      "npc": "sohel",
+      "npc_name": { "en": "Sohel, rod carrier", "bn": "রড বহনকারী সোহেল" },
+      "npc_portrait": "res://assets/characters/sohel_portrait_paper.png",
+      "prompt": {
+        "en": "Sohel was moving the rods when one fell. How do you start the interview?",
+        "bn": "রড পড়ার সময় সোহেল রডগুলো সরাচ্ছিলেন। আপনি সাক্ষাৎকার কীভাবে শুরু করবেন?"
+      },
+      "npc_line": {
+        "en": "Am I in trouble? I didn't mean for anything to fall.",
+        "bn": "আমি কি বিপদে পড়েছি? আমি তো কিছু ফেলতে চাইনি।"
+      },
+      "choices": [
+        {
+          "id": "blame",
+          "quality": "fail",
+          "text": { "en": "Why were you so careless with the rods?", "bn": "রড নিয়ে আপনি এত অসাবধান ছিলেন কেন?" },
+          "reply": { "en": "I wasn't careless! I don't want to talk about it.", "bn": "আমি অসাবধান ছিলাম না! এ নিয়ে কথা বলতে চাই না।" },
+          "feedback": {
+            "en": "Blaming makes witnesses defend themselves and hide details. You learned nothing.",
+            "bn": "দোষারোপ করলে সাক্ষী নিজেকে রক্ষা করেন আর তথ্য লুকান। আপনি কিছুই জানতে পারেননি।"
+          }
+        },
+        {
+          "id": "open",
+          "quality": "best",
+          "text": {
+            "en": "You are not in trouble. We want to fix the problem. Tell me how you were moving the rods yesterday.",
+            "bn": "আপনি বিপদে নেই। আমরা সমস্যাটা ঠিক করতে চাই। গতকাল রডগুলো কীভাবে সরাচ্ছিলেন, বলুন।"
+          },
+          "reply": {
+            "en": "The hoist was busy, so we pulled them up by rope and left them at the edge. There was nothing at the edge to stop them rolling.",
+            "bn": "হয়েস্ট ব্যস্ত ছিল, তাই দড়ি দিয়ে টেনে তুলে কিনারায় রেখেছিলাম। কিনারায় গড়িয়ে পড়া আটকানোর মতো কিছু ছিল না।"
+          },
+          "feedback": {
+            "en": "A calm, open question got you two facts: the rope method and the bare edge.",
+            "bn": "শান্ত, খোলা প্রশ্নে আপনি দুটি তথ্য পেয়েছেন: দড়ির পদ্ধতি আর খালি কিনারা।"
+          }
+        },
+        {
+          "id": "closed",
+          "quality": "ok",
+          "text": { "en": "Did you drop the rod? Yes or no.", "bn": "রডটা কি আপনি ফেলেছেন? হ্যাঁ বা না।" },
+          "reply": { "en": "...No. It rolled off by itself.", "bn": "...না। নিজে নিজেই গড়িয়ে পড়েছে।" },
+          "feedback": {
+            "en": "A yes-or-no question got a short answer. Open questions reveal more.",
+            "bn": "হ্যাঁ-না প্রশ্নে ছোট উত্তর পেয়েছেন। খোলা প্রশ্নে আরও বেশি জানা যায়।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "He is scared. Make him feel safe, then ask him to describe what happened.",
+        "bn": "তিনি ভয় পাচ্ছেন। তাঁকে নিশ্চিন্ত করুন, তারপর কী ঘটেছিল বর্ণনা করতে বলুন।"
+      },
+      "explanation": {
+        "en": "Investigations look for causes, not culprits. People speak openly only when they are not afraid of blame.",
+        "bn": "তদন্ত দোষী নয়, কারণ খোঁজে। দোষের ভয় না থাকলেই মানুষ খোলাখুলি কথা বলেন।"
+      }
+    },
+    {
+      "id": "interview_habib",
+      "type": "dialogue",
+      "npc": "foreman",
+      "npc_name": { "en": "Habib, the foreman", "bn": "ফোরম্যান হাবিব" },
+      "npc_portrait": "res://assets/characters/habib_portrait_paper.png",
+      "prompt": {
+        "en": "Habib says the workers were careless. What do you ask him?",
+        "bn": "হাবিব বলছেন শ্রমিকরা অসাবধান ছিলেন। আপনি তাঁকে কী জিজ্ঞেস করবেন?"
+      },
+      "npc_line": {
+        "en": "These young workers never listen. That's the whole problem.",
+        "bn": "এই তরুণ শ্রমিকরা কখনো কথা শোনে না। সমস্যা এটুকুই।"
+      },
+      "choices": [
+        {
+          "id": "agree",
+          "quality": "fail",
+          "text": { "en": "You're right. I'll give Sohel a warning letter.", "bn": "ঠিক বলেছেন। আমি সোহেলকে সতর্কতা চিঠি দেব।" },
+          "reply": { "en": "Good. Case closed.", "bn": "বেশ। বিষয় শেষ।" },
+          "feedback": {
+            "en": "Punishing one worker leaves the empty store and the bare edge in place. It will happen again.",
+            "bn": "একজন শ্রমিককে শাস্তি দিলে খালি স্টোর আর খোলা কিনারা যেমন ছিল তেমনই থাকে। আবারও ঘটবে।"
+          }
+        },
+        {
+          "id": "why_no_boards",
+          "quality": "best",
+          "text": {
+            "en": "Help me understand: why were there no toe boards or nets at that edge?",
+            "bn": "আমাকে বুঝতে সাহায্য করুন: ওই কিনারায় টো-বোর্ড বা নেট ছিল না কেন?"
+          },
+          "reply": {
+            "en": "...Honestly, the store ran out last week. I asked the office twice, no answer, and the slab is due Friday.",
+            "bn": "...সত্যি বলতে, গত সপ্তাহে স্টোরে শেষ হয়ে গেছে। অফিসে দুবার চেয়েছি, উত্তর পাইনি, আর শুক্রবার ছাদ ঢালাই।"
+          },
+          "feedback": {
+            "en": "Asking about conditions, not people, uncovered the system problem behind the near miss.",
+            "bn": "মানুষ নয়, পরিস্থিতি নিয়ে প্রশ্ন করায় এই ঘটনার পেছনের ব্যবস্থাগত সমস্যা বেরিয়ে এসেছে।"
+          }
+        },
+        {
+          "id": "who",
+          "quality": "ok",
+          "text": { "en": "Who exactly was responsible for that edge?", "bn": "ওই কিনারার দায়িত্বে ঠিক কে ছিলেন?" },
+          "reply": { "en": "The crew. I can't watch every edge myself.", "bn": "দলটি। আমি নিজে তো প্রতিটি কিনারা দেখতে পারি না।" },
+          "feedback": {
+            "en": "Asking 'who' points at people again. Ask 'why' and 'what was missing' instead.",
+            "bn": "'কে' জিজ্ঞেস করলে আবার মানুষের দিকে আঙুল ওঠে। বরং 'কেন' আর 'কী ছিল না' জিজ্ঞেস করুন।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Ask about what was missing at the edge, not about who to blame.",
+        "bn": "কাকে দোষ দেবেন তা নয়, কিনারায় কী ছিল না তা জিজ্ঞেস করুন।"
+      },
+      "explanation": {
+        "en": "Most accidents have causes in planning, supplies and pressure, not only in the last person's action.",
+        "bn": "বেশিরভাগ দুর্ঘটনার কারণ থাকে পরিকল্পনা, সরবরাহ ও চাপের মধ্যে, শুধু শেষ ব্যক্তির কাজে নয়।"
+      }
+    },
+    {
+      "id": "five_whys",
+      "type": "cause_chain",
+      "prompt": {
+        "en": "Build the chain of causes. Start with what happened, then keep asking 'why?' down to the root cause. Three cards do not belong.",
+        "bn": "কারণের শিকল তৈরি করুন। কী ঘটেছে তা দিয়ে শুরু করুন, তারপর বারবার 'কেন?' জিজ্ঞেস করে মূল কারণ পর্যন্ত যান। তিনটি কার্ড এখানে খাটে না।"
+      },
+      "cards": [
+        { "id": "event", "text": { "en": "A steel rod fell onto the public footpath", "bn": "একটি রড জনসাধারণের ফুটপাতে পড়েছে" } },
+        { "id": "careless", "text": { "en": "Sohel is a careless worker", "bn": "সোহেল একজন অসাবধান শ্রমিক" } },
+        { "id": "loose_rods", "text": { "en": "Rods were left loose at the slab edge", "bn": "রডগুলো মেঝের কিনারায় আলগা রাখা ছিল" } },
+        { "id": "wind", "text": { "en": "It was a windy day", "bn": "সেদিন বাতাস ছিল" } },
+        { "id": "no_edge_protection", "text": { "en": "The edge had no toe board or net", "bn": "কিনারায় কোনো টো-বোর্ড বা নেট ছিল না" } },
+        { "id": "store_empty", "text": { "en": "The store had no toe boards or nets", "bn": "স্টোরে কোনো টো-বোর্ড বা নেট ছিল না" } },
+        { "id": "passer_by_close", "text": { "en": "The passer-by walked too close", "bn": "পথচারী খুব কাছ দিয়ে হাঁটছিলেন" } },
+        { "id": "no_owner", "text": { "en": "Nobody is responsible for keeping safety stock, and requests go unanswered", "bn": "নিরাপত্তা সরঞ্জামের মজুত রাখার দায়িত্ব কারও নেই, আর চাহিদার উত্তর আসে না" } }
+      ],
+      "correct_chain": ["event", "loose_rods", "no_edge_protection", "store_empty", "no_owner"],
+      "hint": {
+        "en": "Each card should answer 'why?' for the card above it. Blaming a person or the weather does not explain why the edge was unprotected.",
+        "bn": "প্রতিটি কার্ড তার উপরের কার্ডের 'কেন?'-এর উত্তর দেবে। কোনো মানুষ বা আবহাওয়াকে দোষ দিলে কিনারা কেন অরক্ষিত ছিল তার ব্যাখ্যা হয় না।"
+      },
+      "explanation": {
+        "en": "The root cause is in the system: no one owns safety stock. Fix that, and loose rods at a bare edge stop happening.",
+        "bn": "মূল কারণ ব্যবস্থার মধ্যে: নিরাপত্তা মজুতের দায়িত্ব কারও নেই। সেটি ঠিক করলে খোলা কিনারায় আলগা রড রাখা বন্ধ হবে।"
+      }
+    },
+    {
+      "id": "action_plan",
+      "type": "matching",
+      "prompt": {
+        "en": "Make the action plan. Choose who is responsible for each fix.",
+        "bn": "কর্মপরিকল্পনা তৈরি করুন। প্রতিটি সমাধানের দায়িত্ব কার, বেছে নিন।"
+      },
+      "items": [
+        { "id": "tie_rods", "text": { "en": "Tie down materials and check edges every morning", "bn": "মালামাল বেঁধে রাখা ও প্রতিদিন সকালে কিনারা পরীক্ষা" } },
+        { "id": "stock", "text": { "en": "Keep a minimum stock of toe boards and nets, and reorder on time", "bn": "টো-বোর্ড ও নেটের ন্যূনতম মজুত রাখা ও সময়মতো আবার অর্ডার" } },
+        { "id": "walkway", "text": { "en": "Build a covered walkway over the public footpath", "bn": "জনসাধারণের ফুটপাতের উপর ঢাকা চলার পথ তৈরি" } },
+        { "id": "hoist_rule", "text": { "en": "Make a rule: rods go up only by hoist, never by hand rope", "bn": "নিয়ম করা: রড শুধু হয়েস্টে উঠবে, কখনো হাতের দড়িতে নয়" } }
+      ],
+      "targets": [
+        { "id": "supervisor", "text": { "en": "Supervisor", "bn": "সুপারভাইজার" } },
+        { "id": "store_officer", "text": { "en": "Store officer", "bn": "স্টোর কর্মকর্তা" } },
+        { "id": "site_manager", "text": { "en": "Site manager", "bn": "সাইট ম্যানেজার" } }
+      ],
+      "correct": {
+        "tie_rods": "supervisor",
+        "stock": "store_officer",
+        "walkway": "site_manager",
+        "hoist_rule": "site_manager"
+      },
+      "hint": {
+        "en": "Daily checks belong to the supervisor, supplies to the store, and site-wide rules and public protection to the site manager.",
+        "bn": "দৈনিক পরীক্ষা সুপারভাইজারের, সরবরাহ স্টোরের, আর পুরো সাইটের নিয়ম ও জনসাধারণের সুরক্ষা সাইট ম্যানেজারের দায়িত্ব।"
+      },
+      "explanation": {
+        "en": "An action only happens when one named person owns it and has the authority to do it.",
+        "bn": "কোনো কাজ তখনই হয়, যখন একজন নির্দিষ্ট ব্যক্তি তার দায়িত্বে থাকেন এবং তা করার ক্ষমতা রাখেন।"
+      }
+    },
+    {
+      "id": "purpose",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What is the main purpose of investigating a near miss?",
+        "bn": "অল্পের জন্য বেঁচে যাওয়া ঘটনার তদন্তের মূল উদ্দেশ্য কী?"
+      },
+      "options": [
+        { "id": "punish", "text": { "en": "To find someone to punish", "bn": "শাস্তি দেওয়ার জন্য কাউকে খুঁজে বের করা" } },
+        { "id": "paperwork", "text": { "en": "To complete the paperwork", "bn": "কাগজপত্র সম্পূর্ণ করা" } },
+        { "id": "fix_causes", "text": { "en": "To find and fix the causes before someone gets hurt", "bn": "কেউ আহত হওয়ার আগেই কারণ খুঁজে বের করে ঠিক করা" } },
+        { "id": "fines", "text": { "en": "To protect the company from fines", "bn": "কোম্পানিকে জরিমানা থেকে বাঁচানো" } }
+      ],
+      "correct": "fix_causes",
+      "hint": {
+        "en": "A near miss is a free warning. What should you do with a warning?",
+        "bn": "অল্পের জন্য বেঁচে যাওয়া একটি বিনামূল্যের সতর্কবার্তা। সতর্কবার্তা পেলে কী করা উচিত?"
+      },
+      "explanation": {
+        "en": "Near misses come from the same causes as serious accidents. Fixing those causes now prevents the injury later.",
+        "bn": "গুরুতর দুর্ঘটনা আর অল্পের জন্য বেঁচে যাওয়া ঘটনার কারণ একই। এখন সেই কারণ ঠিক করলে পরে আঘাত ঠেকানো যায়।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Excellent investigation. You found the real cause, and every fix has an owner. That is how sites get safer.",
+      "bn": "চমৎকার তদন্ত। আপনি আসল কারণ খুঁজে পেয়েছেন, আর প্রতিটি সমাধানের দায়িত্ব কারও উপর আছে। এভাবেই সাইট আরও নিরাপদ হয়।"
+    },
+    "fixes": [
+      { "en": "Toe boards and nets back in stock, with a minimum level and reorder owner", "bn": "টো-বোর্ড ও নেট আবার মজুতে, ন্যূনতম পরিমাণ ও অর্ডারের দায়িত্বসহ" },
+      { "en": "Edges protected and materials tied down, checked every morning", "bn": "কিনারা সুরক্ষিত ও মালামাল বাঁধা, প্রতিদিন সকালে পরীক্ষা" },
+      { "en": "Covered walkway built over the public footpath", "bn": "জনসাধারণের ফুটপাতের উপর ঢাকা চলার পথ তৈরি" },
+      { "en": "Rods lifted only by hoist", "bn": "রড শুধু হয়েস্টে তোলা হয়" }
+    ],
+    "references": [
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), accident and dangerous occurrence notice and inquiry",
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety (protection of the public)"
+    ]
+  }
+}

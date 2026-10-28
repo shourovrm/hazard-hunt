@@ -4,6 +4,7 @@ const CASE_PATHS := [
 	"res://content/construction/cases/c01_bamboo_scaffold.json",
 	"res://content/construction/cases/c03_electrical.json",
 	"res://content/construction/cases/c04_trench.json",
+	"res://content/construction/cases/c12_near_miss_investigation.json",
 ]
 const GATE_CASE_PATH := "res://content/construction/cases/c02_gate_check.json"
 

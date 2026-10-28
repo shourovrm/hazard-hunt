@@ -379,3 +379,44 @@ paper cut-outs moved by hand on a desk:
 - Intro: the unsafe scene drops in the same way once at the start.
 - `animations_enabled = false` makes all of this immediate (tests).
 - Test hook: `motion_style() -> String` on the case player.
+
+## Investigation question types (case 12)
+
+Reference data: `content/construction/cases/c12_near_miss_investigation.json`.
+
+### `evidence_board`
+- Data: `cards`: non-empty array of `{id, image, caption}` (caption localized), unique ids.
+- Answer: `Array` of card ids the player has turned over. Correct when every card id is present.
+  `correct_answer` returns all card ids.
+- Widget (`ui/questions/evidence_board_view.gd`, class `EvidenceBoardView`): a cork-coloured
+  board with the cards in a grid (3 columns). Each card shows its image; tapping flips it with a
+  short card-flip (scale.x 1→0→1, ~0.3 s, immediate if the view is not inside the tree) to show
+  the caption on a paper-coloured back; tapping again flips back. A counter
+  `Loc.ui("cards_seen", {seen, total})` and `Loc.ui("tap_to_flip")`. The Submit button is
+  labelled `Loc.ui("done_studying")` and is enabled only when all cards have been turned at
+  least once. Test hooks: `flip_card(card_id)`, `is_card_flipped(card_id) -> bool`.
+
+### `cause_chain`
+- Data: `cards`: array of `{id, text}`; `correct_chain`: array of card ids (its length is the
+  number of slots, at least 3), all known ids, no repeats; extra cards are distractors.
+- Answer: `Array` of card ids in slot order (top = what happened, bottom = root cause). Correct
+  when it exactly equals `correct_chain`. `correct_answer` returns `correct_chain`.
+- Widget (`ui/questions/cause_chain_view.gd`, class `CauseChainView`): left, a vertical chain of
+  slots joined by small down-arrows drawn as lines: the first slot labelled
+  `Loc.ui("what_happened")`, middle slots `Loc.ui("why_slot", {number})`, last slot
+  `Loc.ui("root_cause")`. Right, the pool of unused cards (paper style buttons, wrapping text).
+  Tapping a pool card puts it in the first empty slot; tapping a filled slot returns its card to
+  the pool. A `Loc.ui("clear_chain")` button empties all slots. Submit enabled when every slot is
+  filled. Drag and drop is optional; tap is required.
+
+### `matching`
+- Data: `items`: array of `{id, text}`; `targets`: array of `{id, text}`; `correct`: dictionary
+  item id → target id covering every item.
+- Answer: `Dictionary` item id → target id. Correct when it equals `correct` for every item.
+  `correct_answer` returns `correct`.
+- Widget (`ui/questions/matching_view.gd`, class `MatchingView`): one row per item: the item text
+  and one toggle button per target (exactly one selected per row, 64 px+ high, text wraps).
+  Submit enabled when every row has a choice. Test hook: `set_match(item_id, target_id)`.
+
+All three: hint and show-answer behave as in every other view; locked views show the correct
+state (all cards flipped / correct chain / correct matches highlighted green).
