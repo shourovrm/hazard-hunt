@@ -4,10 +4,14 @@ extends Node
 ## Without --dir it runs every test directory.
 
 const TestContext := preload("res://tests/test_context.gd")
+const ScriptErrorLogger := preload("res://tests/script_error_logger.gd")
 const TEST_ROOT := "res://tests"
+
+var _error_logger := ScriptErrorLogger.new()
 
 
 func _ready() -> void:
+	OS.add_logger(_error_logger)
 	var directories := _directories_to_run()
 	var context := TestContext.new()
 	context.root = self
@@ -55,7 +59,10 @@ func _run_script(script_path: String, context: TestContext) -> int:
 		context.current_test = "%s::%s" % [script_path.get_file(), method_name]
 		var test_instance: Object = script.new()
 		test_instance.set("t", context)
+		_error_logger.take_errors()
 		await test_instance.call(method_name)
+		for script_error in _error_logger.take_errors():
+			context.fail("script error: " + script_error)
 		for child in get_children():
 			child.queue_free()
 		await get_tree().process_frame
