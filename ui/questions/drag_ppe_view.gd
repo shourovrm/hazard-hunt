@@ -53,7 +53,7 @@ func _make_worker_column() -> VBoxContainer:
 	worker_target.add_child(worker_stack)
 
 	var worker_image := TextureRect.new()
-	worker_image.texture = _load_texture(question["target_image"])
+	worker_image.texture = _load_texture(_worker_image_path())
 	worker_image.custom_minimum_size = WORKER_SIZE
 	worker_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	worker_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -68,6 +68,13 @@ func _make_worker_column() -> VBoxContainer:
 		equipped_row.add_child(_make_equipped_button(_find_item(item_id)))
 	column.add_child(equipped_row)
 	return column
+
+
+## The worker shows the safe version once the answer is correct, when the question provides one.
+func _worker_image_path() -> String:
+	if _locked and question.has("target_image_safe"):
+		return question["target_image_safe"]
+	return question["target_image"]
 
 
 func _make_equipped_button(item: Dictionary) -> Button:
@@ -86,8 +93,7 @@ func _make_tray_column() -> VBoxContainer:
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	column.add_theme_constant_override("separation", 8)
 	for item: Dictionary in question["items"]:
-		if not _equipped_item_ids.has(item["id"]):
-			column.add_child(_make_tray_button(item))
+		column.add_child(_make_tray_button(item))
 	return column
 
 
@@ -101,8 +107,18 @@ func _make_tray_button(item: Dictionary) -> PpeItemButton:
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
 	button.disabled = _locked
-	button.pressed.connect(_equip_item.bind(item["id"]))
+	if _equipped_item_ids.has(item["id"]):
+		_apply_selected_look(button, _selected_color_for_result())
+	button.pressed.connect(_toggle_item.bind(item["id"]))
 	return button
+
+
+## Tray buttons never leave the tray, so a tap on an equipped item must unequip it.
+func _toggle_item(item_id: String) -> void:
+	if _equipped_item_ids.has(item_id):
+		_unequip_item(item_id)
+	else:
+		_equip_item(item_id)
 
 
 func _equip_item(item_id: String) -> void:

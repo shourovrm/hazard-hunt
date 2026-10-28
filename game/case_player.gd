@@ -52,6 +52,8 @@ var _camera: Camera2D
 var _scene_content: Node2D
 var _background_unsafe: Sprite2D
 var _background_safe: Sprite2D
+var _backdrop: TextureRect
+var _backdrop_safe_texture: ImageTexture
 var _actors: Array[Sprite2D] = []
 var _ring_layer: Node2D
 var _found_rings: Dictionary = {}
@@ -161,15 +163,17 @@ func is_result_visible() -> bool:
 
 
 func _build_world() -> void:
-	# A solid layer behind the world fills the bars that appear on screens wider than 16:9.
 	var backdrop_layer := CanvasLayer.new()
 	backdrop_layer.layer = -10
 	add_child(backdrop_layer)
-	var backdrop := ColorRect.new()
-	backdrop.color = Color(0.05, 0.07, 0.1)
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	backdrop_layer.add_child(backdrop)
+	_backdrop = TextureRect.new()
+	_backdrop.name = "Backdrop"
+	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_backdrop.modulate = Color(0.55, 0.55, 0.6)
+	_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_layer.add_child(_backdrop)
 
 	_world = Node2D.new()
 	_world.name = "World"
@@ -352,6 +356,8 @@ func _populate_world(case_data: Dictionary) -> void:
 	_background_unsafe = _make_background(scene["background"]["unsafe"])
 	_background_safe = _make_background(scene["background"]["safe"])
 	_background_safe.modulate.a = 0.0
+	_backdrop.texture = _make_blurred_texture(_background_unsafe.texture)
+	_backdrop_safe_texture = _make_blurred_texture(_load_texture(scene["background"]["safe"]))
 	for actor_data: Dictionary in scene["actors"]:
 		_actors.append(_make_actor(actor_data))
 	if "dust" in scene.get("ambient", []):
@@ -368,6 +374,13 @@ func _make_background(texture_path: String) -> Sprite2D:
 	background.centered = false
 	_scene_content.add_child(background)
 	return background
+
+
+func _make_blurred_texture(source_texture: Texture2D) -> ImageTexture:
+	var blurred_image := source_texture.get_image()
+	blurred_image.resize(64, 36, Image.INTERPOLATE_BILINEAR)
+	blurred_image.resize(source_texture.get_width(), source_texture.get_height(), Image.INTERPOLATE_BILINEAR)
+	return ImageTexture.create_from_image(blurred_image)
 
 
 func _make_actor(actor_data: Dictionary) -> Sprite2D:
@@ -555,6 +568,7 @@ func _enter_safe_reveal() -> void:
 	_refresh_texts()
 	_move_camera(_hunt_camera_position(), 1.0, CAMERA_MOVE_SECONDS)
 	_background_is_safe = true
+	_backdrop.texture = _backdrop_safe_texture
 	if animations_enabled:
 		_play_reveal_animation()
 	else:
