@@ -103,7 +103,14 @@ func start_case(path: String) -> void:
 	_session = CaseSession.new(case_data)
 	_session.phase_changed.connect(_on_phase_changed)
 	_populate_world(case_data)
+	var ambience_path: String = case_data["scene"].get("ambience", "")
+	if not ambience_path.is_empty():
+		Sfx.play_ambience(ambience_path)
 	_enter_intro()
+
+
+func _exit_tree() -> void:
+	Sfx.stop_ambience()
 
 
 func get_session() -> CaseSession:
@@ -140,6 +147,7 @@ func handle_scene_tap(scene_point: Vector2) -> void:
 	if tap_result["hit"]:
 		_show_hazard_hit(tap_result)
 	else:
+		Sfx.play("miss")
 		_mentor.say(_ui_text("not_a_hazard"))
 	if tap_result["show_hint"]:
 		_show_hint()
@@ -248,7 +256,7 @@ func _build_continue_button(parent: Control) -> void:
 	_continue_button.offset_top = _continue_button.offset_bottom
 	_continue_button.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_continue_button.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_continue_button.pressed.connect(advance)
+	_continue_button.pressed.connect(_on_advance_button_pressed)
 	parent.add_child(_continue_button)
 
 
@@ -271,7 +279,7 @@ func _build_question_panel(parent: Control) -> void:
 	_next_button.theme_type_variation = "PrimaryButton"
 	_next_button.custom_minimum_size = Vector2(0, 72)
 	_next_button.add_theme_font_size_override("font_size", 28)
-	_next_button.pressed.connect(advance)
+	_next_button.pressed.connect(_on_advance_button_pressed)
 	column.add_child(_next_button)
 	parent.add_child(_question_panel)
 
@@ -583,6 +591,7 @@ func _enter_result() -> void:
 	var result := _session.result()
 	Progress.record_result(result["case_id"], result["stars"])
 	_rebuild_result_card()
+	Sfx.play("case_complete")
 	_result_layer.visible = true
 	_result_visible = true
 
@@ -653,6 +662,7 @@ func _show_hazard_hit(tap_result: Dictionary) -> void:
 	if tap_result["already_found"]:
 		_mentor.say(_ui_text("already_found"))
 		return
+	Sfx.play("hazard_found")
 	_add_found_ring(hazard)
 	_mentor.say(hazard["explain"], hazard["label"])
 
@@ -713,6 +723,12 @@ func _refresh_hazard_counter() -> void:
 func _refresh_continue_button() -> void:
 	if _session.phase == CaseSession.Phase.HAZARD_HUNT:
 		_continue_button.visible = _session.all_hazards_found()
+
+
+## Continue and Next both move the case on, so both play the "next" sound.
+func _on_advance_button_pressed() -> void:
+	Sfx.play("next")
+	advance()
 
 
 func _on_mentor_tapped() -> void:
@@ -850,84 +866,20 @@ func _rebuild_result_card() -> void:
 	for existing_child in _result_card_holder.get_children():
 		_result_card_holder.remove_child(existing_child)
 		existing_child.queue_free()
-	var result := _session.result()
-	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(760, 0)
+	var card := ResultCard.new()
+	card.play_again_requested.connect(_on_play_again_pressed)
+	card.back_to_map_requested.connect(_on_back_to_map_pressed)
+	card.setup(_session.result(), _session.case_data)
 	_result_card_holder.add_child(card)
-	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 10)
-	card.add_child(column)
-
-	var title := Label.new()
-	title.theme_type_variation = "HeadingLabel"
-	title.add_theme_font_size_override("font_size", 40)
-	title.text = Loc.ui("case_complete")
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(title)
-
-	var stars := StarRating.new()
-	stars.star_size = 72.0
-	stars.filled_count = result["stars"]
-	stars.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	column.add_child(stars)
-
-	var mistakes := Label.new()
-	mistakes.text = Loc.ui("mistakes_count", {"count": result["mistakes"]})
-	mistakes.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(mistakes)
-
-	if str(_session.case_data.get("review_status", "")).begins_with("draft"):
-		var draft_notice := Label.new()
-		draft_notice.theme_type_variation = "SmallLabel"
-		draft_notice.text = Loc.ui("draft_notice")
-		draft_notice.add_theme_color_override("font_color", Color(0.7, 0.3, 0.05))
-		draft_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		column.add_child(draft_notice)
-
-	_add_references(column)
-	column.add_child(_make_result_buttons())
-
-
-func _add_references(column: VBoxContainer) -> void:
-	var references: Array = _session.case_data["outcome"].get("references", [])
-	if references.is_empty():
-		return
-	column.add_child(HSeparator.new())
-	var heading := Label.new()
-	heading.theme_type_variation = "SmallLabel"
-	heading.text = Loc.ui("references")
-	column.add_child(heading)
-	for reference: String in references:
-		var reference_label := Label.new()
-		reference_label.theme_type_variation = "SmallLabel"
-		reference_label.text = "• " + reference
-		reference_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		column.add_child(reference_label)
-
-
-func _make_result_buttons() -> HBoxContainer:
-	var buttons := HBoxContainer.new()
-	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
-	buttons.add_theme_constant_override("separation", 20)
-	var play_again_button := Button.new()
-	play_again_button.theme_type_variation = "PrimaryButton"
-	play_again_button.text = Loc.ui("play_again")
-	play_again_button.custom_minimum_size = Vector2(260, 72)
-	play_again_button.pressed.connect(_on_play_again_pressed)
-	buttons.add_child(play_again_button)
-	var back_button := Button.new()
-	back_button.text = Loc.ui("back_to_map")
-	back_button.custom_minimum_size = Vector2(300, 72)
-	back_button.pressed.connect(_on_back_to_map_pressed)
-	buttons.add_child(back_button)
-	return buttons
 
 
 func _on_play_again_pressed() -> void:
+	Sfx.play("tap")
 	start_case(_case_path)
 
 
 func _on_back_to_map_pressed() -> void:
+	Sfx.play("tap")
 	get_tree().change_scene_to_file(SECTOR_MAP_SCENE)
 
 

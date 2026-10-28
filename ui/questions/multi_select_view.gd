@@ -46,4 +46,5 @@ func _on_option_pressed(option_id: String) -> void:
 		_selected_option_ids.erase(option_id)
 	else:
 		_selected_option_ids.append(option_id)
+	Sfx.play("select")
 	_rebuild()

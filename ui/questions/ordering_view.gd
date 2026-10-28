@@ -88,6 +88,7 @@ func _move_item(position_index: int, direction: int) -> void:
 	var moved_item_id := _item_ids_in_order[position_index]
 	_item_ids_in_order[position_index] = _item_ids_in_order[target_index]
 	_item_ids_in_order[target_index] = moved_item_id
+	Sfx.play("select")
 	_rebuild()
 
 

@@ -53,6 +53,10 @@ func submit() -> void:
 
 
 func show_result(result: Dictionary) -> void:
+	if result.get("correct", false):
+		Sfx.play("correct")
+	else:
+		Sfx.play("wrong")
 	_last_result = result
 	if result.get("correct", false):
 		_locked = true
@@ -132,8 +136,13 @@ func _build_skeleton() -> void:
 	_submit_button = Button.new()
 	_submit_button.theme_type_variation = "PrimaryButton"
 	_submit_button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
-	_submit_button.pressed.connect(submit)
+	_submit_button.pressed.connect(_on_submit_pressed)
 	layout.add_child(_submit_button)
+
+
+func _on_submit_pressed() -> void:
+	Sfx.play("tap")
+	submit()
 
 
 ## The feedback labels are added in this frame, and the scroll maximum only covers them after
