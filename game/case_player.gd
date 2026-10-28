@@ -66,6 +66,7 @@ var _reveal_tween: Tween
 var _tap_catcher: Control
 var _counter_pill: PanelContainer
 var _counter_label: Label
+var _hint_button: Button
 var _all_found_label: Label
 var _continue_button: Button
 var _mentor: MentorPanel
@@ -117,6 +118,10 @@ func get_session() -> CaseSession:
 	return _session
 
 
+## Continue, a tap on the intro and the test hooks all leave INTRO through begin_hazard_hunt().
+## The session then emits phase_changed for whatever phase it lands in (HAZARD_HUNT, or QUESTIONS
+## for a case without hazards), and _on_phase_changed builds that layout, so this does not
+## branch on the phase itself.
 func skip_intro() -> void:
 	if _session == null or _session.phase != CaseSession.Phase.INTRO:
 		return
@@ -228,10 +233,19 @@ func _build_counter_pill(parent: Control) -> void:
 	column.add_theme_constant_override("separation", 0)
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_counter_pill.add_child(column)
+	# The hint sits beside the counter in one row; it is free, so it never touches the mistake count.
+	var counter_row := HBoxContainer.new()
+	counter_row.add_theme_constant_override("separation", 12)
+	counter_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(counter_row)
 	_counter_label = Label.new()
 	_counter_label.theme_type_variation = "PillLabel"
 	_counter_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_child(_counter_label)
+	counter_row.add_child(_counter_label)
+	_hint_button = Button.new()
+	_hint_button.add_theme_font_size_override("font_size", 22)
+	_hint_button.pressed.connect(_on_hint_button_pressed)
+	counter_row.add_child(_hint_button)
 	_all_found_label = Label.new()
 	_all_found_label.theme_type_variation = "PillLabel"
 	_all_found_label.add_theme_font_size_override("font_size", 22)
@@ -725,6 +739,20 @@ func _refresh_continue_button() -> void:
 		_continue_button.visible = _session.all_hazards_found()
 
 
+## Free help during the hunt. Plays the press sound, then shows the hint like request_hint().
+func _on_hint_button_pressed() -> void:
+	Sfx.play("tap")
+	request_hint()
+
+
+## Pulses the next unfound hazard and makes the mentor say its hint. Costs nothing: it does not
+## touch session.mistakes(), and it does nothing outside the hunt.
+func request_hint() -> void:
+	if _session == null or _session.phase != CaseSession.Phase.HAZARD_HUNT:
+		return
+	_show_hint()
+
+
 ## Continue and Next both move the case on, so both play the "next" sound.
 func _on_advance_button_pressed() -> void:
 	Sfx.play("next")
@@ -889,6 +917,7 @@ func _on_back_to_map_pressed() -> void:
 func _refresh_texts() -> void:
 	_continue_button.text = Loc.ui("continue")
 	_next_button.text = Loc.ui("next")
+	_hint_button.text = Loc.ui("hint_button")
 	if _session == null:
 		return
 	_refresh_hazard_counter()
