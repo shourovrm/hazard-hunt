@@ -106,3 +106,17 @@ func test_wide_screen_backdrop_exists() -> void:
 	t.assert_not_null(backdrop, "no Backdrop node")
 	if backdrop != null:
 		t.assert_not_null(backdrop.get("texture"), "Backdrop has no texture")
+
+
+func test_case_starts_site_ambience() -> void:
+	var player := _new_player()
+	t.assert_eq(Sfx.current_ambience(), "res://assets/audio/ambience_site.ogg")
+	player.queue_free()
+
+
+func test_main_menu_has_sound_toggle() -> void:
+	Loc.set_language("en")
+	var menu: Node = load("res://game/main_menu.tscn").instantiate()
+	t.root.add_child(menu)
+	var label := Loc.ui("sound_off") if Sfx.is_muted() else Loc.ui("sound_on")
+	t.assert_not_null(_find_button_with_text(menu, label), "no sound toggle button")

@@ -130,5 +130,13 @@
   "locked": {
     "en": "Locked",
     "bn": "তালাবদ্ধ"
+  },
+  "sound_on": {
+    "en": "Sound: on",
+    "bn": "শব্দ: চালু"
+  },
+  "sound_off": {
+    "en": "Sound: off",
+    "bn": "শব্দ: বন্ধ"
   }
 }

@@ -1,0 +1,2 @@
+Sound effects and jingle: Kenney (www.kenney.nl), Interface Sounds, Music Jingles and Impact Sounds packs, CC0 1.0.
+ambience_site.ogg: made for this project from Kenney Impact Sounds (CC0) plus generated noise.

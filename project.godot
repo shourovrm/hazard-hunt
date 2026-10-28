@@ -13,6 +13,7 @@ config/icon="res://assets/icon.png"
 
 Loc="*res://core/localization.gd"
 Progress="*res://core/progress_store.gd"
+Sfx="*res://core/sound_player.gd"
 
 [display]
 

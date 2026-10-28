@@ -35,7 +35,8 @@
         "idle": "breathe"
       }
     ],
-    "ambient": ["dust"]
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
   },
   "intro": {
     "en": "Good morning, Supervisor. Karim is laying bricks on the third-floor scaffold, and Rahim is moving bricks below. I can see four hazards here. Tap each hazard you find.",

@@ -214,3 +214,32 @@ Behaviour:
   `static var selected_case_path: String`).
 - Performance: 2D only, no shaders beyond built-ins, `CPUParticles2D` only, at most ~40
   particles, no per-frame allocations in `_process`.
+
+## Sound (`core/sound_player.gd`, autoload `Sfx`)
+
+Files are in `assets/audio/` (CC0, see `assets/audio/CREDITS.txt`). Sound names map to
+`res://assets/audio/<name>.ogg`.
+
+```
+const SOUND_NAMES: Array[String] = ["tap", "select", "hazard_found", "miss", "correct", "wrong", "next", "case_complete"]
+func has_sound(sound_name: String) -> bool
+func play(sound_name: String) -> void      # unknown name: push_error; muted: plays nothing
+func play_ambience(path: String) -> void   # loops, about -14 dB, short fade in; replaces any current ambience
+func stop_ambience() -> void               # short fade out
+func current_ambience() -> String          # "" when none
+func set_muted(muted: bool) -> void        # also mutes ambience; saved with Progress.set_sound_enabled
+func is_muted() -> bool                    # on start reads Progress.get_sound_enabled()
+```
+
+Several sound effects can overlap (a small pool of AudioStreamPlayer nodes). Streams are
+preloaded once. `ProgressStore` gains `get_sound_enabled() -> bool` (default true) and
+`set_sound_enabled(enabled: bool)` (saves).
+
+Where sounds play:
+- Every Button press in main menu, sector map and case player: `tap` (Next/Continue use `next`).
+- QuestionView: choosing or reordering an option or equipping PPE: `select`; `show_result`:
+  `correct` or `wrong`.
+- Case player: hazard hit (new): `hazard_found`; miss: `miss`; result screen: `case_complete`.
+  `start_case` calls `Sfx.play_ambience(scene.ambience)` when the case has one; leaving the case
+  player (scene exit) calls `Sfx.stop_ambience()`.
+- Main menu: a sound toggle button showing `Loc.ui("sound_on")` or `Loc.ui("sound_off")`.
