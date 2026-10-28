@@ -2,6 +2,7 @@ extends RefCounted
 
 const CASE_PATH := "res://content/construction/cases/c01_bamboo_scaffold.json"
 const TEST_SAVE_PATH := "user://test_progress_game.json"
+const MainMenuScene := preload("res://game/main_menu.tscn")
 
 var t
 
@@ -42,7 +43,7 @@ func _new_player() -> Node:
 
 func test_main_menu_has_start_button() -> void:
 	Loc.set_language("en")
-	var menu: Node = load("res://game/main_menu.tscn").instantiate()
+	var menu: Node = MainMenuScene.instantiate()
 	t.root.add_child(menu)
 	t.assert_not_null(_find_button_with_text(menu, Loc.ui("start")), "no Start button")
 
@@ -116,7 +117,7 @@ func test_case_starts_site_ambience() -> void:
 
 func test_main_menu_has_sound_toggle() -> void:
 	Loc.set_language("en")
-	var menu: Node = load("res://game/main_menu.tscn").instantiate()
+	var menu: Node = MainMenuScene.instantiate()
 	t.root.add_child(menu)
 	var label := Loc.ui("sound_off") if Sfx.is_muted() else Loc.ui("sound_on")
 	t.assert_not_null(_find_button_with_text(menu, label), "no sound toggle button")
