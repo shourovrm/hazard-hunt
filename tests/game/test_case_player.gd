@@ -121,3 +121,24 @@ func test_main_menu_has_sound_toggle() -> void:
 	t.root.add_child(menu)
 	var label := Loc.ui("sound_off") if Sfx.is_muted() else Loc.ui("sound_on")
 	t.assert_not_null(_find_button_with_text(menu, label), "no sound toggle button")
+
+
+func test_hunt_hint_is_free_and_shows_clue() -> void:
+	Loc.set_language("en")
+	var player := _new_player()
+	player.skip_intro()
+	var mistakes_before: int = player.get_session().mistakes()
+	player.request_hint()
+	t.assert_eq(player.get_session().mistakes(), mistakes_before, "hint must not add a mistake")
+	var case_data: Dictionary = player.get_session().case_data
+	t.assert_true(case_data["hazard_hint"]["en"] in t.collect_text(player), "hazard hint not shown")
+
+
+func test_case_without_hazards_goes_to_questions() -> void:
+	var player: Node = load("res://game/case_player.tscn").instantiate()
+	player.animations_enabled = false
+	t.root.add_child(player)
+	player.start_case("res://content/construction/cases/c02_gate_check.json")
+	player.skip_intro()
+	t.assert_eq(player.get_session().phase, CaseSession.Phase.QUESTIONS)
+	t.assert_not_null(player.get_active_question_view(), "no question view for the gate check")

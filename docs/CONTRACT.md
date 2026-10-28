@@ -285,3 +285,16 @@ Reference data: `content/construction/cases/c02_gate_check.json`.
 
 - When the case has no hazards, Continue after the intro goes straight to QUESTIONS (no hunt UI,
   no hazard counter). `skip_intro()` does the same.
+
+## Hints (free help)
+
+Hints never change scoring: they add no mistake and do not lower stars.
+
+- QuestionView: while not locked and the question has a `hint`, show a Hint button
+  (`Loc.ui("hint_button")`). Pressing it, or calling `show_hint()`, shows the question's `hint`
+  text in the feedback area (same place the hint appears after a wrong answer) and plays
+  `select`. The Hint button is hidden once the view is locked. Applies to every type, including
+  `gate_check` (it shows the question hint for the current worker).
+- Case player, HAZARD_HUNT: a Hint button (`Loc.ui("hint_button")`) next to the hazard counter.
+  Pressing it, or calling `request_hint()`, pulses the ring at `session.hint_hazard_id()` and the
+  mentor shows `hazard_hint`. It does not change `session.mistakes()`. Hidden outside the hunt.

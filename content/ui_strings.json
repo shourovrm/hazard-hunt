@@ -158,5 +158,9 @@
   "next_worker": {
     "en": "Next worker",
     "bn": "পরের শ্রমিক"
+  },
+  "hint_button": {
+    "en": "Hint",
+    "bn": "ইঙ্গিত"
   }
 }
