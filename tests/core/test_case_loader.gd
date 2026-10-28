@@ -90,4 +90,4 @@ func test_duplicate_question_ids_are_reported() -> void:
 func test_load_sector() -> void:
 	var sector := CaseLoader.load_sector(SECTOR_PATH)
 	t.assert_eq(sector.get("id"), "construction")
-	t.assert_eq(sector["cases"].size(), 5)
+	t.assert_eq(sector["cases"].size(), 7)

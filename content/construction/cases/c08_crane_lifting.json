@@ -1,0 +1,275 @@
+{
+  "id": "c08_crane_lifting",
+  "sector": "construction",
+  "order": 8,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Crane Lifting",
+    "bn": "ক্রেন দিয়ে উত্তোলন"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "background": {
+      "unsafe": "res://assets/construction/c08/bg_unsafe.png",
+      "safe": "res://assets/construction/c08/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "walker",
+        "name": { "en": "Rina", "bn": "রিনা" },
+        "unsafe": "res://assets/characters/rina_bucket_unsafe.png",
+        "safe": "res://assets/characters/rina_bucket_safe.png",
+        "position": [590, 620],
+        "safe_position": [330, 640],
+        "scale": 0.5,
+        "idle": "breathe"
+      },
+      {
+        "id": "signaller",
+        "name": { "en": "Faruk", "bn": "ফারুক" },
+        "unsafe": "res://assets/characters/faruk_unsafe.png",
+        "safe": "res://assets/characters/faruk_safe.png",
+        "position": [900, 705],
+        "safe_position": [900, 705],
+        "scale": 0.5,
+        "idle": "breathe"
+      }
+    ],
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, Arif is lifting bricks to the third floor with the tower crane. Faruk is the signaller on the ground. I can see three serious hazards in this lift. Tap each one you find.",
+    "bn": "সুপারভাইজার, আরিফ টাওয়ার ক্রেন দিয়ে তিনতলায় ইট তুলছেন। ফারুক মাটিতে সিগন্যালম্যান। এই উত্তোলনে আমি তিনটি গুরুতর বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+  },
+  "hazard_hint": {
+    "en": "Look at what holds the load, who is under it, and who is guiding the crane.",
+    "bn": "বোঝাটি কী দিয়ে ধরা আছে, তার নিচে কে আছেন, আর ক্রেনকে কে দিকনির্দেশনা দিচ্ছেন, তা দেখুন।"
+  },
+  "hazards": [
+    {
+      "id": "frayed_sling",
+      "rect": [495, 105, 170, 240],
+      "label": {
+        "en": "Load hanging from one frayed rope",
+        "bn": "একটি ক্ষয়ে যাওয়া দড়িতে ঝোলানো বোঝা"
+      },
+      "explain": {
+        "en": "The pallet hangs from a single worn rope with no tag line. If the rope snaps or the load swings, a tonne of bricks falls.",
+        "bn": "প্যালেটটি একটিমাত্র ক্ষয়ে যাওয়া দড়িতে ঝুলছে, কোনো ট্যাগ লাইন নেই। দড়ি ছিঁড়ে গেলে বা বোঝা দুলে উঠলে এক টন ইট নিচে পড়বে।"
+      }
+    },
+    {
+      "id": "under_load",
+      "rect": [515, 400, 150, 225],
+      "label": {
+        "en": "Walking under a suspended load",
+        "bn": "ঝুলন্ত বোঝার নিচ দিয়ে হাঁটা"
+      },
+      "explain": {
+        "en": "Rina walks right under the bricks with no helmet. The area below the load is not fenced off.",
+        "bn": "রিনা হেলমেট ছাড়া ঠিক ইটের নিচ দিয়ে হাঁটছেন। বোঝার নিচের জায়গা ঘেরা নেই।"
+      }
+    },
+    {
+      "id": "distracted_signaller",
+      "rect": [820, 380, 160, 325],
+      "label": {
+        "en": "Signaller looking at his phone",
+        "bn": "সিগন্যালম্যান ফোনের দিকে তাকিয়ে"
+      },
+      "explain": {
+        "en": "Faruk should be watching the load and guiding the crane. Arif in the cab cannot see the people below.",
+        "bn": "ফারুকের বোঝার দিকে নজর রেখে ক্রেনকে পথ দেখানোর কথা। কেবিনে বসা আরিফ নিচের মানুষদের দেখতে পান না।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "sling_problem",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What is wrong with how the bricks are slung?",
+        "bn": "ইটগুলো যেভাবে বাঁধা হয়েছে, তাতে সমস্যা কী?"
+      },
+      "options": [
+        { "id": "colour", "text": { "en": "The rope is the wrong colour", "bn": "দড়ির রং ঠিক নয়" } },
+        { "id": "frayed", "text": { "en": "One worn, frayed rope holds the whole load, and loose bricks can fall out", "bn": "একটি ক্ষয়ে যাওয়া দড়িতে পুরো বোঝা ধরা, আর আলগা ইট পড়ে যেতে পারে" } },
+        { "id": "too_long", "text": { "en": "The rope is too long", "bn": "দড়িটি বেশি লম্বা" } },
+        { "id": "too_slow", "text": { "en": "The crane is lifting too slowly", "bn": "ক্রেন খুব ধীরে তুলছে" } }
+      ],
+      "correct": "frayed",
+      "hint": {
+        "en": "Look closely at the rope and at what stops the bricks from sliding off the pallet.",
+        "bn": "দড়িটি ভালো করে দেখুন, আর প্যালেট থেকে ইট পড়ে যাওয়া কী আটকাচ্ছে তাও দেখুন।"
+      },
+      "explanation": {
+        "en": "Slings must be inspected, undamaged and rated for the load, and loose materials must be caged or netted.",
+        "bn": "স্লিং পরীক্ষা করা, অক্ষত ও বোঝার ভার বহনের উপযুক্ত হতে হবে, আর আলগা মালামাল খাঁচা বা জালে ঘিরে রাখতে হবে।"
+      }
+    },
+    {
+      "id": "lift_steps",
+      "type": "ordering",
+      "prompt": {
+        "en": "Put the steps of a safe lift in the right order.",
+        "bn": "নিরাপদ উত্তোলনের ধাপগুলো সঠিক ক্রমে সাজান।"
+      },
+      "items": [
+        {
+          "id": "signal",
+          "text": { "en": "Lift only on the signaller's signal", "bn": "শুধু সিগন্যালম্যানের সংকেতে তোলা" },
+          "tag": { "en": "Step 4", "bn": "ধাপ ৪" }
+        },
+        {
+          "id": "inspect",
+          "text": { "en": "Inspect the sling, hook and load", "bn": "স্লিং, হুক ও বোঝা পরীক্ষা করা" },
+          "tag": { "en": "Step 1", "bn": "ধাপ ১" }
+        },
+        {
+          "id": "tag_line",
+          "text": { "en": "Attach a tag line to control swing", "bn": "দোলা নিয়ন্ত্রণে ট্যাগ লাইন লাগানো" },
+          "tag": { "en": "Step 3", "bn": "ধাপ ৩" }
+        },
+        {
+          "id": "fence",
+          "text": { "en": "Fence off the area under the load path", "bn": "বোঝার পথের নিচের জায়গা ঘিরে দেওয়া" },
+          "tag": { "en": "Step 2", "bn": "ধাপ ২" }
+        }
+      ],
+      "correct_order": ["inspect", "fence", "tag_line", "signal"],
+      "hint": {
+        "en": "Check the equipment first, then make the area safe, then control the load, and lift last.",
+        "bn": "আগে সরঞ্জাম পরীক্ষা, তারপর জায়গা নিরাপদ করা, তারপর বোঝা নিয়ন্ত্রণ, আর সবশেষে তোলা।"
+      },
+      "explanation": {
+        "en": "Every lift follows the same order. Skipping a step is how most crane accidents start.",
+        "bn": "প্রতিটি উত্তোলন একই ক্রমে হয়। বেশিরভাগ ক্রেন দুর্ঘটনা শুরু হয় কোনো ধাপ বাদ দেওয়া থেকে।"
+      }
+    },
+    {
+      "id": "persuade_arif",
+      "type": "dialogue",
+      "npc": "operator",
+      "npc_name": { "en": "Arif, crane operator", "bn": "ক্রেনচালক আরিফ" },
+      "npc_portrait": "res://assets/characters/arif_portrait.png",
+      "prompt": {
+        "en": "Arif wants to keep lifting without Faruk's signals. What do you say over the radio?",
+        "bn": "আরিফ ফারুকের সংকেত ছাড়াই তোলা চালিয়ে যেতে চান। রেডিওতে আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "Faruk is busy. I can see the load from up here. I'll finish this lift myself.",
+        "bn": "ফারুক ব্যস্ত। উপর থেকে আমি বোঝা দেখতে পাচ্ছি। এই উত্তোলনটা আমি নিজেই শেষ করব।"
+      },
+      "choices": [
+        {
+          "id": "go_ahead",
+          "quality": "fail",
+          "text": { "en": "Okay, go ahead, but be careful.", "bn": "ঠিক আছে, চালান, তবে সাবধানে।" },
+          "reply": { "en": "Lifting now.", "bn": "এখনই তুলছি।" },
+          "feedback": {
+            "en": "From the cab he cannot see Rina under the load. Never lift without a signaller.",
+            "bn": "কেবিন থেকে তিনি বোঝার নিচে রিনাকে দেখতে পাচ্ছেন না। সিগন্যালম্যান ছাড়া কখনো তোলা যাবে না।"
+          }
+        },
+        {
+          "id": "plan",
+          "quality": "best",
+          "text": {
+            "en": "Stop and hold the load. You can't see people under it from the cab. I'm clearing the area, and Faruk will guide you in two minutes.",
+            "bn": "থামুন, বোঝা ধরে রাখুন। কেবিন থেকে নিচের মানুষ দেখা যায় না। আমি জায়গা খালি করছি, দুই মিনিটে ফারুক আপনাকে পথ দেখাবেন।"
+          },
+          "reply": { "en": "Holding. Tell me when it's clear.", "bn": "ধরে রাখছি। খালি হলে জানাবেন।" },
+          "feedback": {
+            "en": "You stopped the lift, explained why, and gave a short plan to restart safely.",
+            "bn": "আপনি উত্তোলন থামিয়েছেন, কারণ বুঝিয়েছেন, আর নিরাপদে আবার শুরুর ছোট পরিকল্পনা দিয়েছেন।"
+          }
+        },
+        {
+          "id": "order",
+          "quality": "ok",
+          "text": { "en": "No lifting without a signaller. Stop.", "bn": "সিগন্যালম্যান ছাড়া তোলা চলবে না। থামুন।" },
+          "reply": { "en": "...Stopped.", "bn": "...থামালাম।" },
+          "feedback": {
+            "en": "Correct to stop, but now the load hangs over the path with no plan. Clear the area and get Faruk back.",
+            "bn": "থামানো ঠিক হয়েছে, কিন্তু এখন বোঝা কোনো পরিকল্পনা ছাড়া পথের উপর ঝুলছে। জায়গা খালি করুন আর ফারুককে ফিরিয়ে আনুন।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Stop the lift first, then explain what he cannot see, and say how the lift will continue.",
+        "bn": "আগে উত্তোলন থামান, তারপর বুঝিয়ে দিন তিনি কী দেখতে পাচ্ছেন না, আর কীভাবে আবার শুরু হবে বলুন।"
+      },
+      "explanation": {
+        "en": "The operator has blind spots. The signaller is the operator's eyes on the ground.",
+        "bn": "ক্রেনচালকের দৃষ্টির বাইরে অনেক জায়গা থাকে। মাটিতে সিগন্যালম্যানই তাঁর চোখ।"
+      }
+    },
+    {
+      "id": "equip_rina_crane",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/rina_bucket_unsafe.png",
+      "target_image_safe": "res://assets/characters/rina_bucket_safe.png",
+      "prompt": {
+        "en": "Drag the right gear onto Rina for working near the crane.",
+        "bn": "ক্রেনের কাছে কাজের জন্য সঠিক সরঞ্জাম টেনে রিনার উপর রাখুন।"
+      },
+      "items": [
+        { "id": "vest", "icon": "res://assets/ppe/vest.png", "text": { "en": "Hi-vis vest", "bn": "হাই-ভিজ ভেস্ট" } },
+        { "id": "insulating_gloves", "icon": "res://assets/ppe/insulating_gloves.png", "text": { "en": "Rubber insulating gloves", "bn": "রাবারের ইনসুলেটেড গ্লাভস" } },
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } },
+        { "id": "earmuffs", "icon": "res://assets/ppe/earmuffs.png", "text": { "en": "Ear muffs", "bn": "ইয়ারমাফ" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Safety boots", "bn": "সেফটি বুট" } }
+      ],
+      "correct": ["vest", "helmet", "boots"],
+      "hint": {
+        "en": "Things can fall from above, and the crane driver must be able to see her.",
+        "bn": "উপর থেকে জিনিস পড়তে পারে, আর ক্রেনচালকের তাঁকে দেখতে পাওয়া দরকার।"
+      },
+      "explanation": {
+        "en": "A helmet for falling objects, a vest so the operator and signaller can see her, and boots for her feet.",
+        "bn": "পড়ন্ত জিনিসের জন্য হেলমেট, ক্রেনচালক ও সিগন্যালম্যান যেন দেখতে পান তাই ভেস্ট, আর পায়ের জন্য বুট।"
+      }
+    },
+    {
+      "id": "signaller_duties",
+      "type": "multi_select",
+      "prompt": {
+        "en": "What must the signaller do during a lift?",
+        "bn": "উত্তোলনের সময় সিগন্যালম্যানকে কী করতে হবে?"
+      },
+      "options": [
+        { "id": "watch", "text": { "en": "Watch the load at all times", "bn": "সবসময় বোঝার দিকে নজর রাখা" } },
+        { "id": "phone", "text": { "en": "Answer phone calls between signals", "bn": "সংকেতের ফাঁকে ফোন ধরা" } },
+        { "id": "keep_clear", "text": { "en": "Keep people out of the lifting zone", "bn": "উত্তোলনের এলাকা থেকে মানুষকে দূরে রাখা" } },
+        { "id": "carry", "text": { "en": "Help carry materials to save time", "bn": "সময় বাঁচাতে মালামাল বহনে সাহায্য করা" } },
+        { "id": "signals", "text": { "en": "Use the agreed hand signals or radio words only", "bn": "শুধু ঠিক করা হাতের সংকেত বা রেডিওর শব্দ ব্যবহার করা" } }
+      ],
+      "correct": ["watch", "keep_clear", "signals"],
+      "hint": {
+        "en": "Three answers are correct. During a lift, the signaller does nothing else.",
+        "bn": "তিনটি উত্তর সঠিক। উত্তোলনের সময় সিগন্যালম্যান অন্য কোনো কাজ করেন না।"
+      },
+      "explanation": {
+        "en": "The signaller's only job during a lift is to watch, keep the zone clear and give clear agreed signals.",
+        "bn": "উত্তোলনের সময় সিগন্যালম্যানের একমাত্র কাজ নজর রাখা, এলাকা খালি রাখা আর ঠিক করা স্পষ্ট সংকেত দেওয়া।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Well done. The load is properly slung, the zone below is closed, and Faruk is guiding every move.",
+      "bn": "চমৎকার। বোঝা ঠিকভাবে বাঁধা, নিচের এলাকা বন্ধ, আর প্রতিটি নড়াচড়ায় ফারুক পথ দেখাচ্ছেন।"
+    },
+    "fixes": [
+      { "en": "Four-leg chain sling with an inspection tag; bricks caged", "bn": "পরিদর্শন ট্যাগসহ চার পায়ের চেইন স্লিং; ইট খাঁচায় ঘেরা" },
+      { "en": "Tag line fitted to control the swing", "bn": "দোলা নিয়ন্ত্রণে ট্যাগ লাইন লাগানো" },
+      { "en": "Area under the load fenced off with a no-entry sign", "bn": "বোঝার নিচের জায়গা প্রবেশ নিষেধ চিহ্নসহ ঘেরা" },
+      { "en": "Faruk signals with a radio; Rina wears PPE and walks outside the zone", "bn": "ফারুক রেডিওসহ সংকেত দিচ্ছেন; রিনা সুরক্ষা সরঞ্জাম পরে এলাকার বাইরে দিয়ে হাঁটছেন" }
+    ],
+    "references": [
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety (lifting appliances)",
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety"
+    ]
+  }
+}

@@ -9,17 +9,11 @@
     "res://content/construction/cases/c02_gate_check.json",
     "res://content/construction/cases/c03_electrical.json",
     "res://content/construction/cases/c04_trench.json",
-    "res://content/construction/cases/c05_floor_openings.json"
+    "res://content/construction/cases/c05_floor_openings.json",
+    "res://content/construction/cases/c07_mixer_rebar.json",
+    "res://content/construction/cases/c08_crane_lifting.json"
   ],
   "coming_soon": [
-    {
-      "en": "Concrete mixer and rebar",
-      "bn": "কংক্রিট মিক্সার ও রড"
-    },
-    {
-      "en": "Crane and hoist lifting",
-      "bn": "ক্রেন ও হয়েস্ট দিয়ে উত্তোলন"
-    },
     {
       "en": "Near-miss investigation",
       "bn": "অল্পের জন্য দুর্ঘটনা: তদন্ত"
