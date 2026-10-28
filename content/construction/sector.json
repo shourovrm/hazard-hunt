@@ -7,12 +7,25 @@
   "cases": [
     "res://content/construction/cases/c01_bamboo_scaffold.json",
     "res://content/construction/cases/c02_gate_check.json",
-    "res://content/construction/cases/c03_electrical.json"
+    "res://content/construction/cases/c03_electrical.json",
+    "res://content/construction/cases/c04_trench.json"
   ],
   "coming_soon": [
     {
-      "en": "Trench digging",
-      "bn": "পরিখা খনন"
+      "en": "Floor openings and lift shafts",
+      "bn": "মেঝের খোলা অংশ ও লিফটের গর্ত"
+    },
+    {
+      "en": "Concrete mixer and rebar",
+      "bn": "কংক্রিট মিক্সার ও রড"
+    },
+    {
+      "en": "Crane and hoist lifting",
+      "bn": "ক্রেন ও হয়েস্ট দিয়ে উত্তোলন"
+    },
+    {
+      "en": "Near-miss investigation",
+      "bn": "অল্পের জন্য দুর্ঘটনা: তদন্ত"
     }
   ]
 }
