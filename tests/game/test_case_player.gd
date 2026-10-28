@@ -55,7 +55,9 @@ func test_sector_map_lists_first_case() -> void:
 	var sector_map: Node = load("res://game/sector_map.tscn").instantiate()
 	t.root.add_child(sector_map)
 	t.assert_true("Bamboo Scaffold: Work at Height" in t.collect_text(sector_map), "case title missing")
-	t.assert_true(Loc.ui("coming_soon") in t.collect_text(sector_map), "coming soon cards missing")
+	var sector := CaseLoader.load_sector("res://content/construction/sector.json")
+	if not sector.get("coming_soon", []).is_empty():
+		t.assert_true(Loc.ui("coming_soon") in t.collect_text(sector_map), "coming soon cards missing")
 
 
 func test_player_starts_unsafe_in_intro() -> void:
