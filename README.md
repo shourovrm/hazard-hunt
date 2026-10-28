@@ -14,6 +14,7 @@
 Hazard Hunt is an Android game for skills trainees in Bangladesh that teaches occupational safety and health (OSH). The player is a site supervisor. Each case shows an unsafe workplace, the player finds the hazards and answers questions, and then sees the same place made safe. The game runs offline, in Bangla or English, on low-cost phones.
 
 <p align="center">
+  <img src="docs/screenshots/splash.jpg" width="49%" alt="Opening screen with developer credit">
   <img src="docs/screenshots/main-menu.jpg" width="49%" alt="Main menu">
   <img src="docs/screenshots/sectors.jpg" width="49%" alt="Sector selection">
   <img src="docs/screenshots/construction-cases.jpg" width="49%" alt="Construction cases">
@@ -74,7 +75,7 @@ The case texts and legal references are drafts. An OSH expert must review them b
 
 ## Credits
 
-- Developed for SICIP skills training.
+- Developed by Riad Mashrub Shourov (রিয়াদ মাশরুব সৌরভ).
 - Illustrations generated with AI (OpenAI GPT Image) and edited for the game.
 - Fonts: Noto Sans and Noto Sans Bengali, SIL Open Font License (`assets/fonts/OFL.txt`).
 - Sound effects: Kenney (www.kenney.nl), CC0 (`assets/audio/CREDITS.txt`).

@@ -1,5 +1,5 @@
 extends Control
-## Title screen: Start button and the language switch.
+## Title screen: Start button, language and sound switches, Exit, and the developer credit.
 
 const SECTOR_SELECT_SCENE := "res://game/sector_select.tscn"
 const EXIT_ICON_PATH := "res://assets/icons/exit.svg"
@@ -11,6 +11,7 @@ var _start_button: Button
 var _language_button: Button
 var _sound_button: Button
 var _exit_button: NavigationButton
+var _credit_label: Label
 var _quit_confirm: LeaveConfirmDialog
 
 
@@ -63,6 +64,14 @@ func _build_layout() -> void:
 	_exit_button.pressed.connect(_on_exit_pressed)
 	column.add_child(_exit_button)
 
+	_credit_label = _make_centered_label("SmallLabel")
+	_credit_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	_credit_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_credit_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_credit_label.offset_bottom = -14
+	_credit_label.add_theme_color_override("font_color", Color("#e6e6f2"))
+	add_child(_credit_label)
+
 	_quit_confirm = LeaveConfirmDialog.new("quit_title", "", "exit_game")
 	_quit_confirm.confirm_pressed.connect(_on_quit_confirmed)
 	add_child(_quit_confirm)
@@ -89,6 +98,11 @@ func _refresh_texts() -> void:
 	_language_button.text = Loc.ui("language_switch")
 	_sound_button.text = Loc.ui("sound_off") if Sfx.is_muted() else Loc.ui("sound_on")
 	_exit_button.text = Loc.ui("exit_game")
+	var version := str(ProjectSettings.get_setting("application/config/version"))
+	_credit_label.text = (
+		"%s %s  ·  %s"
+		% [Loc.ui("developed_by"), Loc.ui("developer_name"), Loc.ui("version_label", {"version": version})]
+	)
 
 
 ## Android back asks the same question as the Exit button, so the game never closes by accident.

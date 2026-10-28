@@ -258,5 +258,17 @@
   "sectors": {
     "en": "Sectors",
     "bn": "খাতসমূহ"
+  },
+  "developed_by": {
+    "en": "Developed by",
+    "bn": "তৈরি করেছেন"
+  },
+  "developer_name": {
+    "en": "Riad Mashrub Shourov",
+    "bn": "রিয়াদ মাশরুব সৌরভ"
+  },
+  "version_label": {
+    "en": "Version {version}",
+    "bn": "সংস্করণ {version}"
   }
 }
