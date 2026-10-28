@@ -7,6 +7,12 @@ build/
 *.keystore
 *.jks
 export_credentials.cfg
-# Local previews
+# Local tool output
 /tmp/
+.playwright-mcp/
+.tmp_shot/
+# Local-only agent and memory files (see AGENTS.md)
 .claude/
+CLAUDE.md
+DECISIONS.md
+docs/decisions/
