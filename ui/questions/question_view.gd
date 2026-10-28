@@ -1,0 +1,213 @@
+class_name QuestionView
+extends Control
+## Base class of every question widget. It owns the shared layout (prompt, scrolling body,
+## result area, Submit button), the lock state and the result display. Subclasses fill the
+## body and define the answer shape from the table in docs/CONTRACT.md (Area A).
+
+signal answer_submitted(answer: Variant)
+
+const PANEL_SIZE := Vector2(760, 560)
+const MINIMUM_TOUCH_HEIGHT := 64.0
+const SELECTED_FILL_COLOR := Color(0.16, 0.36, 0.62)
+const CORRECT_COLOR := Color(0.18, 0.62, 0.30)
+const WRONG_COLOR := Color(0.85, 0.25, 0.22)
+
+var question: Dictionary = {}
+
+var _locked := false
+var _last_result: Dictionary = {}
+var _prompt_label: Label
+var _body: VBoxContainer
+var _result_area: VBoxContainer
+var _submit_button: Button
+
+
+func setup(new_question: Dictionary) -> void:
+	if not new_question.has("prompt"):
+		push_error("QuestionView: question '%s' has no prompt" % new_question.get("id", "?"))
+		return
+	question = new_question
+	_locked = false
+	_last_result = {}
+	size = PANEL_SIZE
+	_reset_state()
+	_build_skeleton()
+	if not Loc.language_changed.is_connected(_on_language_changed):
+		# Bound to this node, so Godot drops the connection when the view is freed.
+		Loc.language_changed.connect(_on_language_changed)
+	_rebuild()
+
+
+func get_answer() -> Variant:
+	push_error("QuestionView.get_answer must be overridden")
+	return null
+
+
+func set_answer(_answer: Variant) -> void:
+	push_error("QuestionView.set_answer must be overridden")
+
+
+func submit() -> void:
+	answer_submitted.emit(get_answer())
+
+
+func show_result(result: Dictionary) -> void:
+	_last_result = result
+	if result.get("correct", false):
+		_locked = true
+	_rebuild()
+
+
+func is_locked() -> bool:
+	return _locked
+
+
+## Called once from setup() so subclasses can initialise their selection state.
+func _reset_state() -> void:
+	pass
+
+
+## Subclasses add their input widgets to `_body`. Called on every rebuild.
+func _build_body() -> void:
+	pass
+
+
+func _is_answer_valid() -> bool:
+	return true
+
+
+## Dialogue submits by tapping a choice and has no Submit button.
+func _uses_submit_button() -> bool:
+	return true
+
+
+## Lets a subclass show extra result content (such as an NPC reply) above the status line.
+func _build_result_extras(_result: Dictionary) -> void:
+	pass
+
+
+func _rebuild() -> void:
+	if _prompt_label == null:
+		return
+	_prompt_label.text = Loc.text(question["prompt"])
+	_clear_children(_body)
+	_build_body()
+	_clear_children(_result_area)
+	_build_result_area()
+	_submit_button.visible = _uses_submit_button()
+	_submit_button.text = Loc.ui("submit")
+	_submit_button.disabled = _locked or not _is_answer_valid()
+
+
+func _build_skeleton() -> void:
+	for existing_child in get_children():
+		remove_child(existing_child)
+		existing_child.queue_free()
+	var layout := VBoxContainer.new()
+	layout.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layout.add_theme_constant_override("separation", 12)
+	add_child(layout)
+
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	layout.add_child(scroll)
+
+	var scrolled_content := VBoxContainer.new()
+	scrolled_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scrolled_content.add_theme_constant_override("separation", 12)
+	scroll.add_child(scrolled_content)
+
+	_prompt_label = _make_wrapping_label("")
+	scrolled_content.add_child(_prompt_label)
+	_body = VBoxContainer.new()
+	_body.add_theme_constant_override("separation", 8)
+	scrolled_content.add_child(_body)
+	_result_area = VBoxContainer.new()
+	_result_area.add_theme_constant_override("separation", 8)
+	scrolled_content.add_child(_result_area)
+
+	_submit_button = Button.new()
+	_submit_button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
+	_submit_button.pressed.connect(submit)
+	layout.add_child(_submit_button)
+
+
+func _build_result_area() -> void:
+	if _last_result.is_empty():
+		return
+	_build_result_extras(_last_result)
+	var is_correct: bool = _last_result.get("correct", false)
+	var status_label := _make_wrapping_label(Loc.ui("correct") if is_correct else Loc.ui("try_again"))
+	status_label.add_theme_color_override("font_color", CORRECT_COLOR if is_correct else WRONG_COLOR)
+	_result_area.add_child(status_label)
+	var detail: Dictionary = _last_result.get("explanation" if is_correct else "hint", {})
+	if not detail.is_empty():
+		_result_area.add_child(_make_wrapping_label(Loc.text(detail)))
+
+
+func _on_language_changed(_language: String) -> void:
+	_rebuild()
+
+
+func _make_wrapping_label(label_text: String) -> Label:
+	var label := Label.new()
+	label.text = label_text
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return label
+
+
+## A full-width, left-aligned, wrapping button. A selected button gets a filled style so the
+## state is visible without relying on the theme's toggle look.
+func _make_choice_button(button_text: String, is_selected: bool, selected_color: Color = SELECTED_FILL_COLOR) -> Button:
+	var button := Button.new()
+	button.text = button_text
+	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	button.custom_minimum_size = Vector2(0, MINIMUM_TOUCH_HEIGHT)
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	if is_selected:
+		var selected_style := _make_selected_style(selected_color)
+		for style_name in ["normal", "hover", "pressed", "focus", "disabled"]:
+			button.add_theme_stylebox_override(style_name, selected_style)
+		for color_name in [
+			"font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"
+		]:
+			button.add_theme_color_override(color_name, Color.WHITE)
+	return button
+
+
+func _make_selected_style(fill_color: Color) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = fill_color
+	style.border_color = Color.WHITE
+	style.set_border_width_all(3)
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	return style
+
+
+## Selected choices turn green once the question is solved and locked.
+func _selected_color_for_result() -> Color:
+	if _locked:
+		return CORRECT_COLOR
+	return SELECTED_FILL_COLOR
+
+
+func _load_texture(path: String) -> Texture2D:
+	var texture := load(path) as Texture2D
+	if texture == null:
+		push_error("QuestionView: cannot load texture '%s' for question '%s'" % [path, question.get("id", "?")])
+	return texture
+
+
+## Removes at once (so text queries do not see stale children) and frees safely, because this
+## may run inside a signal emitted by one of the children.
+func _clear_children(container: Node) -> void:
+	for child in container.get_children():
+		container.remove_child(child)
+		child.queue_free()
