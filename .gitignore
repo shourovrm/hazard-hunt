@@ -9,3 +9,4 @@ build/
 export_credentials.cfg
 # Local previews
 /tmp/
+.claude/
