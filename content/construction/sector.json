@@ -8,13 +8,10 @@
     "res://content/construction/cases/c01_bamboo_scaffold.json",
     "res://content/construction/cases/c02_gate_check.json",
     "res://content/construction/cases/c03_electrical.json",
-    "res://content/construction/cases/c04_trench.json"
+    "res://content/construction/cases/c04_trench.json",
+    "res://content/construction/cases/c05_floor_openings.json"
   ],
   "coming_soon": [
-    {
-      "en": "Floor openings and lift shafts",
-      "bn": "মেঝের খোলা অংশ ও লিফটের গর্ত"
-    },
     {
       "en": "Concrete mixer and rebar",
       "bn": "কংক্রিট মিক্সার ও রড"

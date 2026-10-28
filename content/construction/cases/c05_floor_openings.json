@@ -1,0 +1,287 @@
+{
+  "id": "c05_floor_openings",
+  "sector": "construction",
+  "order": 5,
+  "review_status": "draft: needs OSH expert review before release",
+  "title": {
+    "en": "Floor Openings and Edges",
+    "bn": "মেঝের ফাঁকা অংশ ও কিনারা"
+  },
+  "scene": {
+    "size": [1280, 720],
+    "background": {
+      "unsafe": "res://assets/construction/c05/bg_unsafe.png",
+      "safe": "res://assets/construction/c05/bg_safe.png"
+    },
+    "actors": [
+      {
+        "id": "handler",
+        "name": { "en": "Tanvir", "bn": "তানভীর" },
+        "unsafe": "res://assets/characters/tanvir_barrow_unsafe.png",
+        "safe": "res://assets/characters/tanvir_barrow_safe.png",
+        "position": [560, 520],
+        "safe_position": [560, 560],
+        "scale": 0.5,
+        "idle": "breathe"
+      },
+      {
+        "id": "rod_carrier",
+        "name": { "en": "Sohel", "bn": "সোহেল" },
+        "unsafe": "res://assets/characters/sohel_rods_unsafe.png",
+        "safe": "res://assets/characters/sohel_rods_safe.png",
+        "position": [1090, 440],
+        "safe_position": [900, 420],
+        "scale": 0.5,
+        "idle": "breathe"
+      }
+    ],
+    "ambient": ["dust"],
+    "ambience": "res://assets/audio/ambience_site.ogg"
+  },
+  "intro": {
+    "en": "Supervisor, we are on the fourth floor. The lift shaft and the floor edges are still open, and the crew is moving materials. I can see four hazards. Tap each one you find.",
+    "bn": "সুপারভাইজার, আমরা এখন চারতলায়। লিফটের গর্ত আর মেঝের কিনারা এখনো খোলা, আর দলটি মালামাল সরাচ্ছে। আমি চারটি বিপদ দেখছি। প্রতিটি বিপদ খুঁজে পেলে তাতে ট্যাপ করুন।"
+  },
+  "hazard_hint": {
+    "en": "Look at every hole and edge on this floor, and at what is stacked near them.",
+    "bn": "এই মেঝের প্রতিটি গর্ত আর কিনারা দেখুন, আর তার কাছে কী জমা করা আছে তাও দেখুন।"
+  },
+  "hazards": [
+    {
+      "id": "lift_shaft",
+      "rect": [300, 285, 470, 240],
+      "label": {
+        "en": "Open lift shaft beside a busy path",
+        "bn": "চলাচলের পথের পাশে খোলা লিফটের গর্ত"
+      },
+      "explain": {
+        "en": "The shaft drops four floors and has no cover or rail. Tanvir pushes a heavy load right along it, with no helmet.",
+        "bn": "গর্তটি চারতলা নিচে নেমে গেছে, কোনো ঢাকনা বা রেলিং নেই। তানভীর হেলমেট ছাড়া ঠিক তার পাশ দিয়ে ভারী বোঝা ঠেলছেন।"
+      }
+    },
+    {
+      "id": "open_edge",
+      "rect": [1020, 200, 240, 250],
+      "label": {
+        "en": "Walking backwards near an unguarded edge",
+        "bn": "রেলিং ছাড়া কিনারার কাছে পেছন দিকে হাঁটা"
+      },
+      "explain": {
+        "en": "Sohel cannot see where he steps, and the slab edge has no guardrail. One more step and he falls to the street.",
+        "bn": "সোহেল দেখতে পাচ্ছেন না কোথায় পা ফেলছেন, আর মেঝের কিনারায় কোনো রেলিং নেই। আর এক পা এগোলেই তিনি রাস্তায় পড়ে যাবেন।"
+      }
+    },
+    {
+      "id": "loose_cover",
+      "rect": [0, 415, 385, 140],
+      "label": {
+        "en": "Loose, unmarked sheet over a hole",
+        "bn": "গর্তের উপর আলগা, চিহ্নহীন পাত"
+      },
+      "explain": {
+        "en": "The plywood is not fixed down and has no marking. Someone can step on it, or kick it aside, and fall through.",
+        "bn": "প্লাইউডটি আটকানো নেই, কোনো চিহ্নও নেই। কেউ এর উপর পা দিলে বা পা লেগে সরে গেলে নিচে পড়ে যেতে পারেন।"
+      }
+    },
+    {
+      "id": "edge_materials",
+      "rect": [780, 240, 115, 80],
+      "label": {
+        "en": "Bricks stacked at the slab edge",
+        "bn": "মেঝের কিনারায় ইটের স্তূপ"
+      },
+      "explain": {
+        "en": "Bricks near an open edge can be knocked off and hit people on the street or the floors below.",
+        "bn": "খোলা কিনারার কাছের ইট ধাক্কা লেগে পড়ে গিয়ে নিচের রাস্তার বা তলার মানুষকে আঘাত করতে পারে।"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "which_openings",
+      "type": "multi_select",
+      "prompt": {
+        "en": "Which of these must be covered or fenced before work continues?",
+        "bn": "কাজ চালিয়ে যাওয়ার আগে এগুলোর মধ্যে কোনগুলো ঢাকতে বা ঘিরতে হবে?"
+      },
+      "options": [
+        { "id": "shaft", "text": { "en": "The open lift shaft", "bn": "খোলা লিফটের গর্ত" } },
+        { "id": "stairs", "text": { "en": "The staircase that already has a fixed handrail", "bn": "যে সিঁড়িতে আগে থেকেই শক্ত হাতল লাগানো আছে" } },
+        { "id": "small_hole", "text": { "en": "The small hole under the plywood", "bn": "প্লাইউডের নিচের ছোট গর্ত" } },
+        { "id": "slab_edge", "text": { "en": "The open slab edge", "bn": "মেঝের খোলা কিনারা" } },
+        { "id": "drain", "text": { "en": "The covered drain in the street below", "bn": "নিচের রাস্তার ঢাকনা দেওয়া ড্রেন" } }
+      ],
+      "correct": ["shaft", "small_hole", "slab_edge"],
+      "hint": {
+        "en": "Three answers are correct. Which ones could someone fall into or off right now?",
+        "bn": "তিনটি উত্তর সঠিক। এই মুহূর্তে কোনগুলোতে কেউ পড়ে যেতে পারেন?"
+      },
+      "explanation": {
+        "en": "Any hole a person or a tool can fall through, and any open edge, needs a fixed cover or a guardrail. Small holes are dangerous too: a foot can go through.",
+        "bn": "যে গর্ত দিয়ে মানুষ বা যন্ত্র পড়ে যেতে পারে, আর যেকোনো খোলা কিনারা, শক্ত ঢাকনা বা রেলিং দিয়ে বন্ধ করতে হয়। ছোট গর্তও বিপজ্জনক: পা ঢুকে যেতে পারে।"
+      }
+    },
+    {
+      "id": "shaft_controls",
+      "type": "ordering",
+      "prompt": {
+        "en": "Put these ways of protecting the lift shaft in order, from most effective to least effective.",
+        "bn": "লিফটের গর্ত সুরক্ষার এই উপায়গুলো সবচেয়ে কার্যকর থেকে সবচেয়ে কম কার্যকর ক্রমে সাজান।"
+      },
+      "items": [
+        {
+          "id": "harness",
+          "text": { "en": "Give a harness to anyone working near the shaft", "bn": "গর্তের কাছে যে কাজ করবেন তাঁকে হারনেস দেওয়া" },
+          "tag": { "en": "PPE", "bn": "ব্যক্তিগত সুরক্ষা সরঞ্জাম" }
+        },
+        {
+          "id": "guardrail",
+          "text": { "en": "Fit a guardrail with a toe board around the shaft", "bn": "গর্তের চারপাশে টো-বোর্ডসহ রেলিং লাগানো" },
+          "tag": { "en": "Engineering control", "bn": "প্রকৌশলগত নিয়ন্ত্রণ" }
+        },
+        {
+          "id": "route",
+          "text": { "en": "Train the crew and set a walking route away from the shaft", "bn": "দলকে প্রশিক্ষণ দেওয়া ও গর্ত থেকে দূরে চলার পথ ঠিক করা" },
+          "tag": { "en": "Administrative control", "bn": "প্রশাসনিক নিয়ন্ত্রণ" }
+        },
+        {
+          "id": "signs",
+          "text": { "en": "Put up warning signs and mark the area", "bn": "সতর্কচিহ্ন লাগানো ও জায়গাটি চিহ্নিত করা" },
+          "tag": { "en": "Warning", "bn": "সতর্কতা" }
+        }
+      ],
+      "correct_order": ["guardrail", "signs", "route", "harness"],
+      "hint": {
+        "en": "A physical barrier works even when nobody is paying attention. PPE comes last.",
+        "bn": "কেউ খেয়াল না রাখলেও শক্ত বাধা কাজ করে। ব্যক্তিগত সুরক্ষা সরঞ্জাম সবশেষে।"
+      },
+      "explanation": {
+        "en": "Barriers stop the fall, signs warn, routes and training depend on people remembering, and a harness only helps if it is worn and clipped on.",
+        "bn": "বাধা পড়ে যাওয়া থামায়, চিহ্ন সতর্ক করে, পথ ও প্রশিক্ষণ মানুষের মনে রাখার উপর নির্ভর করে, আর হারনেস কাজে লাগে কেবল পরা ও আটকানো থাকলে।"
+      }
+    },
+    {
+      "id": "persuade_sohel",
+      "type": "dialogue",
+      "npc": "rod_carrier",
+      "npc_name": { "en": "Sohel", "bn": "সোহেল" },
+      "npc_portrait": "res://assets/characters/sohel_portrait.png",
+      "prompt": {
+        "en": "Sohel says he does not need to look where he walks. What do you say?",
+        "bn": "সোহেল বলছেন হাঁটার সময় তাঁর দেখার দরকার নেই। আপনি কী বলবেন?"
+      },
+      "npc_line": {
+        "en": "I know this floor by heart. Walking backwards with the rods is faster.",
+        "bn": "এই মেঝে আমার মুখস্থ। রড নিয়ে পেছন দিকে হাঁটলে তাড়াতাড়ি হয়।"
+      },
+      "choices": [
+        {
+          "id": "slowly",
+          "quality": "fail",
+          "text": { "en": "Fine, just go slowly near the edge.", "bn": "ঠিক আছে, শুধু কিনারার কাছে আস্তে যাবেন।" },
+          "reply": { "en": "Sure, sure.", "bn": "আচ্ছা, আচ্ছা।" },
+          "feedback": {
+            "en": "Going slowly does not help if you cannot see the edge behind you.",
+            "bn": "পেছনের কিনারা দেখতে না পেলে আস্তে হাঁটায় কোনো লাভ নেই।"
+          }
+        },
+        {
+          "id": "stop",
+          "quality": "ok",
+          "text": { "en": "Stop walking backwards. Now.", "bn": "পেছন দিকে হাঁটা বন্ধ করুন। এখনই।" },
+          "reply": { "en": "...Okay, okay.", "bn": "...আচ্ছা, আচ্ছা।" },
+          "feedback": {
+            "en": "He stopped, but you did not give him a better way to carry the rods.",
+            "bn": "তিনি থামলেন, কিন্তু রড বহনের ভালো কোনো উপায় আপনি দেখাননি।"
+          }
+        },
+        {
+          "id": "partner",
+          "quality": "best",
+          "text": {
+            "en": "Nobody can see an edge behind them. Carry the rods with a partner, both facing forward, inside the rail line.",
+            "bn": "পেছনের কিনারা কেউ দেখতে পায় না। একজন সঙ্গীর সঙ্গে রড বহন করুন, দুজনেই সামনে মুখ করে, রেলিংয়ের ভেতরে থেকে।"
+          },
+          "reply": { "en": "Tanvir, give me a hand at the other end.", "bn": "তানভীর, অন্য মাথাটা একটু ধরো তো।" },
+          "feedback": {
+            "en": "You gave him a faster and safer way, so he changed how he works.",
+            "bn": "আপনি তাঁকে আরও দ্রুত ও নিরাপদ উপায় দেখিয়েছেন, তাই তিনি কাজের ধরন বদলালেন।"
+          }
+        }
+      ],
+      "hint": {
+        "en": "Do not just forbid it. Show him a better way to carry long rods.",
+        "bn": "শুধু নিষেধ করবেন না। লম্বা রড বহনের ভালো উপায় দেখিয়ে দিন।"
+      },
+      "explanation": {
+        "en": "Experience does not protect against an edge you cannot see. Two people carrying forward is safer and just as fast.",
+        "bn": "যে কিনারা দেখা যায় না, অভিজ্ঞতা তা থেকে বাঁচায় না। দুজনে সামনে মুখ করে বহন করা বেশি নিরাপদ, আর সমান দ্রুত।"
+      }
+    },
+    {
+      "id": "equip_tanvir",
+      "type": "drag_ppe",
+      "target_image": "res://assets/characters/tanvir_barrow_unsafe.png",
+      "target_image_safe": "res://assets/characters/tanvir_barrow_safe.png",
+      "prompt": {
+        "en": "Drag the right gear onto Tanvir before he moves more bricks.",
+        "bn": "তানভীর আরও ইট সরানোর আগে সঠিক সরঞ্জাম টেনে তাঁর উপর রাখুন।"
+      },
+      "items": [
+        { "id": "earmuffs", "icon": "res://assets/ppe/earmuffs.png", "text": { "en": "Ear muffs", "bn": "ইয়ারমাফ" } },
+        { "id": "helmet", "icon": "res://assets/ppe/helmet.png", "text": { "en": "Helmet", "bn": "হেলমেট" } },
+        { "id": "boots", "icon": "res://assets/ppe/boots.png", "text": { "en": "Safety boots", "bn": "সেফটি বুট" } },
+        { "id": "welding_mask", "icon": "res://assets/ppe/welding_mask.png", "text": { "en": "Welding mask", "bn": "ওয়েল্ডিং মাস্ক" } },
+        { "id": "gloves", "icon": "res://assets/ppe/gloves.png", "text": { "en": "Work gloves", "bn": "কাজের গ্লাভস" } }
+      ],
+      "correct": ["helmet", "boots", "gloves"],
+      "hint": {
+        "en": "He handles rough bricks under floors where things can fall. Protect head, feet and hands.",
+        "bn": "তিনি খসখসে ইট নিয়ে কাজ করেন, আর উপর থেকে জিনিস পড়তে পারে। মাথা, পা ও হাত সুরক্ষিত করুন।"
+      },
+      "explanation": {
+        "en": "A helmet guards against falling objects, boots against dropped bricks, and gloves against cuts. Ear muffs and welding masks are for other jobs.",
+        "bn": "হেলমেট পড়ন্ত জিনিস থেকে, বুট পড়ে যাওয়া ইট থেকে, আর গ্লাভস হাত কাটা থেকে রক্ষা করে। ইয়ারমাফ ও ওয়েল্ডিং মাস্ক অন্য কাজের জন্য।"
+      }
+    },
+    {
+      "id": "safe_cover",
+      "type": "single_choice",
+      "prompt": {
+        "en": "What makes a cover over a floor hole safe?",
+        "bn": "মেঝের গর্তের উপরের ঢাকনা কীভাবে নিরাপদ হয়?"
+      },
+      "options": [
+        { "id": "any_sheet", "text": { "en": "Any sheet that hides the hole from view", "bn": "যেকোনো পাত, যা গর্তটি আড়াল করে" } },
+        { "id": "cardboard", "text": { "en": "Cardboard with a warning written on it", "bn": "সতর্কবার্তা লেখা কার্ডবোর্ড" } },
+        { "id": "strong_fixed_marked", "text": { "en": "Strong enough for a person's weight, fixed so it cannot slide, and clearly marked", "bn": "মানুষের ভার নিতে যথেষ্ট মজবুত, এমনভাবে আটকানো যে সরে না, আর স্পষ্টভাবে চিহ্নিত" } },
+        { "id": "bricks_around", "text": { "en": "A ring of bricks placed around the hole", "bn": "গর্তের চারপাশে ইট সাজিয়ে রাখা" } }
+      ],
+      "correct": "strong_fixed_marked",
+      "hint": {
+        "en": "Think of three things: can it hold a person, can it move, and can people tell it is a cover?",
+        "bn": "তিনটি বিষয় ভাবুন: এটি কি মানুষের ভার নিতে পারে, এটি কি সরে যেতে পারে, আর মানুষ কি বুঝতে পারে এটি একটি ঢাকনা?"
+      },
+      "explanation": {
+        "en": "A safe cover is strong, fixed down and marked. Hiding a hole without these three makes it more dangerous, not less.",
+        "bn": "নিরাপদ ঢাকনা মজবুত, আটকানো ও চিহ্নিত। এই তিনটি ছাড়া গর্ত আড়াল করলে বিপদ কমে না, বরং বাড়ে।"
+      }
+    }
+  ],
+  "outcome": {
+    "mentor_line": {
+      "en": "Excellent. Every hole and edge on this floor is now guarded, and the crew moves materials safely.",
+      "bn": "চমৎকার। এই মেঝের প্রতিটি গর্ত ও কিনারা এখন সুরক্ষিত, আর দলটি নিরাপদে মালামাল সরাচ্ছে।"
+    },
+    "fixes": [
+      { "en": "Guardrail with toe board around the lift shaft", "bn": "লিফটের গর্তের চারপাশে টো-বোর্ডসহ রেলিং" },
+      { "en": "Guardrail, toe board and safety net along the slab edge", "bn": "মেঝের কিনারায় রেলিং, টো-বোর্ড ও সেফটি নেট" },
+      { "en": "Small hole covered with a fixed, striped cover", "bn": "ছোট গর্ত আটকানো, ডোরাকাটা ঢাকনায় ঢাকা" },
+      { "en": "Bricks moved back from the edge; Tanvir and Sohel wear PPE", "bn": "ইট কিনারা থেকে সরানো; তানভীর ও সোহেল সুরক্ষা সরঞ্জাম পরেছেন" }
+    ],
+    "references": [
+      "Bangladesh National Building Code (BNBC) 2020, Part 7: Construction Practices and Safety",
+      "Bangladesh Labour Act 2006 (amended 2013 and 2018), Chapter VI: Safety"
+    ]
+  }
+}
