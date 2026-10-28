@@ -5,13 +5,24 @@ extends RefCounted
 
 const REQUIRED_CASE_KEYS: Array[String] = ["id", "title", "scene", "intro", "hazards", "questions", "outcome"]
 const QUESTION_TYPES: Array[String] = [
-	"single_choice", "multi_select", "ordering", "dialogue", "drag_ppe", "gate_check", "permit_check"
+	"single_choice",
+	"multi_select",
+	"ordering",
+	"dialogue",
+	"drag_ppe",
+	"gate_check",
+	"permit_check",
+	"evidence_board",
+	"cause_chain",
+	"matching",
 ]
 const DIALOGUE_QUALITIES: Array[String] = ["best", "ok", "fail"]
 const REQUIRED_LANGUAGES: Array[String] = ["en", "bn"]
 const GATE_WORKER_KEYS: Array[String] = ["id", "name", "image", "image_safe", "missing", "feedback"]
 const PERMIT_STATUSES: Array[String] = ["ok", "not_ok"]
 const PERMIT_DECISIONS: Array[String] = ["approve", "refuse"]
+# A chain with fewer slots would not show a "why" step between what happened and the root cause.
+const CAUSE_CHAIN_MIN_SLOTS := 3
 
 
 static func load_case(path: String) -> Dictionary:
@@ -149,10 +160,19 @@ static func _check_question(question: Dictionary, where: String, problems: Array
 			_check_gate_check(question, where, problems)
 		"permit_check":
 			_check_permit_check(question, where, problems)
+		"evidence_board":
+			_check_evidence_board(question, where, problems)
+		"cause_chain":
+			_check_cause_chain(question, where, problems)
+		"matching":
+			_check_matching(question, where, problems)
 
 
-## Validates the entries of `list_key` (options or items) and returns their ids.
-static func _check_entries(question: Dictionary, list_key: String, where: String, problems: Array[String]) -> Array:
+## Validates the entries of `list_key` (options, items, cards or targets) and returns their ids.
+## `text_key` names the localized field of each entry; evidence cards use "caption".
+static func _check_entries(
+	question: Dictionary, list_key: String, where: String, problems: Array[String], text_key: String = "text"
+) -> Array:
 	var entry_ids: Array = []
 	var entries: Variant = question.get(list_key)
 	if not entries is Array or entries.is_empty():
@@ -163,8 +183,16 @@ static func _check_entries(question: Dictionary, list_key: String, where: String
 			problems.append("%s: every entry in '%s' needs an 'id'" % [where, list_key])
 			continue
 		entry_ids.append(entry["id"])
-		_check_localized(entry.get("text"), "%s %s '%s' text" % [where, list_key, entry["id"]], problems)
+		_check_localized(entry.get(text_key), "%s %s '%s' %s" % [where, list_key, entry["id"], text_key], problems)
 	return entry_ids
+
+
+static func _check_unique_ids(ids: Array, where: String, problems: Array[String]) -> void:
+	var seen_ids: Array = []
+	for entry_id in ids:
+		if entry_id in seen_ids:
+			problems.append("%s: duplicate id '%s'" % [where, str(entry_id)])
+		seen_ids.append(entry_id)
 
 
 static func _check_single_choice(question: Dictionary, where: String, problems: Array[String]) -> void:
@@ -321,3 +349,61 @@ static func _check_permit_decision(
 		problems.append(
 			"%s: correct_decision is '%s' but the checks require '%s'" % [where, str(decision), expected_decision]
 		)
+
+
+static func _check_evidence_board(question: Dictionary, where: String, problems: Array[String]) -> void:
+	var card_ids := _check_entries(question, "cards", where, problems, "caption")
+	_check_unique_ids(card_ids, where + " cards", problems)
+	_check_card_images(question.get("cards"), where, problems)
+
+
+static func _check_card_images(cards: Variant, where: String, problems: Array[String]) -> void:
+	if not cards is Array:
+		return  # _check_entries already reported the missing array
+	for card in cards:
+		if not card is Dictionary:
+			continue  # _check_entries already reported the bad entry
+		var image: Variant = card.get("image")
+		if not image is String or image == "":
+			problems.append("%s: card '%s' needs an 'image' path" % [where, str(card.get("id", "?"))])
+
+
+static func _check_cause_chain(question: Dictionary, where: String, problems: Array[String]) -> void:
+	var card_ids := _check_entries(question, "cards", where, problems)
+	_check_unique_ids(card_ids, where + " cards", problems)
+	var correct_chain: Variant = question.get("correct_chain")
+	if not correct_chain is Array or correct_chain.size() < CAUSE_CHAIN_MIN_SLOTS:
+		problems.append("%s: 'correct_chain' must be an array of at least %d card ids" % [where, CAUSE_CHAIN_MIN_SLOTS])
+		return
+	for card_id in correct_chain:
+		if card_id not in card_ids:
+			problems.append("%s: correct_chain id '%s' is not in 'cards'" % [where, str(card_id)])
+	_check_unique_ids(correct_chain, where + " correct_chain", problems)
+
+
+static func _check_matching(question: Dictionary, where: String, problems: Array[String]) -> void:
+	var item_ids := _check_entries(question, "items", where, problems)
+	var target_ids := _check_entries(question, "targets", where, problems)
+	_check_matching_correct(question.get("correct"), item_ids, target_ids, where, problems)
+
+
+## Every item must map to a known target, and the map must not name unknown items.
+static func _check_matching_correct(
+	correct: Variant, item_ids: Array, target_ids: Array, where: String, problems: Array[String]
+) -> void:
+	if not correct is Dictionary:
+		problems.append("%s: 'correct' must be an object mapping item ids to target ids" % where)
+		return
+	for item_id in item_ids:
+		if not correct.has(item_id):
+			problems.append("%s: no correct target for item '%s'" % [where, str(item_id)])
+		elif correct[item_id] not in target_ids:
+			problems.append(
+				(
+					"%s: correct target '%s' for item '%s' is not in 'targets'"
+					% [where, str(correct[item_id]), str(item_id)]
+				)
+			)
+	for mapped_item_id in correct:
+		if mapped_item_id not in item_ids:
+			problems.append("%s: correct maps '%s', which is not in 'items'" % [where, str(mapped_item_id)])

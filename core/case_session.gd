@@ -273,6 +273,8 @@ func _is_correct_non_dialogue(question: Dictionary, answer: Variant) -> bool:
 			return answer is Array and _as_strings(answer) == _as_strings(question["correct_order"])
 		"permit_check":
 			return _is_correct_permit_check(question, answer)
+		"evidence_board", "cause_chain", "matching":
+			return _is_correct_investigation(question, answer)
 	push_error("CaseSession: unknown question type '%s'" % str(question["type"]))
 	return false
 
@@ -313,6 +315,14 @@ static func correct_answer(question: Dictionary) -> Variant:
 			return _gate_check_correct_answer(question)
 		"permit_check":
 			return _permit_check_correct_answer(question)
+		"evidence_board":
+			return _card_ids(question["cards"])
+		"cause_chain":
+			var correct_chain: Array = question["correct_chain"]
+			return correct_chain.duplicate()
+		"matching":
+			var correct_targets: Dictionary = question["correct"]
+			return correct_targets.duplicate()
 	push_error("CaseSession: correct_answer has no rule for question type '%s'" % str(question["type"]))
 	return null
 
@@ -352,3 +362,41 @@ func _as_sorted_strings(values: Array) -> Array[String]:
 	var strings := _as_strings(values)
 	strings.sort()
 	return strings
+
+
+## Scores the case 12 investigation types, each with its own rule.
+func _is_correct_investigation(question: Dictionary, answer: Variant) -> bool:
+	match question["type"]:
+		"evidence_board":
+			return _is_correct_evidence_board(question, answer)
+		"cause_chain":
+			return answer is Array and _as_strings(answer) == _as_strings(question["correct_chain"])
+		"matching":
+			return answer is Dictionary and _as_string_map(answer) == _as_string_map(question["correct"])
+	return false
+
+
+# Every card must be turned over. Order and repeated entries in the answer do not matter.
+func _is_correct_evidence_board(question: Dictionary, answer: Variant) -> bool:
+	if not answer is Array:
+		return false
+	var turned_card_ids := _as_strings(answer)
+	for card_id in _card_ids(question["cards"]):
+		if card_id not in turned_card_ids:
+			return false
+	return true
+
+
+# Answers may use non-String keys or values, so every id is compared as a string.
+func _as_string_map(values: Dictionary) -> Dictionary:
+	var strings: Dictionary = {}
+	for key in values:
+		strings[str(key)] = str(values[key])
+	return strings
+
+
+static func _card_ids(cards: Array) -> Array[String]:
+	var card_ids: Array[String] = []
+	for card in cards:
+		card_ids.append(str(card["id"]))
+	return card_ids
