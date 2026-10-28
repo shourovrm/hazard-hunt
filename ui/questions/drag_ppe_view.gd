@@ -125,6 +125,7 @@ func _equip_item(item_id: String) -> void:
 	if _locked or _find_item(item_id).is_empty() or _equipped_item_ids.has(item_id):
 		return
 	_equipped_item_ids.append(item_id)
+	Sfx.play("select")
 	_rebuild()
 
 
@@ -132,6 +133,7 @@ func _unequip_item(item_id: String) -> void:
 	if _locked:
 		return
 	_equipped_item_ids.erase(item_id)
+	Sfx.play("select")
 	_rebuild()
 
 

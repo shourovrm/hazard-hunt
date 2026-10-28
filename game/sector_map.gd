@@ -147,11 +147,13 @@ func _make_card_title(title_text: String) -> Label:
 
 
 func _on_play_pressed(case_path: String) -> void:
+	Sfx.play("tap")
 	GameState.selected_case_path = case_path
 	get_tree().change_scene_to_file(CASE_PLAYER_SCENE)
 
 
 func _on_back_pressed() -> void:
+	Sfx.play("tap")
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 

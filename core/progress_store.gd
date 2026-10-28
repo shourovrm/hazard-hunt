@@ -4,11 +4,13 @@ extends Node
 ## saved as JSON so they survive restarts.
 
 const DEFAULT_LANGUAGE := "bn"
+const DEFAULT_SOUND_ENABLED := true
 
 var save_path := "user://progress.json"
 
 var _best_stars: Dictionary = {}
 var _language := DEFAULT_LANGUAGE
+var _sound_enabled := DEFAULT_SOUND_ENABLED
 
 
 func _ready() -> void:
@@ -37,7 +39,7 @@ func save_progress() -> void:
 	if file == null:
 		push_error("ProgressStore: cannot write '%s' (error %d)" % [save_path, FileAccess.get_open_error()])
 		return
-	file.store_string(JSON.stringify({"stars": _best_stars, "language": _language}))
+	file.store_string(JSON.stringify({"stars": _best_stars, "language": _language, "sound_enabled": _sound_enabled}))
 	file.close()
 
 
@@ -74,6 +76,15 @@ func set_language(code: String) -> void:
 	save_progress()
 
 
+func get_sound_enabled() -> bool:
+	return _sound_enabled
+
+
+func set_sound_enabled(enabled: bool) -> void:
+	_sound_enabled = enabled
+	save_progress()
+
+
 func reset() -> void:
 	_clear_memory()
 	if FileAccess.file_exists(save_path):
@@ -85,6 +96,7 @@ func reset() -> void:
 func _clear_memory() -> void:
 	_best_stars = {}
 	_language = DEFAULT_LANGUAGE
+	_sound_enabled = DEFAULT_SOUND_ENABLED
 
 
 func _apply_saved_data(saved: Dictionary) -> void:
@@ -94,3 +106,5 @@ func _apply_saved_data(saved: Dictionary) -> void:
 			# JSON numbers load as float; stars are whole numbers.
 			_best_stars[str(case_id)] = int(saved_stars[case_id])
 	_language = str(saved.get("language", DEFAULT_LANGUAGE))
+	# Saves from before sound existed have no key; they keep sound on.
+	_sound_enabled = bool(saved.get("sound_enabled", DEFAULT_SOUND_ENABLED))

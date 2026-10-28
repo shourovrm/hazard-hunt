@@ -37,4 +37,5 @@ func _build_body() -> void:
 
 func _on_option_pressed(option_id: String) -> void:
 	_selected_option_id = option_id
+	Sfx.play("select")
 	_rebuild()

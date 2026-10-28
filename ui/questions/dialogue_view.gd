@@ -90,5 +90,6 @@ func _build_result_extras(result: Dictionary) -> void:
 
 func _on_choice_pressed(choice_id: String) -> void:
 	_selected_choice_id = choice_id
+	Sfx.play("select")
 	_rebuild()
 	submit()

@@ -8,6 +8,7 @@ var _title_label: Label
 var _subtitle_label: Label
 var _start_button: Button
 var _language_button: Button
+var _sound_button: Button
 
 
 func _ready() -> void:
@@ -48,6 +49,12 @@ func _build_layout() -> void:
 	_language_button.pressed.connect(_on_language_switch_pressed)
 	column.add_child(_language_button)
 
+	_sound_button = Button.new()
+	_sound_button.custom_minimum_size = Vector2(240, 64)
+	_sound_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_sound_button.pressed.connect(_on_sound_toggle_pressed)
+	column.add_child(_sound_button)
+
 
 func _make_centered_label(type_variation: String) -> Label:
 	var label := Label.new()
@@ -68,16 +75,26 @@ func _refresh_texts() -> void:
 	_subtitle_label.visible = not _subtitle_label.text.is_empty()
 	_start_button.text = Loc.ui("start")
 	_language_button.text = Loc.ui("language_switch")
+	_sound_button.text = Loc.ui("sound_off") if Sfx.is_muted() else Loc.ui("sound_on")
 
 
 func _on_start_pressed() -> void:
+	Sfx.play("tap")
 	get_tree().change_scene_to_file(SECTOR_MAP_SCENE)
 
 
 func _on_language_switch_pressed() -> void:
+	Sfx.play("tap")
 	var other_language := "en" if Loc.language == "bn" else "bn"
 	Loc.set_language(other_language)
 	Progress.set_language(other_language)
+
+
+## Toggles after the mute change, so the confirming tap is heard only when sound comes back on.
+func _on_sound_toggle_pressed() -> void:
+	Sfx.set_muted(not Sfx.is_muted())
+	Sfx.play("tap")
+	_refresh_texts()
 
 
 func _on_language_changed(_language: String) -> void:
