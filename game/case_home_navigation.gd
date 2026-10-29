@@ -5,7 +5,7 @@ extends CanvasLayer
 
 signal home_pressed
 
-const HOME_ICON_PATH := "res://assets/icons/home.svg"
+const BACK_ICON_PATH := "res://assets/icons/back.svg"
 # The case list of the selected sector; GameState.selected_sector_path still names it.
 const SECTOR_MAP_SCENE := "res://game/sector_map.tscn"
 const HOME_BUTTON_SIZE := Vector2(64, 64)
@@ -20,7 +20,7 @@ var _leave_confirm: LeaveConfirmDialog
 func _init() -> void:
 	name = "Navigation"
 	layer = NAVIGATION_LAYER
-	_home_button = NavigationButton.new(HOME_ICON_PATH, HOME_BUTTON_SIZE)
+	_home_button = NavigationButton.new(BACK_ICON_PATH, HOME_BUTTON_SIZE)
 	_home_button.name = "HomeButton"
 	_home_button.position = Vector2(SCREEN_MARGIN, SCREEN_MARGIN)
 	_home_button.pressed.connect(_on_home_button_pressed)
@@ -71,4 +71,4 @@ func _on_language_changed(_language: String) -> void:
 
 
 func _refresh_texts() -> void:
-	_home_button.tooltip_text = Loc.ui("home")
+	_home_button.tooltip_text = Loc.ui("back")

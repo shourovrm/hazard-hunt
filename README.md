@@ -6,7 +6,7 @@
 <p align="center"><b>OSH training game</b> · পেশাগত নিরাপত্তা প্রশিক্ষণ গেম</p>
 
 <p align="center">
-  <a href="https://github.com/shourovrm/hazard-hunt/releases/latest/download/hazard-hunt.apk"><b>⬇ Download the latest Android APK</b></a>
+  <a href="https://github.com/shourovrm/hazard-hunt/releases/latest"><b>⬇ Download the latest Android APK</b></a>
   ·
   <a href="https://github.com/shourovrm/hazard-hunt/releases/latest">Release notes</a>
 </p>
@@ -44,7 +44,7 @@ Every question has a free **Hint**, and **Show answer** appears after a wrong tr
 
 ## Install
 
-1. Download [`hazard-hunt.apk`](https://github.com/shourovrm/hazard-hunt/releases/latest/download/hazard-hunt.apk) on an Android phone (Android 7 or newer, OpenGL ES 3.0).
+1. Download [`hazard-hunt-<version>.apk`](https://github.com/shourovrm/hazard-hunt/releases/latest) on an Android phone (Android 7 or newer, OpenGL ES 3.0).
 2. Open the file and allow installing from this source when Android asks.
 
 ## Build from source

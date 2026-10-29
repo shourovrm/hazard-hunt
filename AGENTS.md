@@ -14,7 +14,7 @@ Interfaces between code areas are fixed in `docs/CONTRACT.md`; read the section 
 - Lint / format: `gdformat --line-length=120 core ui game tests` and `gdlint core ui game tests` (max 1000 lines per file).
 - Run locally: `godot --path .`; on the phone: `adb install -r build/hazard-hunt.apk && adb shell monkey -p bd.sicip.hazardhunt -c android.intent.category.LAUNCHER 1`
 - Browser build (for scripted play tests): `godot --headless --path . --export-debug "Web" build/web/index.html`, serve `build/web` with `python3 -m http.server`.
-- Release, in order: 1 bump `version/code` and `version/name` in `export_presets.cfg`; 2 full verify; 3 release APK build; 4 commit and tag `vX.Y.Z`; 5 `gh release create vX.Y.Z build/hazard-hunt.apk` (asset name must stay `hazard-hunt.apk`, the README links to `releases/latest/download/hazard-hunt.apk`).
+- Release, in order: 1 bump `version/code` and `version/name` in `export_presets.cfg`; 2 full verify; 3 release APK build; 4 commit and tag `vX.Y.Z`; 5 copy the APK to `build/hazard-hunt-X.Y.Z.apk`, then `gh release create vX.Y.Z build/hazard-hunt-X.Y.Z.apk` (asset name carries the version; the README links to `releases/latest`).
 - Exclusive resources (one session at a time): the USB phone (adb), `project.godot`, `content/**`, `assets/**`, `tests/**`, `core/localization.gd`, `docs/CONTRACT.md`.
 
 ## Content and art
