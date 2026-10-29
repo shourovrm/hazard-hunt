@@ -416,6 +416,7 @@ func _make_background(texture_path: String) -> Sprite2D:
 	background.texture = _load_texture(texture_path)
 	background.centered = false
 	_scene_content.add_child(background)
+	SceneVideo.attach_if_downloaded(background, texture_path)
 	return background
 
 
