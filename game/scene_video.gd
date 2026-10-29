@@ -1,9 +1,9 @@
 class_name SceneVideo
 extends RefCounted
-## Plays a case's optional video clips: "intro" shows the workers at work before the hunt and "outro"
-## shows the safe way of working during the reveal. Each clip ends on the exact still scene the game
-## draws next, so fading the clip away is seamless. Clips are downloaded after install; without them
-## the case plays with its still pictures only.
+## Plays a case's optional video clips: "accident" shows what could happen after the hazard hunt and
+## "safe_work" shows the safe way of working during the reveal. Each clip starts on the exact still
+## scene, so it can take over without a jump. Clips are downloaded after install; without them the
+## case plays with its still pictures only.
 
 const VIDEO_ROOT := "user://videos/"
 const PICTURE_ROOT := "res://assets/"
@@ -20,8 +20,8 @@ static func clip_path(case_picture_path: String, clip_name: String) -> String:
 
 
 ## Plays the clip once on top of `parent`'s children and returns its player, or null when the clip
-## was not downloaded. When the clip ends it fades away, uncovering the still scene underneath.
-static func play_once(parent: Node, path: String, fade_in: bool) -> VideoStreamPlayer:
+## was not downloaded. A finished player keeps showing its last frame until it is faded out.
+static func play(parent: Node, path: String, fade_in: bool) -> VideoStreamPlayer:
 	if not FileAccess.file_exists(path):
 		return null
 	var stream := VideoStreamTheora.new()
@@ -32,7 +32,6 @@ static func play_once(parent: Node, path: String, fade_in: bool) -> VideoStreamP
 	video.expand = true
 	video.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	video.size = CLIP_SIZE
-	video.finished.connect(fade_out.bind(video))
 	if fade_in:
 		video.modulate.a = 0.0
 		video.create_tween().tween_property(video, "modulate:a", 1.0, FADE_SECONDS)
@@ -41,11 +40,12 @@ static func play_once(parent: Node, path: String, fade_in: bool) -> VideoStreamP
 	return video
 
 
-## Fades the clip out and frees it; safe to call on a clip that already ended or was freed.
-static func fade_out(video: VideoStreamPlayer) -> void:
+## Fades the clip out and frees it. Takes a Variant because the clip may already be freed,
+## and any Object-typed parameter rejects a freed object before this check can run.
+static func fade_out(video: Variant) -> void:
 	if not is_instance_valid(video) or video.has_meta("fading"):
 		return
 	video.set_meta("fading", true)
-	var tween := video.create_tween()
+	var tween: Tween = video.create_tween()
 	tween.tween_property(video, "modulate:a", 0.0, FADE_SECONDS)
 	tween.tween_callback(video.queue_free)

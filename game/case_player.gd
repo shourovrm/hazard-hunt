@@ -48,8 +48,7 @@ var _camera: Camera2D
 var _scene_content: Node2D
 var _background_unsafe: Sprite2D
 var _background_safe: Sprite2D
-var _intro_clip: VideoStreamPlayer
-var _outro_clip: VideoStreamPlayer
+var _accident_clip: AccidentClip
 var _backdrop: TextureRect
 var _backdrop_safe_texture: ImageTexture
 var _actors: Array[Sprite2D] = []
@@ -138,7 +137,7 @@ func advance() -> void:
 		CaseSession.Phase.INTRO:
 			skip_intro()
 		CaseSession.Phase.HAZARD_HUNT:
-			_session.finish_hazard_hunt()
+			_finish_hazard_hunt()
 		CaseSession.Phase.QUESTIONS:
 			_advance_question()
 		CaseSession.Phase.SAFE_REVEAL:
@@ -543,7 +542,6 @@ func _enter_intro() -> void:
 	_continue_button.visible = true
 	_refresh_texts()
 	if animations_enabled:
-		_intro_clip = SceneVideo.play_once(_scene_content, _clip_path("unsafe", "intro"), false)
 		_play_intro_pan()
 		if motion_style() == "paper":
 			var sheet_tween := _background_unsafe.create_tween().set_parallel(true)
@@ -553,11 +551,26 @@ func _enter_intro() -> void:
 
 
 func _enter_hazard_hunt() -> void:
-	SceneVideo.fade_out(_intro_clip)
 	_move_camera(_hunt_camera_position(), 1.0, CAMERA_MOVE_SECONDS)
 	_counter_pill.visible = true
 	_refresh_hazard_counter()
 	_refresh_continue_button()
+
+
+## Shows the accident clip, when downloaded, before the questions; a second press skips it.
+func _finish_hazard_hunt() -> void:
+	if is_instance_valid(_accident_clip):
+		_accident_clip.skip()
+		return
+	if animations_enabled and _session.all_hazards_found():
+		_accident_clip = AccidentClip.start(_scene_content, _clip_path("unsafe", "accident"))
+	if _accident_clip == null:
+		_session.finish_hazard_hunt()
+		return
+	_counter_pill.visible = false
+	_hide_hint_ring()
+	_mentor.say(_ui_text("accident_watch"))
+	_accident_clip.ended.connect(_session.finish_hazard_hunt)
 
 
 func _enter_questions() -> void:
@@ -575,7 +588,7 @@ func _enter_safe_reveal() -> void:
 	_question_panel.visible = false
 	_mentor.visible = true
 	_mentor.say(_session.case_data["outcome"]["mentor_line"])
-	_rebuild_fixes_list()
+	FixesList.rebuild(_fixes_list, _session.case_data["outcome"]["fixes"])
 	_fixes_panel.visible = true
 	_continue_button.visible = true
 	_refresh_texts()
@@ -590,7 +603,6 @@ func _enter_safe_reveal() -> void:
 
 func _enter_result() -> void:
 	_finish_reveal_immediately()
-	SceneVideo.fade_out(_outro_clip)
 	_fixes_panel.visible = false
 	_continue_button.visible = false
 	_mentor.visible = false
@@ -828,7 +840,7 @@ func _play_reveal_animation() -> void:
 		move.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_reveal_tween.tween_callback(_emit_sparkles).set_delay(SPARKLE_DELAY_SECONDS)
 	_reveal_tween.finished.connect(_apply_safe_state)
-	_outro_clip = SceneVideo.play_once(_scene_content, _clip_path("safe", "outro"), true)
+	SceneVideo.play(_scene_content, _clip_path("safe", "safe_work"), true)
 
 
 func _emit_sparkles() -> void:
@@ -854,39 +866,6 @@ func _finish_reveal_immediately() -> void:
 		_reveal_tween.kill()
 		_reveal_tween = null
 	_apply_safe_state()
-
-
-func _rebuild_fixes_list() -> void:
-	for existing_child in _fixes_list.get_children():
-		_fixes_list.remove_child(existing_child)
-		existing_child.queue_free()
-	var title := Label.new()
-	title.theme_type_variation = "HeadingLabel"
-	title.text = Loc.ui("safe_scene_title")
-	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_fixes_list.add_child(title)
-	for fix: Dictionary in _session.case_data["outcome"]["fixes"]:
-		_fixes_list.add_child(_make_fix_row(Loc.text(fix)))
-
-
-func _make_fix_row(fix_text: String) -> HBoxContainer:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var bullet := Label.new()
-	bullet.text = "•"
-	bullet.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	bullet.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(bullet)
-	var fix_label := Label.new()
-	fix_label.text = fix_text
-	fix_label.add_theme_font_size_override("font_size", 21)
-	fix_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	fix_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	fix_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(fix_label)
-	return row
 
 
 # ---- Result --------------------------------------------------------------------------------
@@ -932,7 +911,7 @@ func _on_language_changed(_language: String) -> void:
 	if _session == null:
 		return
 	if _fixes_panel.visible:
-		_rebuild_fixes_list()
+		FixesList.rebuild(_fixes_list, _session.case_data["outcome"]["fixes"])
 	if _result_visible:
 		_rebuild_result_card()
 
