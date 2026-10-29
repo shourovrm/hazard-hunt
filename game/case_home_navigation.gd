@@ -6,7 +6,8 @@ extends CanvasLayer
 signal home_pressed
 
 const HOME_ICON_PATH := "res://assets/icons/home.svg"
-const MAIN_MENU_SCENE := "res://game/main_menu.tscn"
+# The case list of the selected sector; GameState.selected_sector_path still names it.
+const SECTOR_MAP_SCENE := "res://game/sector_map.tscn"
 const HOME_BUTTON_SIZE := Vector2(64, 64)
 const SCREEN_MARGIN := 16.0
 # The interface layer is 1; this one must be higher so the Home button is drawn over it.
@@ -57,7 +58,7 @@ func is_leave_confirm_visible() -> bool:
 
 func confirm_leave() -> void:
 	Sfx.stop_ambience()
-	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
+	get_tree().change_scene_to_file(SECTOR_MAP_SCENE)
 
 
 func _on_home_button_pressed() -> void:
