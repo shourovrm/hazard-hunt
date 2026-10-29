@@ -48,6 +48,8 @@ var _camera: Camera2D
 var _scene_content: Node2D
 var _background_unsafe: Sprite2D
 var _background_safe: Sprite2D
+var _intro_clip: VideoStreamPlayer
+var _outro_clip: VideoStreamPlayer
 var _backdrop: TextureRect
 var _backdrop_safe_texture: ImageTexture
 var _actors: Array[Sprite2D] = []
@@ -416,7 +418,6 @@ func _make_background(texture_path: String) -> Sprite2D:
 	background.texture = _load_texture(texture_path)
 	background.centered = false
 	_scene_content.add_child(background)
-	SceneVideo.attach_if_downloaded(background, texture_path)
 	return background
 
 
@@ -542,6 +543,7 @@ func _enter_intro() -> void:
 	_continue_button.visible = true
 	_refresh_texts()
 	if animations_enabled:
+		_intro_clip = SceneVideo.play_once(_scene_content, _clip_path("unsafe", "intro"), false)
 		_play_intro_pan()
 		if motion_style() == "paper":
 			var sheet_tween := _background_unsafe.create_tween().set_parallel(true)
@@ -551,6 +553,7 @@ func _enter_intro() -> void:
 
 
 func _enter_hazard_hunt() -> void:
+	SceneVideo.fade_out(_intro_clip)
 	_move_camera(_hunt_camera_position(), 1.0, CAMERA_MOVE_SECONDS)
 	_counter_pill.visible = true
 	_refresh_hazard_counter()
@@ -587,6 +590,7 @@ func _enter_safe_reveal() -> void:
 
 func _enter_result() -> void:
 	_finish_reveal_immediately()
+	SceneVideo.fade_out(_outro_clip)
 	_fixes_panel.visible = false
 	_continue_button.visible = false
 	_mentor.visible = false
@@ -824,6 +828,7 @@ func _play_reveal_animation() -> void:
 		move.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_reveal_tween.tween_callback(_emit_sparkles).set_delay(SPARKLE_DELAY_SECONDS)
 	_reveal_tween.finished.connect(_apply_safe_state)
+	_outro_clip = SceneVideo.play_once(_scene_content, _clip_path("safe", "outro"), true)
 
 
 func _emit_sparkles() -> void:
@@ -972,6 +977,10 @@ func _rect_from(values: Array) -> Rect2:
 
 func _vector_from(values: Array) -> Vector2:
 	return Vector2(values[0], values[1])
+
+
+func _clip_path(background_state_name: String, clip_name: String) -> String:
+	return SceneVideo.clip_path(_session.case_data["scene"]["background"][background_state_name], clip_name)
 
 
 func _load_texture(path: String) -> Texture2D:
